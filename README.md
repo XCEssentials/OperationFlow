@@ -71,7 +71,117 @@ Any sequence might be cancelled at any time. If cancelled, sequence won't stop c
 How To Use
 ---
 
-TBD
+Here is a simple usage example.
+
+```objective-c
+NSOperationQueue *theQueue = ...; // store an NSOperationQueue somewhere
+
+//===
+
+[MKHBlockSequence setDefaultQueue:theQueue];
+
+//===
+
+MKHBlockSequence *sequence =
+[MKHBlockSequence newWithName:@"MyTestSequence"]; // name is needed for debugging only
+    
+// alternatively you can use 'MKHNewSequence' macro for quick temp var definition
+
+// add some operation:
+[sequence
+ then:^id(id object) {
+     
+     // object is nil
+     
+     for (int i = 0; i<1000; i++)
+     {
+         NSLog(@"Long operation");
+     }
+     
+     //===
+     
+     return @"1st result";
+ }];
+
+// add another operation:
+[sequence
+ then:^id(id object) {
+     
+     // object is: "1st result"
+     
+     //===
+     
+     for (int i = 0; i<10000; i++)
+     {
+         NSLog(@"Another Long operation");
+     }
+     
+     //===
+     
+     return @"2nd result";
+ }];
+
+// call 'finally:' method with completion block (may be nil)
+// to actually start sequence execution:
+[sequence
+ finally:^(id object) {
+     
+     // object is: "2nd result"
+     
+     NSLog(@"DONE");
+ }];
+```
+
+Here is a more advanced usage example.
+
+```objective-c
+NSOperationQueue *theQueue = ...; // store an NSOperationQueue somewhere
+    
+//===
+
+[MKHBlockSequence setDefaultQueue:theQueue];
+
+//===
+
+[[[[MKHBlockSequence
+    execute:^id{
+        
+        for (int i = 0; i<1000; i++)
+        {
+            NSLog(@"Long operation");
+        }
+        
+        //===
+        
+        return @"1st result";
+    }]
+   then:^id(id previousResult) {
+       
+       // object is: "1st result"
+       
+       //===
+       
+       for (int i = 0; i<10000; i++)
+       {
+           NSLog(@"Another Long operation");
+       }
+       
+       //===
+       
+       return @"2nd result";
+   }]
+  errorHandler:^(NSError *error) {
+      
+      // handle error
+      // show an alert and so on...
+  }]
+ finally:^(id lastResult) {
+     
+     // object is: "2nd result"
+     
+     NSLog(@"DONE");
+ }];
+```
 
 
 [0]: http://promisekit.org
