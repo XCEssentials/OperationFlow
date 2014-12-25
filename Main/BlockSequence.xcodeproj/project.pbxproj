@@ -36,7 +36,6 @@
 
 /* Begin PBXFileReference section */
 		50967A701A2CF843001258D3 /* libBlockSequence.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBlockSequence.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		50967A731A2CF843001258D3 /* BlockSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlockSequence.h; sourceTree = "<group>"; };
 		50967A7B1A2CF844001258D3 /* BlockSequenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockSequenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50967A7E1A2CF844001258D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50967A871A2CF8F0001258D3 /* MKHBlockSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKHBlockSequence.h; sourceTree = "<group>"; };
@@ -84,7 +83,6 @@
 		50967A721A2CF843001258D3 /* Src */ = {
 			isa = PBXGroup;
 			children = (
-				50967A731A2CF843001258D3 /* BlockSequence.h */,
 				50967A871A2CF8F0001258D3 /* MKHBlockSequence.h */,
 				50967A881A2CF8F0001258D3 /* MKHBlockSequence.m */,
 			);
@@ -152,7 +150,7 @@
 		50967A681A2CF843001258D3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = MKH;
+				CLASSPREFIX = BSQ;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Maxim Khatskevich";
 				TargetAttributes = {

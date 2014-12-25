@@ -5,12 +5,13 @@
 //  Created by Maxim Khatskevich on 02/12/14.
 //  Copyright (c) 2014 Maxim Khatskevich. All rights reserved.
 //
+//  BLS - BLock Sequence - Prefix for all secondary classes
 
 #import <Foundation/Foundation.h>
 
 //===
 
-#define MKHNewSequence MKHBlockSequence *sequence = [MKHBlockSequence new]
+#define BLSNewSequence MKHBlockSequence *sequence = [MKHBlockSequence new]
 
 //===
 
