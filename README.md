@@ -1,4 +1,4 @@
-BlockSequence
+MKHBlockSequence
 =============
 
 Lightweight implementation of async operations sequence controller.
@@ -181,6 +181,15 @@ NSOperationQueue *theQueue = ...; // store an NSOperationQueue somewhere
      
      NSLog(@"DONE");
  }];
+```
+
+How to link to your project
+---
+
+Just import key header "MKHBlockSequence.h" like this:
+
+```objective-c
+#import <MKHBlockSequence/MKHBlockSequence.h>
 ```
 
 
