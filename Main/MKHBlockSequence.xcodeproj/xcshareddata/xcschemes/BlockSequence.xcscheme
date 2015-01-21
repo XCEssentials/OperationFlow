@@ -9,15 +9,15 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "50967A7A1A2CF844001258D3"
-               BuildableName = "BlockSequenceTests.xctest"
-               BlueprintName = "BlockSequenceTests"
-               ReferencedContainer = "container:BlockSequence.xcodeproj">
+               BlueprintIdentifier = "50967A6F1A2CF843001258D3"
+               BuildableName = "libMKHBlockSequence.a"
+               BlueprintName = "MKHBlockSequence"
+               ReferencedContainer = "container:MKHBlockSequence.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "50967A7A1A2CF844001258D3"
-               BuildableName = "BlockSequenceTests.xctest"
-               BlueprintName = "BlockSequenceTests"
-               ReferencedContainer = "container:BlockSequence.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "50967A7A1A2CF844001258D3"
-            BuildableName = "BlockSequenceTests.xctest"
-            BlueprintName = "BlockSequenceTests"
-            ReferencedContainer = "container:BlockSequence.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -61,10 +42,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "50967A7A1A2CF844001258D3"
-            BuildableName = "BlockSequenceTests.xctest"
-            BlueprintName = "BlockSequenceTests"
-            ReferencedContainer = "container:BlockSequence.xcodeproj">
+            BlueprintIdentifier = "50967A6F1A2CF843001258D3"
+            BuildableName = "libMKHBlockSequence.a"
+            BlueprintName = "MKHBlockSequence"
+            ReferencedContainer = "container:MKHBlockSequence.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -79,10 +60,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "50967A7A1A2CF844001258D3"
-            BuildableName = "BlockSequenceTests.xctest"
-            BlueprintName = "BlockSequenceTests"
-            ReferencedContainer = "container:BlockSequence.xcodeproj">
+            BlueprintIdentifier = "50967A6F1A2CF843001258D3"
+            BuildableName = "libMKHBlockSequence.a"
+            BlueprintName = "MKHBlockSequence"
+            ReferencedContainer = "container:MKHBlockSequence.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
