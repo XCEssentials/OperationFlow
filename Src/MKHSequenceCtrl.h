@@ -1,6 +1,6 @@
 //
-//  MKHBlockSequence.h
-//  BlockSequence
+//  MKHSequenceCtrl.h
+//  MKHSequenceCtrl
 //
 //  Created by Maxim Khatskevich on 02/12/14.
 //  Copyright (c) 2014 Maxim Khatskevich. All rights reserved.
@@ -11,7 +11,7 @@
 
 //===
 
-#define BLSNewSequence MKHBlockSequence *sequence = [MKHBlockSequence new]
+#define BLSNewSequence MKHSequenceCtrl *sequence = [MKHSequenceCtrl new]
 
 //===
 
@@ -22,7 +22,7 @@ typedef void (^MKHSequenceErrorBlock)(NSError *error);
 
 //===
 
-@interface MKHBlockSequence : NSObject
+@interface MKHSequenceCtrl : NSObject
 
 @property (weak, nonatomic) NSOperationQueue *targetQueue;
 

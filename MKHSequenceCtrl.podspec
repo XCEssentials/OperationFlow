@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
 
-  s.name         = "MKHBlockSequence"
-  s.version      = "1.0.1"
+  s.name         = "MKHSequenceCtrl"
+  s.version      = "1.0.2"
   s.summary      = "Lightweight implementation of async operations sequence controller"
-  s.homepage     = "https://github.com/maximkhatskevich/MKHBlockSequence"
+  s.homepage     = "https://github.com/maximkhatskevich/MKHSequenceCtrl"
 
   s.license      = { :type => "MIT", :file => "LICENSE" }
 
@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.source_files  = "Main/Src/*.{h,m}"
+  s.source_files  = "Src/*.{h,m}"
 
 end

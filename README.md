@@ -1,4 +1,4 @@
-MKHBlockSequence
+MKHSequenceCtrl
 =============
 
 Lightweight implementation of async operations sequence controller.
@@ -78,12 +78,12 @@ NSOperationQueue *theQueue = ...; // store an NSOperationQueue somewhere
 
 //===
 
-[MKHBlockSequence setDefaultQueue:theQueue];
+[MKHSequenceCtrl setDefaultQueue:theQueue];
 
 //===
 
-MKHBlockSequence *sequence =
-[MKHBlockSequence newWithName:@"MyTestSequence"]; // name is needed for debugging only
+MKHSequenceCtrl *sequence =
+[MKHSequenceCtrl newWithName:@"MyTestSequence"]; // name is needed for debugging only
     
 // alternatively you can use 'MKHNewSequence' macro for quick temp var definition
 
@@ -139,11 +139,11 @@ NSOperationQueue *theQueue = ...; // store an NSOperationQueue somewhere
     
 //===
 
-[MKHBlockSequence setDefaultQueue:theQueue];
+[MKHSequenceCtrl setDefaultQueue:theQueue];
 
 //===
 
-[[[[MKHBlockSequence
+[[[[MKHSequenceCtrl
     execute:^id{
         
         for (int i = 0; i<1000; i++)
@@ -186,10 +186,10 @@ NSOperationQueue *theQueue = ...; // store an NSOperationQueue somewhere
 How to link to your project
 ---
 
-Just import key header "MKHBlockSequence.h" like this:
+Just import key header "MKHSequenceCtrl.h" like this:
 
 ```objective-c
-#import <MKHBlockSequence/MKHBlockSequence.h>
+#import "MKHSequenceCtrl.h"
 ```
 
 

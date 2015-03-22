@@ -1,12 +1,12 @@
 //
-//  MKHBlockSequence.m
+//  MKHSequenceCtrl.m
 //  BlockSequence
 //
 //  Created by Maxim Khatskevich on 02/12/14.
 //  Copyright (c) 2014 Maxim Khatskevich. All rights reserved.
 //
 
-#import "MKHBlockSequence.h"
+#import "MKHSequenceCtrl.h"
 
 //===
 
@@ -15,7 +15,7 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
 
 //===
 
-@interface MKHBlockSequence ()
+@interface MKHSequenceCtrl ()
 
 @property (copy, nonatomic) NSString *name;
 @property (strong, nonatomic) NSBlockOperation *currentOperation;
@@ -30,7 +30,7 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
 
 //===
 
-@implementation MKHBlockSequence
+@implementation MKHSequenceCtrl
 
 #pragma mark - Overrided methods
 
@@ -99,7 +99,7 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
 
 + (instancetype)newWithName:(NSString *)sequenceName
 {
-    MKHBlockSequence *result = self.class.new;
+    MKHSequenceCtrl *result = self.class.new;
     
     //===
     
