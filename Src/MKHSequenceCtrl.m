@@ -235,10 +235,14 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
                          
                          if ([result isKindOfClass:NSError.class])
                          {
+                             // lets return error and stop execution
+                             
                              [self reportError:result];
                          }
                          else
                          {
+                             // continue execution
+                             
                              [self executeNextWithObject:result];
                          }
                      }
