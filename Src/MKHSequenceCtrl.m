@@ -21,7 +21,6 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
 @property (strong, nonatomic) NSBlockOperation *currentOperation;
 
 @property (strong, nonatomic) NSMutableArray *items;
-@property (strong, nonatomic) id selfLink;
 
 @property (copy, nonatomic) MKHSequenceCompletionBlock completionBlock;
 @property (copy, nonatomic) MKHSequenceErrorBlock errorBlock;
@@ -133,8 +132,6 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
 
 - (instancetype)then:(MKHSequenceGenericBlock)operation
 {
-    // [self.items safeAddObject:operation];
-    
     if (operation)
     {
         [self.items addObject:operation];
@@ -148,13 +145,6 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
 - (instancetype)finally:(MKHSequenceCompletionBlock)completion
 {
     self.completionBlock = completion;
-    
-    //===
-    
-    if (self.items.count)
-    {
-        self.selfLink = self;
-    }
     
     //===
     
@@ -227,7 +217,7 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
                      
                      if (thisOperation.isCancelled)
                      {
-                         [self releaseSelf];
+                         // do nothing
                      }
                      else
                      {
@@ -256,8 +246,6 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
         else
         {
             NSLog(@"WARNING: Can't execute block sequence, .targetQueue hasn't been set.");
-            
-            [self releaseSelf];
         }
     }
     else
@@ -275,10 +263,6 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
         
         self.completionBlock(lastResult);
     }
-    
-    //===
-    
-    [self releaseSelf];
 }
 
 - (void)reportError:(NSError *)error
@@ -290,15 +274,6 @@ static MKHSequenceErrorBlock __defaultErrorBlock;
         
         self.errorBlock(error);
     }
-    
-    //===
-    
-    [self releaseSelf];
-}
-
-- (void)releaseSelf
-{
-    self.selfLink = nil;
 }
 
 @end
