@@ -1,20 +1,24 @@
 Pod::Spec.new do |s|
 
-  s.name             = "MKHSequence"
-  s.version          = "1.0.3"
-  s.summary          = "Lightweight implementation of async operations sequence controller"
-  s.homepage         = "https://github.com/maximkhatskevich/#{s.name}"
+  s.name                      = "MKHSequence"
+  s.version                   = "1.0.3"
+  s.summary                   = "Lightweight implementation of async operations sequence controller"
+  s.homepage                  = "https://github.com/maximkhatskevich/#{s.name}"
 
-  s.license          = { :type => "MIT", :file => "LICENSE" }
+  s.license                   = { :type => "MIT", :file => "LICENSE" }
 
-  s.author           = { "Maxim Khatskevich" => "maxim@khatskevi.ch" }
-  s.platform         = :ios, "6.0"
+  s.author                    = { "Maxim Khatskevich" => "maxim@khatskevi.ch" }
 
-  s.source           = { :git => "#{s.homepage}.git", :tag => "#{s.version}" }
-  s.source_files     = "Src/*.swift"
+  s.ios.deployment_target     = '8.0'
+  s.osx.deployment_target     = '10.9'
+  s.tvos.deployment_target    = '9.0'
+  s.watchos.deployment_target = '2.0'
 
-  s.requires_arc     = true
+  s.source                    = { :git => "#{s.homepage}.git", :tag => "#{s.version}" }
+  s.source_files              = "Src/*.swift"
 
-  s.social_media_url = "http://www.linkedin.com/in/maximkhatskevich"
+  s.requires_arc              = true
+
+  s.social_media_url          = "http://www.linkedin.com/in/maximkhatskevich"
 
 end
