@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
 
   s.source                    = { :git => "#{s.homepage}.git", :tag => "#{s.version}" }
-  s.source_files              = "Src/*.swift"
+  s.source_files              = "Src/#{s.name}/*.swift"
 
   s.requires_arc              = true
 
