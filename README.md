@@ -1,4 +1,4 @@
-MKHSequenceCtrl
+MKHSequence
 =============
 
 Lightweight implementation of async operations sequence controller.
