@@ -1,32 +1,36 @@
-MKHSequenceCtrl
+MKHSequence
 =============
 
-Lightweight implementation of async operations sequence controller.
+Lightweight tasks collection controller.
+
+Swift vs. Objective-C
+---
+
+Note, that this description is valid for version 2.x, which is done in Swift 2.0. If you are looking for an Objective-C implementation and documentation, see tag/release [1.0.3][4].
 
 
 Inspiration
 ---
 
-This lib has been inspired by [PromiseKit][0], [Objective-Chain][1] and [ReactiveCocoa][2].
+This library has been inspired by [PromiseKit][0], [Objective-Chain][1] and [ReactiveCocoa][2].
 
 
 The Goal
 ---
 
-A tool for easy and elegant control of **serial** sequence of (background) operations with shared error handling and completion blocks.
+A tool for simple and elegant management of sequence of tasks that are being executed **serially** on a background queue with shared (among all tasks) error handler and completion handler being called on main queue after all tasks have been executed and completed successfully.
 
 
 How It Works?
 ---
 
-_BlockSequence_ class implements generic queue-based (FIFO) collection of operations that are supposed to be executed one-by-one. Each operation is represented by a [block][3] which is being executed on the sequence target queue. You can add as many operations to a sequence as you need, but at least one operation is needed to make the use of this class meaningful. Each operation should expect to get previous operation result as input parameter (expect the very first operation where input parameter is always `nil`).
+_Sequence_ class implements generic queue-based (FIFO) collection of tasks that are supposed to be executed one-by-one. Each task is represented by a [block][3] which is being executed on the sequence target queue. You can add as many tasks to a sequence as you need, but at least one task is expected to make use of this class meaningful. Each task should expect to receive result from  previous task as input parameter (expect the very first task where input parameter is always `nil`).
 
-Any sequence might be provided with **final** (completion) block which will be called when all other operations have completed successfully. Final block is always being called on main queue. If you do not need completion block - feel free to pass `nil` instead.
+Any sequence might be provided with **final** (completion) block which will be called when all tasks have completed successfully. Completion block is always being called on main queue. If you do not need completion block - feel free to just call `start()` instead.
 
-Sequence also might be configured with custom **error** handling block which will be called (with error as input parameter) if _ANY_ of the operations in the sequence has failed. To indicate failure, a block must return an instance of _NSError_ class. In this case, the sequence will not call next block (or even final block). Instead it will call sequence error handling block and stop execution after that. Error handling block is always being called on main queue.
+Sequence also might be configured with custom **error** handling block which will be called (with error as input parameter) if _ANY_ of the tasks in the sequence has failed. To indicate failure, a task must return an instance of _NSError_ class. In this case, the sequence will not call next task (or final/completion block). Instead it will call sequence error handling block and stop execution after that. Error handling block is always being called on main queue.
 
-NOTE: Each operation in a sequence may be also called _step_ or _block_ (because each operation is being passed to a sequence as a block).
-
+NOTE: Each task in a sequence may be also called _step_.
 
 Key Features
 ---
@@ -39,163 +43,53 @@ Easy to use, minimal syntax. Minimum params have to be provided per each call to
 
 ### Code completion
 
-This library does not use block-return class methods and "dot-based" syntax, so when you are in Xcode - you have full code-completion support.
+This library does not use block-return class methods or run time "magic", so in Xcode you have full code-completion support.
 
-### Independent target queue per sequence
+### Independent target queue per each sequence
 
-The target queue (where all the operations of that given sequence will be executed one by one) can be set for each sequence independently from other sequences.
+The target queue (where all tasks of that given sequence will be executed one by one) can be set for each sequence independently from other sequences.
 
-NOTE: The sequence target queue is automatically being set to global default value, so no need to setup target queue for each particular sequence explicitly. In turn, global default target queue is being set automatically to _current queue_, i.e. to the queue where sequence class has been used first time. It is **recommended** to setup global default target queue to a custom background queue explicitly before you start using sequences.
+NOTE: The sequence target queue is automatically being set to global default value, so no need to setup target queue for each particular sequence explicitly. In turn, global default target queue is being set automatically to _current queue_, i.e. to the queue where sequence class has been used first time. It is **recommended** to setup global default target queue to a custom background serial queue explicitly before you start using Sequence class.
 
 ### Pass result value between steps
 
-Each block in a sequence returns an _id_ object. This object is considered as a result of this step and will be passed to next block as input parameter.
+Each task in a sequence returns an _Any?_ value. This object is considered as a result of this step and will be passed to next task as input parameter.
 
 ### Operates via main queue
 
-Each sequence controls its flow on main queue, i.e. every step is being executed on target queue, but sequence passes results from previous block to next one and controls the flow via main queue.
+Each sequence manages its flow on main queue, i.e. every step is being executed on target queue, but sequence passes results from previous task to next one and controls the flow via main queue.
 
 ### Completion block
 
-When all operations that have been added to the sequence have been _successfully_ completed, the sequence will call completion method with result of the very last operation in the sequence. 
+When all tasks from the sequence have been _successfully_ completed, the sequence will call completion block with result of the very last task in the sequence. 
 
 ### Shared error handling block
 
-Each sequence can be configured with custom error handling block which will be called (with error as input parameter) if _ANY_ of the operations in the sequence has failed.
+Each sequence can be configured with shared error handling block which will be called (with error as input parameter) if _ANY_ of the tasks in the sequence has indicated execution failure.
 
 ### Cancellable
 
-Any sequence might be cancelled at any time. If cancelled, sequence won't stop current operation execution immediately, but will NOT proceed to next operation and release itself.
+Any sequence might be cancelled at any time. If cancelled, sequence won't force to stop current task execution immediately, but will NOT proceed to next task or completion block.
 
+How to add to your project
+---
+
+Just import module "MKHSequence" like this:
+
+```swift
+import MKHSequence
+```
 
 How To Use
 ---
 
-Here is a simple usage example.
-
-```objective-c
-NSOperationQueue *theQueue = ...; // store an NSOperationQueue somewhere
-
-//===
-
-[MKHSequenceCtrl setDefaultQueue:theQueue];
-
-//===
-
-MKHSequenceCtrl *sequence =
-[MKHSequenceCtrl newWithName:@"MyTestSequence"]; // name is needed for debugging only
-    
-// alternatively you can use 'MKHNewSequence' macro for quick temp var definition
-
-// add some operation:
-[sequence
- then:^id(id object) {
-     
-     // object is nil
-     
-     for (int i = 0; i<1000; i++)
-     {
-         NSLog(@"Long operation");
-     }
-     
-     //===
-     
-     return @"1st result";
- }];
-
-// add another operation:
-[sequence
- then:^id(id object) {
-     
-     // object is: "1st result"
-     
-     //===
-     
-     for (int i = 0; i<10000; i++)
-     {
-         NSLog(@"Another Long operation");
-     }
-     
-     //===
-     
-     return @"2nd result";
- }];
-
-// call 'finally:' method with completion block (may be nil)
-// to actually start sequence execution:
-[sequence
- finally:^(id object) {
-     
-     // object is: "2nd result"
-     
-     NSLog(@"DONE");
- }];
-```
-
-Here is a more advanced usage example.
-
-```objective-c
-NSOperationQueue *theQueue = ...; // store an NSOperationQueue somewhere
-    
-//===
-
-[MKHSequenceCtrl setDefaultQueue:theQueue];
-
-//===
-
-[[[[MKHSequenceCtrl
-    execute:^id{
-        
-        for (int i = 0; i<1000; i++)
-        {
-            NSLog(@"Long operation");
-        }
-        
-        //===
-        
-        return @"1st result";
-    }]
-   then:^id(id previousResult) {
-       
-       // object is: "1st result"
-       
-       //===
-       
-       for (int i = 0; i<10000; i++)
-       {
-           NSLog(@"Another Long operation");
-       }
-       
-       //===
-       
-       return @"2nd result";
-   }]
-  errorHandler:^(NSError *error) {
-      
-      // handle error
-      // show an alert and so on...
-  }]
- finally:^(id lastResult) {
-     
-     // object is: "2nd result"
-     
-     NSLog(@"DONE");
- }];
-```
-
-How to link to your project
----
-
-Just import key header "MKHSequenceCtrl.h" like this:
-
-```objective-c
-#import "MKHSequenceCtrl.h"
-```
+Please, see [unit tests][5] to get an idea of how to use Sequence class.
 
 
 [0]: http://promisekit.org
 [1]: https://github.com/iMartinKiss/Objective-Chain
 [2]: https://github.com/ReactiveCocoa/ReactiveCocoa
 [3]: https://www.google.ru/search?q=objective+c+block
-
+[4]: https://github.com/maximkhatskevich/MKHSequence/releases/tag/1.0.3
+[5]: https://github.com/maximkhatskevich/MKHSequence/blob/master/Src/MKHSequenceTests/MKHSequenceTests.swift
 

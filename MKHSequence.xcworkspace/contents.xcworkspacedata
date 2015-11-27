@@ -5,6 +5,6 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
-      location = "group:Example/MKHSequenceCtrl.xcodeproj">
+      location = "group:Src/MKHSequence.xcodeproj">
    </FileRef>
 </Workspace>
