@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
   s.name                      = "MKHSequence"
-  s.version                   = "1.0.3"
-  s.summary                   = "Lightweight implementation of async operations sequence controller"
+  s.version                   = "2.0.0"
+  s.summary                   = "Lightweight tasks collection controller"
   s.homepage                  = "https://github.com/maximkhatskevich/#{s.name}"
 
   s.license                   = { :type => "MIT", :file => "LICENSE" }
