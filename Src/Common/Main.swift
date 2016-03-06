@@ -1,5 +1,5 @@
 //
-//  Sequence.swift
+//  Main.swift
 //  MKHSequence
 //
 //  Created by Maxim Khatskevich on 11/26/15.
@@ -10,7 +10,7 @@ import UIKit
 
 //===
 
-public class Sequence
+public class MKHSequence
 {
     // MARK: Nested types and aliases
     
@@ -52,7 +52,7 @@ public class Sequence
         
         //===
         
-        targetQueue = Sequence.__defaultTargetQueue
+        targetQueue = MKHSequence.__defaultTargetQueue
     }
     
     // MARK: Methods - Private

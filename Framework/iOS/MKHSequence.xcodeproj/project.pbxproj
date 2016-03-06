@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94BE2A2B1C8C327F0097D805 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BE2A2A1C8C327F0097D805 /* Main.swift */; };
 		94DC11471C07E92F00B0B0D8 /* MKHSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 94DC11461C07E92F00B0B0D8 /* MKHSequence.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94DC114E1C07E92F00B0B0D8 /* MKHSequence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DC11431C07E92F00B0B0D8 /* MKHSequence.framework */; };
 		94DC11531C07E92F00B0B0D8 /* MKHSequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC11521C07E92F00B0B0D8 /* MKHSequenceTests.swift */; };
-		94DC115F1C07EA4700B0B0D8 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC115E1C07EA4700B0B0D8 /* Sequence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,13 +24,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		94BE2A2A1C8C327F0097D805 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		94DC11431C07E92F00B0B0D8 /* MKHSequence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MKHSequence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94DC11461C07E92F00B0B0D8 /* MKHSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKHSequence.h; sourceTree = "<group>"; };
 		94DC11481C07E92F00B0B0D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94DC114D1C07E92F00B0B0D8 /* MKHSequenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MKHSequenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94DC11521C07E92F00B0B0D8 /* MKHSequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKHSequenceTests.swift; sourceTree = "<group>"; };
 		94DC11541C07E92F00B0B0D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94DC115E1C07EA4700B0B0D8 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +52,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94BE2A291C8C327F0097D805 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				94BE2A2A1C8C327F0097D805 /* Main.swift */,
+			);
+			name = Common;
+			path = ../../../Src/Common;
+			sourceTree = "<group>";
+		};
 		94DC11391C07E92F00B0B0D8 = {
 			isa = PBXGroup;
 			children = (
@@ -75,7 +84,7 @@
 			children = (
 				94DC11461C07E92F00B0B0D8 /* MKHSequence.h */,
 				94DC11481C07E92F00B0B0D8 /* Info.plist */,
-				94DC115D1C07E9E500B0B0D8 /* Core */,
+				94BE2A291C8C327F0097D805 /* Common */,
 			);
 			path = MKHSequence;
 			sourceTree = "<group>";
@@ -87,14 +96,6 @@
 				94DC11541C07E92F00B0B0D8 /* Info.plist */,
 			);
 			path = MKHSequenceTests;
-			sourceTree = "<group>";
-		};
-		94DC115D1C07E9E500B0B0D8 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				94DC115E1C07EA4700B0B0D8 /* Sequence.swift */,
-			);
-			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,7 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94DC115F1C07EA4700B0B0D8 /* Sequence.swift in Sources */,
+				94BE2A2B1C8C327F0097D805 /* Main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +248,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2.1.0.1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -295,7 +296,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2.1.0.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
