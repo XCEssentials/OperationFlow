@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                      = "MKHSequence"
-  s.version                   = "2.0.0"
+  s.version                   = "2.1.0"
   s.summary                   = "Lightweight tasks collection controller"
   s.homepage                  = "https://github.com/maximkhatskevich/#{s.name}"
 
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
 
   s.source                    = { :git => "#{s.homepage}.git", :tag => "#{s.version}" }
-  s.source_files              = "Src/#{s.name}/*.swift"
+  s.source_files              = "Src/Common/*.swift"
 
   s.requires_arc              = true
 
