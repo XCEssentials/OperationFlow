@@ -6,13 +6,13 @@ Lightweight tasks collection controller.
 Swift vs. Objective-C
 ---
 
-Note, that this description is valid for version 2.x, which is done in Swift 2.0. If you are looking for an Objective-C implementation and documentation, see tag/release [1.0.3][4].
+Note, that this description is valid for version 2.x, which is done in Swift 2.0. If you are looking for an Objective-C implementation and documentation, see tag/release [1.0.3][0].
 
 
 Inspiration
 ---
 
-This library has been inspired by [PromiseKit][0], [Objective-Chain][1] and [ReactiveCocoa][2].
+This library has been inspired by [PromiseKit][1], [Objective-Chain][2] and [ReactiveCocoa][3].
 
 
 The Goal
@@ -24,7 +24,7 @@ A tool for simple and elegant management of sequence of tasks that are being exe
 How It Works?
 ---
 
-_Sequence_ class implements generic queue-based (FIFO) collection of tasks that are supposed to be executed one-by-one. Each task is represented by a [block][3] which is being executed on the sequence target queue. You can add as many tasks to a sequence as you need, but at least one task is expected to make use of this class meaningful. Each task should expect to receive result from  previous task as input parameter (expect the very first task where input parameter is always `nil`).
+_Sequence_ class implements generic queue-based (FIFO) collection of tasks that are supposed to be executed one-by-one. Each task is represented by a [block][4] which is being executed on the sequence target queue. You can add as many tasks to a sequence as you need, but at least one task is expected to make use of this class meaningful. Each task should expect to receive result from  previous task as input parameter (expect the very first task where input parameter is always `nil`).
 
 Any sequence might be provided with **final** (completion) block which will be called when all tasks have completed successfully. Completion block is always being called on main queue. If you do not need completion block - feel free to just call `start()` instead.
 
@@ -85,11 +85,10 @@ How To Use
 
 Please, see [unit tests][5] to get an idea of how to use Sequence class.
 
-
-[0]: http://promisekit.org
-[1]: https://github.com/iMartinKiss/Objective-Chain
-[2]: https://github.com/ReactiveCocoa/ReactiveCocoa
-[3]: https://www.google.ru/search?q=objective+c+block
-[4]: https://github.com/maximkhatskevich/MKHSequence/releases/tag/1.0.3
-[5]: https://github.com/maximkhatskevich/MKHSequence/blob/master/Src/MKHSequenceTests/MKHSequenceTests.swift
+[0]: https://github.com/maximkhatskevich/MKHSequence/releases/tag/1.0.3
+[1]: http://promisekit.org
+[2]: https://github.com/iMartinKiss/Objective-Chain
+[3]: https://github.com/ReactiveCocoa/ReactiveCocoa
+[4]: https://www.google.ru/search?q=objective+c+block
+[5]: https://github.com/maximkhatskevich/MKHSequence/blob/master/Framework/iOS/MKHSequenceTests/MKHSequenceTests.swift
 
