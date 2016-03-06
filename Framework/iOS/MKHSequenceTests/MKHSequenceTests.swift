@@ -27,11 +27,11 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        MKHSequence.Sequence.setDefaultTargetQueue(queue)
+        MKHSequence.setDefaultTargetQueue(queue)
         
         //===
         
-        let seq = Sequence()
+        let seq = MKHSequence()
         
         seq.add { (previousResult) -> Any? in
             
@@ -84,11 +84,11 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        MKHSequence.Sequence.setDefaultTargetQueue(queue)
+        MKHSequence.setDefaultTargetQueue(queue)
         
         //===
         
-        Sequence()
+        MKHSequence()
             .add { (previousResult) -> Any? in
                 
                 // previousResult is nil
@@ -145,11 +145,11 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        MKHSequence.Sequence.setDefaultTargetQueue(queue)
+        MKHSequence.setDefaultTargetQueue(queue)
         
         //===
         
-        let seq = Sequence()
+        let seq = MKHSequence()
             .add { (previousResult) -> Any? in
                 
                 // previousResult is nil
