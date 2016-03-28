@@ -49,7 +49,7 @@ class Sequence
     
     // MARK: Properties - Public
     
-    private
+    public
     static
     var onFailureDefault: FailureHandler?
     
