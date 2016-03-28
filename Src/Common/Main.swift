@@ -49,6 +49,10 @@ class Sequence
     
     // MARK: Properties - Public
     
+    private
+    static
+    var onFailureDefault: FailureHandler?
+    
     public
     static
     var defaultTargetQueue = NSOperationQueue()
@@ -150,7 +154,7 @@ class Sequence
         
         //===
         
-        if let failureHandler = self.onFailure
+        if let failureHandler = (self.onFailure ?? self.dynamicType.onFailureDefault)
         {
             failureHandler(sequence: self, error: error);
         }
