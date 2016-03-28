@@ -8,7 +8,7 @@
 
 import XCTest
 
-//@testable
+@testable
 import MKHSequence
 
 class MKHSequenceTests: XCTestCase
@@ -19,7 +19,8 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        let expectation = self.expectationWithDescription("SimpleCase Sequence")
+        let expectation =
+            expectationWithDescription("SimpleCase Sequence")
         
         //===
         
@@ -33,7 +34,7 @@ class MKHSequenceTests: XCTestCase
         
         let seq = Sequence()
         
-        seq.add { (previousResult) -> Any? in
+        seq.add { (sequence, previousResult) -> Any? in
             
             XCTAssertFalse(task1Completed)
             XCTAssertFalse(task2Completed)
@@ -54,7 +55,7 @@ class MKHSequenceTests: XCTestCase
             return res1
         }
         
-        seq.add { (previousResult) -> Any? in
+        seq.add { (sequence, previousResult) -> Any? in
             
             XCTAssertTrue(task1Completed)
             XCTAssertFalse(task2Completed)
@@ -77,13 +78,13 @@ class MKHSequenceTests: XCTestCase
             return res2
         }
         
-        seq.finally { (previousResult) -> Void in
+        seq.finally { (sequence, lastResult) -> Void in
             
             XCTAssertTrue(task1Completed)
             XCTAssertTrue(task2Completed)
-            XCTAssertNotNil(previousResult)
-            XCTAssertTrue(previousResult is String)
-            XCTAssertEqual((previousResult as! String), res2)
+            XCTAssertNotNil(lastResult)
+            XCTAssertTrue(lastResult is String)
+            XCTAssertEqual((lastResult as! String), res2)
             XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
             
             //===
@@ -104,7 +105,8 @@ class MKHSequenceTests: XCTestCase
     
     func testCaseWithError()
     {
-        let expectation = self.expectationWithDescription("CaseWithError Sequence")
+        let expectation =
+            expectationWithDescription("CaseWithError Sequence")
         
         //===
         
@@ -117,7 +119,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         Sequence()
-            .add { (previousResult) -> Any? in
+            .add { (sequence, previousResult) -> Any? in
                 
                 XCTAssertFalse(task1Completed)
                 XCTAssertFalse(task2Completed)
@@ -137,7 +139,7 @@ class MKHSequenceTests: XCTestCase
                 
                 return res1
             }
-            .add { (previousResult) -> Any? in
+            .add { (sequence, previousResult) -> Any? in
             
                 XCTAssertTrue(task1Completed)
                 XCTAssertFalse(task2Completed)
@@ -166,7 +168,7 @@ class MKHSequenceTests: XCTestCase
                             ["reason": "Just for test",
                              "origin": "CaseWithError, task 2"])
             }
-            .onFailure({ (error) -> Void in
+            .onFailure({ (sequence, error) -> Void in
                 
                 XCTAssertTrue(task1Completed)
                 XCTAssertTrue(task2Completed)
@@ -196,22 +198,41 @@ class MKHSequenceTests: XCTestCase
         
         var task1Started = false
         var task1Completed = false
-        var completionExecuted = false
         
         //===
         
-        let seq = Sequence()
-            .add { (previousResult) -> Any? in
+        Sequence()
+            .add { (sequence, previousResult) -> Any? in
                 
                 XCTAssertFalse(task1Started)
                 XCTAssertFalse(task1Completed)
-                XCTAssertFalse(completionExecuted)
+                XCTAssertNotEqual(sequence.status, Sequence.Status.Cancelled)
                 XCTAssertNil(previousResult)
                 XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
                 
                 //===
                 
                 task1Started = true
+                
+                //===
+                
+                NSOperationQueue.mainQueue()
+                    .addOperationWithBlock {
+                        
+                        XCTAssertTrue(task1Started)
+                        XCTAssertFalse(task1Completed)
+                        XCTAssertNotEqual(sequence.status, Sequence.Status.Cancelled)
+                        
+                        //===
+                        
+                        sequence.cancel()
+                        
+                        //===
+                        
+                        XCTAssertEqual(sequence.status, Sequence.Status.Cancelled)
+                    }
+                
+                //===
                 
                 for i in 0...10000
                 {
@@ -223,24 +244,15 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
+                XCTAssertEqual(sequence.status, Sequence.Status.Cancelled)
+                
+                //===
+                
                 return res1
             }
-            .finally { (previousResult) in
+            .finally { (sequence, lastResult) in
                 
-                XCTAssertTrue(task1Completed)
-                XCTAssertFalse(completionExecuted)
-                XCTAssertNotNil(previousResult)
-                XCTAssertTrue(previousResult is String)
-                XCTAssertEqual((previousResult as! String), res1)
-                XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
-                
-                //===
-                
-                completionExecuted = true
-                
-                //===
-                
-                XCTAssertFalse(completionExecuted, "This blok should not be called ever.")
+                XCTAssert(false, "This blok should NOT be called ever.")
             }
         
         //===
@@ -249,29 +261,82 @@ class MKHSequenceTests: XCTestCase
         
         XCTAssertFalse(task1Started)
         XCTAssertFalse(task1Completed)
-        XCTAssertFalse(completionExecuted)
+    }
+    
+    func testCaseWithErrorAndRepeat()
+    {
+        let expectation =
+            expectationWithDescription("CaseWithErrorAndRepeat Sequence")
         
         //===
         
-        NSOperationQueue.mainQueue()
-            .addOperationWithBlock {
+        let res1 = "CaseWithErrorAndRepeat - 1st result"
+        let errCode = 1231481 // just random number
+        
+        var failureReported = false
+        var shouldReportFailure = true
+        
+        //===
+        
+        Sequence()
+            .add { (sequence, previousResult) -> Any? in
                 
-                // lets dispatch this call on the same (main) queue,
-                // but after this whole method to be completed,
-                // to give the sequence some time to start execution
-                
-                seq.cancel()
+                for i in 0...1000
+                {
+                    print("SimpleCase task 1, step \(i)")
+                }
                 
                 //===
                 
-                // we won't be doing assumptions on whaterver
-                // 'task1Completed' has been reached by execution flow or not
-                // at this moment, it will be reached anyway if the 1st task
-                // in the sequence will be started (as 'cancel' does not
-                // stop tasks that are being executed at the moment
+                if shouldReportFailure
+                {
+                    return
+                        NSError(domain: "MKHSmapleError",
+                            code: errCode,
+                            userInfo:
+                            ["reason": "Just for test",
+                             "origin": "CaseWithErrorAndRepeat, task 1"])
+                }
+                else
+                {
+                    return res1
+                }
+            }
+            .onFailure({ (sequence, error) -> Void in
                 
-                XCTAssertTrue(task1Started)
-                XCTAssertFalse(completionExecuted)
-        }
+                XCTAssertFalse(failureReported)
+                
+                //===
+                
+                failureReported = true
+                shouldReportFailure = false
+                
+                //===
+                
+                // re-try after 1.5 seconds
+                
+                sequence.executeAgain(after: 1.5)
+            })
+            .finally { (sequence, lastResult) in
+                
+                XCTAssertTrue(failureReported)
+                XCTAssertNotNil(lastResult)
+                XCTAssertTrue(lastResult is String)
+                XCTAssertEqual((lastResult as! String), res1)
+                
+                //===
+                
+                print("CaseWithErrorAndRepeat - DONE")
+                
+                //===
+                
+                // this error block has been executed as expected
+                
+                expectation.fulfill()
+            }
+        
+        //===
+        
+        waitForExpectationsWithTimeout(5.0, handler: nil)
     }
 }

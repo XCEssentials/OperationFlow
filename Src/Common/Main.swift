@@ -39,13 +39,13 @@ class Sequence
     // MARK: Nested types and aliases
     
     public
-    typealias Task = (previousResult: Any?) -> Any?
+    typealias Task = (sequence: Sequence, previousResult: Any?) -> Any?
     
     public
-    typealias CompletionHandler = (previousResult: Any?) -> Void
+    typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
     
     public
-    typealias FailureHandler = (error: NSError) -> Void
+    typealias FailureHandler = (sequence: Sequence, error: NSError) -> Void
     
     // MARK: Properties - Public
     
@@ -109,7 +109,7 @@ class Sequence
             targetQueue
                 .addOperationWithBlock({ () -> Void in
                     
-                    let result = task(previousResult: previousResult)
+                    let result = task(sequence: self, previousResult: previousResult)
                     
                     //===
                     
@@ -152,7 +152,7 @@ class Sequence
         
         if let failureHandler = self.onFailure
         {
-            failureHandler(error: error);
+            failureHandler(sequence: self, error: error);
         }
     }
     
@@ -176,7 +176,7 @@ class Sequence
         if
             let completionHandler = self.onComplete
         {
-            completionHandler(previousResult: lastResult);
+            completionHandler(sequence: self, lastResult: lastResult);
         }
     }
     
@@ -312,6 +312,23 @@ class Sequence
         if reset()
         {
             start()
+        }
+    }
+    
+    public
+    func executeAgain(after interval: NSTimeInterval)
+    {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
+        let delay = dispatch_time(
+            DISPATCH_TIME_NOW,
+            Int64(interval * Double(NSEC_PER_SEC)))
+        
+        dispatch_after(delay, dispatch_get_main_queue()) { 
+            
+            self.executeAgain()
         }
     }
 }
