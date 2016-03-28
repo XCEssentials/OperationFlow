@@ -7,16 +7,12 @@
 //
 
 import XCTest
-@testable import MKHSequence
+
+@testable
+import MKHSequence
 
 class MKHSequenceTests: XCTestCase
 {
-    // MARK: Properties - Static
-    
-    var queue = NSOperationQueue()
-    
-    // MARK: Tests
-    
     func testSimpleCase()
     {
         // how we test async calls: http://stackoverflow.com/a/24705283
@@ -27,11 +23,7 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        MKHSequence.setDefaultTargetQueue(queue)
-        
-        //===
-        
-        let seq = MKHSequence()
+        let seq = Sequence()
         
         seq.add { (previousResult) -> Any? in
             
@@ -84,11 +76,7 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        MKHSequence.setDefaultTargetQueue(queue)
-        
-        //===
-        
-        MKHSequence()
+        Sequence()
             .add { (previousResult) -> Any? in
                 
                 // previousResult is nil
@@ -142,10 +130,6 @@ class MKHSequenceTests: XCTestCase
     func testCaseWithCancel()
     {
         let expectation = self.expectationWithDescription("CaseWithCancel Sequence")
-        
-        //===
-        
-        MKHSequence.setDefaultTargetQueue(queue)
         
         //===
         

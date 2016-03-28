@@ -10,39 +10,45 @@ import UIKit
 
 //===
 
-public class MKHSequence
+public
+class Sequence
 {
     // MARK: Nested types and aliases
     
-    public typealias Task = (previousResult: Any?) -> Any?
-    public typealias CompletionHandler = (previousResult: Any?) -> Void
-    public typealias FailureHandler = (error: NSError?) -> Void
+    public
+    typealias Task = (previousResult: Any?) -> Any?
     
-    // MARK: Properties - Private - Static
+    public
+    typealias CompletionHandler = (previousResult: Any?) -> Void
     
-    private static var __defaultTargetQueue: NSOperationQueue?
+    public
+    typealias FailureHandler = (error: NSError?) -> Void
     
     // MARK: Properties - Private
     
-    private var name: String?
+    private
+    var name: String?
     
-    private var tasks: [Task] = []
+    private
+    var tasks: [Task] = []
     
-    private var onComplete: CompletionHandler?
-    private var onFailure: FailureHandler?
+    private
+    var onComplete: CompletionHandler?
     
-    private var isCancelled = false
+    private
+    var onFailure: FailureHandler?
+    
+    private
+    var isCancelled = false
     
     // MARK: Properties - Public
     
-    public var targetQueue: NSOperationQueue?
+    public
+    static
+    var defaultTargetQueue = NSOperationQueue()
     
-    // MARK: Methods - Class level
-    
-    class func setDefaultTargetQueue(queue: NSOperationQueue?)
-    {
-        __defaultTargetQueue = queue
-    }
+    public
+    var targetQueue: NSOperationQueue!
     
     // MARK: Init
     
@@ -52,7 +58,7 @@ public class MKHSequence
         
         //===
         
-        targetQueue = MKHSequence.__defaultTargetQueue
+        targetQueue = Sequence.defaultTargetQueue
     }
     
     // MARK: Methods - Private
