@@ -52,13 +52,16 @@ class Sequence
     typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
     
     public
-    typealias FailureHandler = (sequence: Sequence, error: ErrorType) -> Void
+    typealias FailureHandler = (sequence: Sequence, error: ErrorType) -> Bool // should passToDefault?
+    
+    public
+    typealias FailureHandlerDefault = (sequence: Sequence, error: ErrorType) -> Void
     
     // MARK: Properties - Public
     
     public
     static
-    var onFailureDefault: FailureHandler?
+    var onFailureDefault: FailureHandlerDefault?
     
     public
     static
@@ -156,9 +159,23 @@ class Sequence
                 
                 //===
                 
-                if let failureHandler = (self.onFailure ?? self.dynamicType.onFailureDefault)
+                var shouldPassToDefault = true
+                
+                //===
+                
+                if let failureHandler = self.onFailure
                 {
-                    failureHandler(sequence: self, error: error);
+                    shouldPassToDefault = failureHandler(sequence: self, error: error)
+                }
+                
+                //===
+                
+                if shouldPassToDefault
+                {
+                    if let failureHandler = self.dynamicType.onFailureDefault
+                    {
+                        failureHandler(sequence: self, error: error)
+                    }
                 }
             }
         }

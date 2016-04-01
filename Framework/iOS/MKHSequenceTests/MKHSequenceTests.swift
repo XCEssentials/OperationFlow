@@ -43,7 +43,7 @@ class MKHSequenceTests: XCTestCase
         
         let seq = Sequence()
         
-        seq.add { (sequence, previousResult) -> Any? in
+        seq.add { (_, previousResult) -> Any? in
             
             XCTAssertFalse(task1Completed)
             XCTAssertFalse(task2Completed)
@@ -64,7 +64,7 @@ class MKHSequenceTests: XCTestCase
             return res1
         }
         
-        seq.add { (sequence, previousResult) -> Any? in
+        seq.add { (_, previousResult) -> Any? in
             
             XCTAssertTrue(task1Completed)
             XCTAssertFalse(task2Completed)
@@ -87,7 +87,7 @@ class MKHSequenceTests: XCTestCase
             return res2
         }
         
-        seq.finally { (sequence, lastResult) -> Void in
+        seq.finally { (_, lastResult) -> Void in
             
             XCTAssertTrue(task1Completed)
             XCTAssertTrue(task2Completed)
@@ -127,7 +127,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         Sequence()
-            .add { (sequence, previousResult) -> Any? in
+            .add { (_, previousResult) -> Any? in
                 
                 XCTAssertFalse(task1Completed)
                 XCTAssertNil(previousResult)
@@ -146,7 +146,7 @@ class MKHSequenceTests: XCTestCase
                 
                 return res1
             }
-            .add { (sequence, previousResult) -> Any? in
+            .add { (_, previousResult) -> Any? in
             
                 XCTAssertTrue(task1Completed)
                 XCTAssertNotNil(previousResult)
@@ -167,7 +167,7 @@ class MKHSequenceTests: XCTestCase
                 
                 throw TestError.Two(code: errCode)
             }
-            .onFailure({ (sequence, error) -> Void in
+            .onFailure({ (_, error) -> Bool in
                 
                 XCTAssertTrue(task1Completed)
                 XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
@@ -194,6 +194,10 @@ class MKHSequenceTests: XCTestCase
                 // this error block has been executed as expected
                 
                 expectation.fulfill()
+                
+                //===
+                
+                return false // do not pass to default handler
             })
             .start()
         
@@ -260,7 +264,7 @@ class MKHSequenceTests: XCTestCase
                 
                 return res1
             }
-            .finally { (sequence, lastResult) in
+            .finally { (_, lastResult) in
                 
                 XCTAssert(false, "This blok should NOT be called ever.")
             }
@@ -289,7 +293,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         Sequence()
-            .add { (sequence, previousResult) -> Any? in
+            .add { (_, previousResult) -> Any? in
                 
                 for i in 0...1000
                 {
@@ -307,7 +311,7 @@ class MKHSequenceTests: XCTestCase
                     return res1
                 }
             }
-            .onFailure({ (sequence, error) -> Void in
+            .onFailure({ (sequence, error) -> Bool in
                 
                 XCTAssertFalse(failureReported)
                 
@@ -334,8 +338,12 @@ class MKHSequenceTests: XCTestCase
                 // re-try after 1.5 seconds
                 
                 sequence.executeAgain(after: 1.5)
+                
+                //===
+                
+                return false
             })
-            .finally { (sequence, lastResult) in
+            .finally { (_, lastResult) in
                 
                 XCTAssertTrue(failureReported)
                 XCTAssertNotNil(lastResult)
@@ -352,6 +360,62 @@ class MKHSequenceTests: XCTestCase
                 
                 expectation.fulfill()
             }
+        
+        //===
+        
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
+    
+    func testCaseWithErrorAndDefault()
+    {
+        let expectation =
+            expectationWithDescription("CaseWithErrorAndDefault Sequence")
+        
+        //===
+        
+        Sequence.onFailureDefault = { (_, error) in
+            
+            switch error
+            {
+                case TestError.One:
+                    XCTAssert(true)
+                    
+                default:
+                    XCTAssert(false, "Received wrong error type")
+            }
+            
+            //===
+            
+            expectation.fulfill()
+        }
+        
+        Sequence()
+            .add { (_, _) -> Any? in
+                
+                throw TestError.One
+            }
+            .onFailure({ (_, error) -> Bool in
+                
+                XCTAssertTrue(error is TestError)
+                
+                switch error
+                {
+                    case TestError.One:
+                        XCTAssert(true)
+                        
+                    default:
+                        XCTAssert(false, "Received wrong error type")
+                }
+                
+                //===
+                
+                print("CaseWithError - FAILURE REPORTED")
+                
+                //===
+                
+                return true // DO pass to default handler
+            })
+            .start()
         
         //===
         
