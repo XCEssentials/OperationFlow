@@ -10,6 +10,13 @@ import UIKit
 
 //===
 
+private
+func runOnMain(block: () -> Void)
+{
+    NSOperationQueue.mainQueue()
+        .addOperationWithBlock(block)
+}
+
 public
 class Sequence
 {
@@ -39,13 +46,13 @@ class Sequence
     // MARK: Nested types and aliases
     
     public
-    typealias Task = (sequence: Sequence, previousResult: Any?) -> Any?
+    typealias Task = (sequence: Sequence, previousResult: Any?) throws -> Any?
     
     public
     typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
     
     public
-    typealias FailureHandler = (sequence: Sequence, error: NSError) -> Void
+    typealias FailureHandler = (sequence: Sequence, error: ErrorType) -> Void
     
     // MARK: Properties - Public
     
@@ -113,32 +120,23 @@ class Sequence
             targetQueue
                 .addOperationWithBlock({ () -> Void in
                     
-                    let result = task(sequence: self, previousResult: previousResult)
-                    
-                    //===
-                    
-                    NSOperationQueue.mainQueue()
-                        .addOperationWithBlock({ () -> Void in
-                            
-                            if !self.isCancelled
-                            {
-                                if let error = result as? NSError
-                                {
-                                    // the task that has been just executed,
-                                    // indicated failure by returning NSError,
-                                    // lets report error and stop execution
-                                    
-                                    self.reportFailure(error)
-                                }
-                                else
-                                {
-                                    // everything seems to be good,
-                                    // lets continue execution
-                                    
-                                    self.proceed(result)
-                                }
-                            }
-                        })
+                    do
+                    {
+                        let result = try task(sequence: self, previousResult: previousResult)
+                        
+                        //===
+                        
+                        // everything seems to be good,
+                        // lets continue execution
+                        
+                        self.proceed(result)
+                    }
+                    catch let error
+                    {
+                        // the task trown an error
+                        
+                        self.reportFailure(error)
+                    }
                 })
         }
         else
@@ -148,31 +146,47 @@ class Sequence
     }
     
     private
-    func reportFailure(error: NSError)
+    func reportFailure(error: ErrorType)
     {
-        status = .Failed
-        
-        //===
-        
-        if let failureHandler = (self.onFailure ?? self.dynamicType.onFailureDefault)
-        {
-            failureHandler(sequence: self, error: error);
+        runOnMain {
+            
+            if self.status == .Processing
+            {
+                self.status = .Failed
+                
+                //===
+                
+                if let failureHandler = (self.onFailure ?? self.dynamicType.onFailureDefault)
+                {
+                    failureHandler(sequence: self, error: error);
+                }
+            }
         }
     }
     
     private
     func proceed(previousResult: Any? = nil)
     {
-        targetTaskIndex += 1
-        
-        //===
-        
-        executeNext(previousResult)
+        runOnMain { 
+            
+            if self.status == .Processing
+            {
+                self.targetTaskIndex += 1
+                
+                //===
+                
+                self.executeNext(previousResult)
+            }
+        }
     }
     
     private
     func executeCompletion(lastResult: Any? = nil)
     {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
         status = .Completed
         
         //===
@@ -187,6 +201,10 @@ class Sequence
     private
     func reset() -> Bool
     {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
         var result = false
         
         //===

@@ -11,6 +11,15 @@ import XCTest
 @testable
 import MKHSequence
 
+//===
+
+enum TestError: ErrorType
+{
+    case One, Two(code: Int)
+}
+
+//===
+
 class MKHSequenceTests: XCTestCase
 {
     func testSimpleCase()
@@ -114,7 +123,6 @@ class MKHSequenceTests: XCTestCase
         let errCode = 1231481 // just random number
         
         var task1Completed = false
-        var task2Completed = false
         
         //===
         
@@ -122,7 +130,6 @@ class MKHSequenceTests: XCTestCase
             .add { (sequence, previousResult) -> Any? in
                 
                 XCTAssertFalse(task1Completed)
-                XCTAssertFalse(task2Completed)
                 XCTAssertNil(previousResult)
                 XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
             
@@ -142,7 +149,6 @@ class MKHSequenceTests: XCTestCase
             .add { (sequence, previousResult) -> Any? in
             
                 XCTAssertTrue(task1Completed)
-                XCTAssertFalse(task2Completed)
                 XCTAssertNotNil(previousResult)
                 XCTAssertTrue(previousResult is String)
                 XCTAssertEqual((previousResult as! String), res1)
@@ -155,29 +161,33 @@ class MKHSequenceTests: XCTestCase
                     print("CaseWithError task 2, step \(i)")
                 }
                 
-                task2Completed = true
-                
                 //===
                 
                 // lets return error here
                 
-                return
-                    NSError(domain: "MKHSmapleError",
-                        code: errCode,
-                        userInfo:
-                            ["reason": "Just for test",
-                             "origin": "CaseWithError, task 2"])
+                throw TestError.Two(code: errCode)
             }
             .onFailure({ (sequence, error) -> Void in
                 
                 XCTAssertTrue(task1Completed)
-                XCTAssertTrue(task2Completed)
-                XCTAssertEqual(error.code, errCode)
                 XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
                 
                 //===
                 
-                print("CaseWithError - FAILED")
+                XCTAssertTrue(error is TestError)
+                
+                switch error
+                {
+                    case TestError.Two(let code):
+                        XCTAssertEqual(code, errCode)
+                    
+                    default:
+                        XCTAssert(false, "Received wrong error type")
+                }
+                
+                //===
+                
+                print("CaseWithError - FAILURE REPORTED")
                 
                 //===
                 
@@ -290,12 +300,7 @@ class MKHSequenceTests: XCTestCase
                 
                 if shouldReportFailure
                 {
-                    return
-                        NSError(domain: "MKHSmapleError",
-                            code: errCode,
-                            userInfo:
-                            ["reason": "Just for test",
-                             "origin": "CaseWithErrorAndRepeat, task 1"])
+                    throw TestError.Two(code: errCode)
                 }
                 else
                 {
@@ -305,6 +310,19 @@ class MKHSequenceTests: XCTestCase
             .onFailure({ (sequence, error) -> Void in
                 
                 XCTAssertFalse(failureReported)
+                
+                //===
+                
+                XCTAssertTrue(error is TestError)
+                
+                switch error
+                {
+                    case TestError.Two(let code):
+                        XCTAssertEqual(code, errCode)
+                        
+                    default:
+                        XCTAssert(false, "Received wrong error type")
+                }
                 
                 //===
                 
