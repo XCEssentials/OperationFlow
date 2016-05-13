@@ -52,7 +52,7 @@ class Sequence
     typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
     
     public
-    typealias FailureHandler = (sequence: Sequence, error: ErrorType) -> Bool // should passToDefault?
+    typealias FailureHandler = (sequence: Sequence, error: ErrorType, inout passToDefault: Bool) -> Void
     
     public
     typealias FailureHandlerDefault = (sequence: Sequence, error: ErrorType) -> Void
@@ -165,7 +165,7 @@ class Sequence
                 
                 if let failureHandler = self.onFailure
                 {
-                    shouldPassToDefault = failureHandler(sequence: self, error: error)
+                    failureHandler(sequence: self, error: error, passToDefault: &shouldPassToDefault)
                 }
                 
                 //===

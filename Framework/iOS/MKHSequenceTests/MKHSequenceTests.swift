@@ -167,7 +167,7 @@ class MKHSequenceTests: XCTestCase
                 
                 throw TestError.Two(code: errCode)
             }
-            .onFailure({ (_, error) -> Bool in
+            .onFailure({ (_, error, passToDefault) -> Void in
                 
                 XCTAssertTrue(task1Completed)
                 XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
@@ -197,7 +197,7 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
-                return false // do not pass to default handler
+                passToDefault = false // do not pass to default handler
             })
             .start()
         
@@ -311,7 +311,7 @@ class MKHSequenceTests: XCTestCase
                     return res1
                 }
             }
-            .onFailure({ (sequence, error) -> Bool in
+            .onFailure({ (sequence, error, passToDefault) -> Void in
                 
                 XCTAssertFalse(failureReported)
                 
@@ -341,7 +341,7 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
-                return false
+                passToDefault = false
             })
             .finally { (_, lastResult) in
                 
@@ -394,7 +394,7 @@ class MKHSequenceTests: XCTestCase
                 
                 throw TestError.One
             }
-            .onFailure({ (_, error) -> Bool in
+            .onFailure({ (_, error, _) -> Void in
                 
                 XCTAssertTrue(error is TestError)
                 
@@ -413,7 +413,7 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
-                return true // DO pass to default handler
+                // keep "passToDefault" equal to "true" as by default
             })
             .start()
         
