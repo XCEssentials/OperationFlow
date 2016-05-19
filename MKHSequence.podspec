@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                      = "MKHSequence"
-  s.version                   = "2.4.1"
+  s.version                   = "2.4.2"
   s.summary                   = "Lightweight tasks collection controller"
   s.homepage                  = "https://github.com/maximkhatskevich/#{s.name}"
 
