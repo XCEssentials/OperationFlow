@@ -421,4 +421,89 @@ class MKHSequenceTests: XCTestCase
         
         waitForExpectationsWithTimeout(5.0, handler: nil)
     }
+    
+    func testCaseWithBegin()
+    {
+        let expectation =
+            expectationWithDescription("CaseWithBegin Sequence")
+        
+        //===
+        
+        let res0 = "CaseWithBegin - input"
+        
+        //===
+        
+        let seq = Sequence()
+        
+        seq.beginWith { () -> Any? in
+            
+            return res0
+        }
+        
+        seq.add { (_, previousResult) -> Any? in
+            
+            XCTAssertEqual(res0, previousResult as? String)
+            
+            //===
+            
+            for i in 0...1000
+            {
+                print("CaseWithBegin task 1, step \(i)")
+            }
+            
+            //===
+            
+            return nil
+        }
+        
+        seq.finally { (_, _) -> Void in
+            
+            expectation.fulfill()
+        }
+        
+        //===
+        
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
+    
+    func testCaseWithBegin2()
+    {
+        let expectation =
+            expectationWithDescription("CaseWithBegin2 Sequence")
+        
+        //===
+        
+        let res0 = "CaseWithBegin2 - input"
+        
+        //===
+        
+        let seq = Sequence()
+        
+        seq.beginWith(res0)
+        
+        seq.add { (_, previousResult) -> Any? in
+            
+            XCTAssertEqual(res0, previousResult as? String)
+            
+            //===
+            
+            for i in 0...1000
+            {
+                print("CaseWithBegin2 task 1, step \(i)")
+            }
+            
+            //===
+            
+            return nil
+        }
+        
+        seq.finally { (_, _) -> Void in
+            
+            expectation.fulfill()
+        }
+        
+        //===
+        
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
 }

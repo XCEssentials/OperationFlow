@@ -26,6 +26,9 @@ class Sequence
     var name: String?
     
     private
+    var inputData: Any? = nil
+    
+    private
     var tasks: [Task] = []
     
     private
@@ -44,6 +47,9 @@ class Sequence
     var targetTaskIndex = 0
     
     // MARK: Nested types and aliases
+    
+    public
+    typealias PreparationBlock = () -> Any?
     
     public
     typealias Task = (sequence: Sequence, previousResult: Any?) throws -> Any?
@@ -249,6 +255,26 @@ class Sequence
     // MARK: Methods - Public
     
     public
+    func beginWith(preparation: PreparationBlock) -> Self
+    {
+        self.inputData = preparation()
+        
+        //===
+        
+        return self
+    }
+    
+    public
+    func beginWith(input: Any) -> Self
+    {
+        self.inputData = input
+        
+        //===
+        
+        return self
+    }
+    
+    public
     func add(task: Task) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -316,7 +342,7 @@ class Sequence
             
             //===
             
-            executeNext()
+            executeNext(self.inputData)
         }
         
         //===
