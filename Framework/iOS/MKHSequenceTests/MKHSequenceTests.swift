@@ -167,7 +167,7 @@ class MKHSequenceTests: XCTestCase
                 
                 throw TestError.Two(code: errCode)
             }
-            .onFailure({ (_, error, passToDefault) -> Void in
+            .onFailure({ (_, error) -> Void in
                 
                 XCTAssertTrue(task1Completed)
                 XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
@@ -194,10 +194,6 @@ class MKHSequenceTests: XCTestCase
                 // this error block has been executed as expected
                 
                 expectation.fulfill()
-                
-                //===
-                
-                passToDefault = false // do not pass to default handler
             })
             .start()
         
@@ -311,7 +307,7 @@ class MKHSequenceTests: XCTestCase
                     return res1
                 }
             }
-            .onFailure({ (sequence, error, passToDefault) -> Void in
+            .onFailure({ (sequence, error) -> Void in
                 
                 XCTAssertFalse(failureReported)
                 
@@ -338,10 +334,6 @@ class MKHSequenceTests: XCTestCase
                 // re-try after 1.5 seconds
                 
                 sequence.executeAgain(after: 1.5)
-                
-                //===
-                
-                passToDefault = false
             })
             .finally { (_, lastResult) in
                 
@@ -373,28 +365,12 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        Sequence.onFailureDefault = { (_, error) in
-            
-            switch error
-            {
-                case TestError.One:
-                    XCTAssert(true)
-                    
-                default:
-                    XCTAssert(false, "Received wrong error type")
-            }
-            
-            //===
-            
-            expectation.fulfill()
-        }
-        
         Sequence()
             .add { (_, _) -> Any? in
                 
                 throw TestError.One
             }
-            .onFailure({ (_, error, _) -> Void in
+            .onFailure({ (_, error) -> Void in
                 
                 XCTAssertTrue(error is TestError)
                 
@@ -413,7 +389,7 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
-                // keep "passToDefault" equal to "true" as by default
+                expectation.fulfill()
             })
             .start()
         

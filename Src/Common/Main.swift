@@ -18,6 +18,7 @@ func runOnMain(block: () -> Void)
 }
 
 public
+final
 class Sequence
 {
     // MARK: Properties - Private
@@ -58,16 +59,9 @@ class Sequence
     typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
     
     public
-    typealias FailureHandler = (sequence: Sequence, error: ErrorType, inout passToDefault: Bool) -> Void
-    
-    public
-    typealias FailureHandlerDefault = (sequence: Sequence, error: ErrorType) -> Void
+    typealias FailureHandler = (sequence: Sequence, error: ErrorType) -> Void
     
     // MARK: Properties - Public
-    
-    public
-    static
-    var onFailureDefault: FailureHandlerDefault?
     
     public
     static
@@ -93,13 +87,10 @@ class Sequence
     // MARK: Init
     
     public
-    init(name: String? = nil)
+    init(targetQueue: NSOperationQueue = Sequence.defaultTargetQueue, name: String? = nil)
     {
         self.name = name
-        
-        //===
-        
-        targetQueue = Sequence.defaultTargetQueue
+        self.targetQueue = targetQueue
     }
     
     // MARK: Methods - Private
@@ -165,23 +156,9 @@ class Sequence
                 
                 //===
                 
-                var shouldPassToDefault = true
-                
-                //===
-                
                 if let failureHandler = self.onFailure
                 {
-                    failureHandler(sequence: self, error: error, passToDefault: &shouldPassToDefault)
-                }
-                
-                //===
-                
-                if shouldPassToDefault
-                {
-                    if let failureHandler = self.dynamicType.onFailureDefault
-                    {
-                        failureHandler(sequence: self, error: error)
-                    }
+                    failureHandler(sequence: self, error: error)
                 }
             }
         }
@@ -289,6 +266,16 @@ class Sequence
         //===
         
         return self
+    }
+    
+    public
+    func then(task: Task) -> Self
+    {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
+        return add(task)
     }
     
     public
