@@ -87,7 +87,7 @@ class Sequence
     // MARK: Init
     
     public
-    init(targetQueue: NSOperationQueue = Sequence.defaultTargetQueue, name: String? = nil)
+    init(name: String? = nil, targetQueue: NSOperationQueue = Sequence.defaultTargetQueue)
     {
         self.name = name
         self.targetQueue = targetQueue
