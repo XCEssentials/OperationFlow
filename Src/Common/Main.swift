@@ -81,6 +81,9 @@ class Sequence
     public private(set)
     var status: Status = .Pending
     
+    public private(set)
+    var failedAttempts: UInt = 0
+    
     // MARK: Init
     
     public
@@ -150,6 +153,10 @@ class Sequence
             if self.status == .Processing
             {
                 self.status = .Failed
+                
+                //===
+                
+                self.failedAttempts += 1
                 
                 //===
                 
