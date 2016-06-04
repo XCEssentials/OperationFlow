@@ -24,9 +24,6 @@ class Sequence
     // MARK: Properties - Private
     
     private
-    var name: String?
-    
-    private
     var inputData: Any? = nil
     
     private
@@ -59,6 +56,9 @@ class Sequence
     typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
     
     // MARK: Properties - Public
+    
+    public private(set)
+    var name: String?
     
     public
     static
