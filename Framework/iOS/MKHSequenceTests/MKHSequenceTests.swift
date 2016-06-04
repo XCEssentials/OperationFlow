@@ -43,7 +43,7 @@ class MKHSequenceTests: XCTestCase
         
         let seq = Sequence()
         
-        seq.add { (_, previousResult) -> Any? in
+        seq.add { (_, previousResult: Any?) -> Any? in
             
             XCTAssertFalse(task1Completed)
             XCTAssertFalse(task2Completed)
@@ -64,13 +64,12 @@ class MKHSequenceTests: XCTestCase
             return res1
         }
         
-        seq.add { (_, previousResult) -> Any? in
+        seq.add { (_, previousResult: String?) -> Any? in
             
             XCTAssertTrue(task1Completed)
             XCTAssertFalse(task2Completed)
             XCTAssertNotNil(previousResult)
-            XCTAssertTrue(previousResult is String)
-            XCTAssertEqual((previousResult as! String), res1)
+            XCTAssertEqual(previousResult, res1)
             XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
             
             //===
@@ -87,13 +86,12 @@ class MKHSequenceTests: XCTestCase
             return res2
         }
         
-        seq.finally { (_, lastResult) -> Void in
+        seq.finally { (_, lastResult: String?) in
             
             XCTAssertTrue(task1Completed)
             XCTAssertTrue(task2Completed)
             XCTAssertNotNil(lastResult)
-            XCTAssertTrue(lastResult is String)
-            XCTAssertEqual((lastResult as! String), res2)
+            XCTAssertEqual(lastResult, res2)
             XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
             
             //===
@@ -127,7 +125,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         Sequence()
-            .add { (_, previousResult) -> Any? in
+            .add { (_, previousResult: Any?) -> Any? in
                 
                 XCTAssertFalse(task1Completed)
                 XCTAssertNil(previousResult)
@@ -146,12 +144,11 @@ class MKHSequenceTests: XCTestCase
                 
                 return res1
             }
-            .add { (_, previousResult) -> Any? in
+            .add { (_, previousResult: String?) -> Any? in
             
                 XCTAssertTrue(task1Completed)
                 XCTAssertNotNil(previousResult)
-                XCTAssertTrue(previousResult is String)
-                XCTAssertEqual((previousResult as! String), res1)
+                XCTAssertEqual(previousResult, res1)
                 XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
                 
                 //===
@@ -212,7 +209,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         Sequence()
-            .add { (sequence, previousResult) -> Any? in
+            .add { (sequence, previousResult: Any?) -> Any? in
                 
                 XCTAssertFalse(task1Started)
                 XCTAssertFalse(task1Completed)
@@ -260,7 +257,7 @@ class MKHSequenceTests: XCTestCase
                 
                 return res1
             }
-            .finally { (_, lastResult) in
+            .finally { (_, lastResult: Any?) in
                 
                 XCTAssert(false, "This blok should NOT be called ever.")
             }
@@ -289,7 +286,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         Sequence()
-            .add { (_, previousResult) -> Any? in
+            .add { (_, previousResult: Any?) -> Any? in
                 
                 for i in 0...1000
                 {
@@ -335,7 +332,7 @@ class MKHSequenceTests: XCTestCase
                 
                 sequence.executeAgain(after: 1.5)
             })
-            .finally { (_, lastResult) in
+            .finally { (_, lastResult: Any?) in
                 
                 XCTAssertTrue(failureReported)
                 XCTAssertNotNil(lastResult)
@@ -366,7 +363,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         Sequence()
-            .add { (_, _) -> Any? in
+            .add { (_, previousResult: Any?) -> Any? in
                 
                 throw TestError.One
             }
@@ -416,9 +413,9 @@ class MKHSequenceTests: XCTestCase
             return res0
         }
         
-        seq.add { (_, previousResult) -> Any? in
+        seq.add { (_, previousResult: String?) -> Any? in
             
-            XCTAssertEqual(res0, previousResult as? String)
+            XCTAssertEqual(res0, previousResult)
             
             //===
             
@@ -432,7 +429,7 @@ class MKHSequenceTests: XCTestCase
             return nil
         }
         
-        seq.finally { (_, _) -> Void in
+        seq.finally { (_, previousResult: Any?) in
             
             expectation.fulfill()
         }
@@ -455,11 +452,11 @@ class MKHSequenceTests: XCTestCase
         
         let seq = Sequence()
         
-        seq.beginWith(res0)
+        seq.input(res0)
         
-        seq.add { (_, previousResult) -> Any? in
+        seq.add { (_, previousResult: String?) -> Any? in
             
-            XCTAssertEqual(res0, previousResult as? String)
+            XCTAssertEqual(res0, previousResult)
             
             //===
             
@@ -473,7 +470,7 @@ class MKHSequenceTests: XCTestCase
             return nil
         }
         
-        seq.finally { (_, _) -> Void in
+        seq.finally { (_, previousResult: Any?) in
             
             expectation.fulfill()
         }

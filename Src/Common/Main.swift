@@ -50,16 +50,13 @@ class Sequence
     // MARK: Nested types and aliases
     
     public
-    typealias PreparationBlock = () -> Any?
-    
-    public
     typealias Task = (sequence: Sequence, previousResult: Any?) throws -> Any?
     
     public
-    typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
+    typealias FailureHandler = (sequence: Sequence, error: ErrorType) -> Void
     
     public
-    typealias FailureHandler = (sequence: Sequence, error: ErrorType) -> Void
+    typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
     
     // MARK: Properties - Public
     
@@ -232,35 +229,11 @@ class Sequence
     // MARK: Methods - Public
     
     public
-    func beginWith(preparation: PreparationBlock) -> Self
+    func input(data: Any) -> Self
     {
-        self.inputData = preparation()
-        
-        //===
-        
-        return self
-    }
-    
-    public
-    func beginWith(input: Any) -> Self
-    {
-        self.inputData = input
-        
-        //===
-        
-        return self
-    }
-    
-    public
-    func add(task: Task) -> Self
-    {
-        // NOTE: this mehtod is supposed to be called on main queue
-        
-        //===
-        
         if status == .Pending
         {
-            tasks.append(task)
+            self.inputData = data
         }
         
         //===
@@ -269,7 +242,51 @@ class Sequence
     }
     
     public
-    func then(task: Task) -> Self
+    func beginWith<InputDataType>(preparation: () -> InputDataType?) -> Self
+    {
+        if status == .Pending
+        {
+            self.inputData = preparation()
+        }
+        
+        //===
+        
+        return self
+    }
+    
+    public
+    func add<PreviousResultType: Any, ResultType: Any>(
+        customTask: (sequence: Sequence, previousResult: PreviousResultType?) throws -> ResultType?
+        ) -> Self
+    {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
+        if status == .Pending
+        {
+            let genericTask: Task = { (sequence, previousResult) throws -> Any? in
+                
+                return
+                    try customTask(
+                        sequence: sequence,
+                        previousResult: previousResult as? PreviousResultType)
+            }
+            
+            //===
+            
+            tasks.append(genericTask)
+        }
+        
+        //===
+        
+        return self
+    }
+    
+    public
+    func then<PreviousResultType, ResultType>(
+        task: (sequence: Sequence, previousResult: PreviousResultType?) throws -> ResultType?
+        ) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
@@ -296,7 +313,9 @@ class Sequence
     }
     
     public
-    func finally(completionHandler: CompletionHandler) -> Self
+    func finally<LastResultType: Any>(
+        completion: (sequence: Sequence, lastResult: LastResultType?) -> Void
+        ) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
@@ -304,7 +323,14 @@ class Sequence
         
         if status == .Pending
         {
-            onComplete = completionHandler
+            let genericCompletion: CompletionHandler = { sequence, lastResult in
+                
+                return completion(sequence: sequence, lastResult: lastResult as? LastResultType)
+            }
+            
+            //===
+            
+            onComplete = genericCompletion
             
             //===
             
