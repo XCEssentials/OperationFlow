@@ -237,6 +237,7 @@ extension Sequence
 public
 extension Sequence
 {
+    @discardableResult
     func input(_ data: Any) -> Self
     {
         if status == .pending
@@ -249,6 +250,7 @@ extension Sequence
         return self
     }
     
+    @discardableResult
     func beginWith<InputDataType>(_ preparation: () -> InputDataType?) -> Self
     {
         if status == .pending
@@ -302,6 +304,7 @@ extension Sequence
         return add(task)
     }
     
+    @discardableResult
     func onFailure(_ failureHandler: FailureHandler) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4BB20F78DE9EE1584DD28FBA"
+               BlueprintIdentifier = "1467B86E4D5E7264BFD32463"
                BuildableName = "MKHSequence.framework"
                BlueprintName = "MKHSequence"
                ReferencedContainer = "container:MKHSequence.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "52D01C2FFC5EA33B813B1186"
+               BlueprintIdentifier = "9A2BB0ECCAEDBF3286A00269"
                BuildableName = "MKHSequenceTst.xctest"
                BlueprintName = "MKHSequenceTst"
                ReferencedContainer = "container:MKHSequence.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4BB20F78DE9EE1584DD28FBA"
+            BlueprintIdentifier = "1467B86E4D5E7264BFD32463"
             BuildableName = "MKHSequence.framework"
             BlueprintName = "MKHSequence"
             ReferencedContainer = "container:MKHSequence.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4BB20F78DE9EE1584DD28FBA"
+            BlueprintIdentifier = "1467B86E4D5E7264BFD32463"
             BuildableName = "MKHSequence.framework"
             BlueprintName = "MKHSequence"
             ReferencedContainer = "container:MKHSequence.xcodeproj">
@@ -82,7 +82,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4BB20F78DE9EE1584DD28FBA"
+            BlueprintIdentifier = "1467B86E4D5E7264BFD32463"
             BuildableName = "MKHSequence.framework"
             BlueprintName = "MKHSequence"
             ReferencedContainer = "container:MKHSequence.xcodeproj">
