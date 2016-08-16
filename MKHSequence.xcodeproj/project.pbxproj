@@ -10,7 +10,7 @@
 		1577CE06BE5EEFADB85F5D85 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16B458916BB6413DE18C3FCF /* UIKit.framework */; };
 		1A5858FA923080AE99C9EC10 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16B458916BB6413DE18C3FCF /* UIKit.framework */; };
 		224A570986AC39C874BDB333 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA988C9BFBC6D52F71BA8B82 /* Foundation.framework */; };
-		79678479DF1DDB13E64F0693 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA8D68CE1EA46BAC0EF9B29 /* Main.swift */; };
+		79678479DF1DDB13E64F0693 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA8D68CE1EA46BAC0EF9B29 /* Sequence.swift */; };
 		C5638EE701F8F456E0F31FE2 /* MKHSequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEC8AE5372940B433B56CB7 /* MKHSequenceTests.swift */; };
 		E6E38CF3D1C598756E80D901 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA988C9BFBC6D52F71BA8B82 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -22,7 +22,7 @@
 		9F4E1B9D71CCF3E0D25B8257 /* MKHSequence. */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MKHSequence.; path = MKHSequence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B2CAF5D03FDFB48373B5CA /* MKHSequence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKHSequence.h; sourceTree = "<group>"; };
 		BA988C9BFBC6D52F71BA8B82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		DBA8D68CE1EA46BAC0EF9B29 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		DBA8D68CE1EA46BAC0EF9B29 /* Sequence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +77,7 @@
 		7EF86C87148A4F2C752669EA /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				DBA8D68CE1EA46BAC0EF9B29 /* Main.swift */,
+				DBA8D68CE1EA46BAC0EF9B29 /* Sequence.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -193,7 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79678479DF1DDB13E64F0693 /* Main.swift in Sources */,
+				79678479DF1DDB13E64F0693 /* Sequence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

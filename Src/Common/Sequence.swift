@@ -1,5 +1,5 @@
 //
-//  Main.swift
+//  Sequence.swift
 //  MKHSequence
 //
 //  Created by Maxim Khatskevich on 11/26/15.
@@ -13,7 +13,8 @@ import UIKit
 private
 func runOnMain(block: () -> Void)
 {
-    NSOperationQueue.mainQueue()
+    NSOperationQueue
+        .mainQueue()
         .addOperationWithBlock(block)
 }
 
@@ -92,16 +93,18 @@ class Sequence
         self.name = name
         self.targetQueue = targetQueue
     }
-    
-    // MARK: Methods - Private
-    
-    private
+}
+
+// MARK: Methods - Private
+
+private
+extension Sequence
+{
     func shouldProceed() -> Bool
     {
         return (targetTaskIndex < self.tasks.count)
     }
     
-    private
     func executeNext(previousResult: Any? = nil)
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -145,7 +148,6 @@ class Sequence
         }
     }
     
-    private
     func reportFailure(error: ErrorType)
     {
         runOnMain {
@@ -168,7 +170,6 @@ class Sequence
         }
     }
     
-    private
     func proceed(previousResult: Any? = nil)
     {
         runOnMain { 
@@ -184,7 +185,6 @@ class Sequence
         }
     }
     
-    private
     func executeCompletion(lastResult: Any? = nil)
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -202,7 +202,6 @@ class Sequence
         }
     }
     
-    private
     func reset() -> Bool
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -232,10 +231,13 @@ class Sequence
         
         return result
     }
-    
-    // MARK: Methods - Public
-    
-    public
+}
+
+// MARK: Methods - Public
+
+public
+extension Sequence
+{
     func input(data: Any) -> Self
     {
         if status == .Pending
@@ -248,7 +250,6 @@ class Sequence
         return self
     }
     
-    public
     func beginWith<InputDataType>(preparation: () -> InputDataType?) -> Self
     {
         if status == .Pending
@@ -261,8 +262,7 @@ class Sequence
         return self
     }
     
-    public
-    func add<PreviousResultType: Any, ResultType: Any>(
+    func add<PreviousResultType, ResultType>(
         customTask: (sequence: Sequence, previousResult: PreviousResultType?) throws -> ResultType?
         ) -> Self
     {
@@ -290,7 +290,6 @@ class Sequence
         return self
     }
     
-    public
     func then<PreviousResultType, ResultType>(
         task: (sequence: Sequence, previousResult: PreviousResultType?) throws -> ResultType?
         ) -> Self
@@ -302,7 +301,6 @@ class Sequence
         return add(task)
     }
     
-    public
     func onFailure(failureHandler: FailureHandler) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -319,7 +317,6 @@ class Sequence
         return self
     }
     
-    public
     func finally<LastResultType: Any>(
         completion: (sequence: Sequence, lastResult: LastResultType?) -> Void
         ) -> Self
@@ -349,7 +346,6 @@ class Sequence
         return self
     }
     
-    public
     func start() -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -370,7 +366,6 @@ class Sequence
         return self
     }
     
-    public
     func cancel()
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -387,7 +382,6 @@ class Sequence
         }
     }
     
-    public
     func executeAgain() // (after: NSTimeInterval = 0)
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -400,7 +394,6 @@ class Sequence
         }
     }
     
-    public
     func executeAgain(after interval: NSTimeInterval)
     {
         // NOTE: this mehtod is supposed to be called on main queue
