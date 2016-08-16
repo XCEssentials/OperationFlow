@@ -32,11 +32,18 @@ project.all_configurations.each do |configuration|
 
     configuration.settings["CURRENT_PROJECT_VERSION"] = "1" # just default non-empty value
 
+    #=== Xcode 8:
+
+    configuration.settings["CLANG_WARN_INFINITE_RECURSION"] = "YES"
+    configuration.settings["CLANG_WARN_SUSPICIOUS_MOVE"] = "YES"
+    configuration.settings["ENABLE_STRICT_OBJC_MSGSEND"] = "YES"
+
     #===
 
     if configuration.name == "Release"
 
         configuration.settings["DEBUG_INFORMATION_FORMAT"] = "dwarf-with-dsym"
+        configuration.settings["SWIFT_OPTIMIZATION_LEVEL"] = "-Owholemodule" # Xcode 8
 
     end
 
