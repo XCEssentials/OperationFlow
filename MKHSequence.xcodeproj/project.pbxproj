@@ -19,7 +19,7 @@
 		04314A783B61FCB43286701A /* MKHSequenceTst.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MKHSequenceTst.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FEC8AE5372940B433B56CB7 /* MKHSequenceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MKHSequenceTests.swift; sourceTree = "<group>"; };
 		16B458916BB6413DE18C3FCF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		9F4E1B9D71CCF3E0D25B8257 /* MKHSequence. */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MKHSequence.; path = MKHSequence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F4E1B9D71CCF3E0D25B8257 /* MKHSequence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MKHSequence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B2CAF5D03FDFB48373B5CA /* MKHSequence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKHSequence.h; sourceTree = "<group>"; };
 		BA988C9BFBC6D52F71BA8B82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		DBA8D68CE1EA46BAC0EF9B29 /* Sequence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				04314A783B61FCB43286701A /* MKHSequenceTst.xctest */,
-				9F4E1B9D71CCF3E0D25B8257 /* MKHSequence. */,
+				9F4E1B9D71CCF3E0D25B8257 /* MKHSequence.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,7 +132,7 @@
 			);
 			name = MKHSequence;
 			productName = MKHSequence;
-			productReference = 9F4E1B9D71CCF3E0D25B8257 /* MKHSequence. */;
+			productReference = 9F4E1B9D71CCF3E0D25B8257 /* MKHSequence.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		52D01C2FFC5EA33B813B1186 /* MKHSequenceTst */ = {
@@ -161,6 +161,14 @@
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Maxim Khatskevich";
+				TargetAttributes = {
+					4BB20F78DE9EE1584DD28FBA = {
+						LastSwiftMigration = 0800;
+					};
+					52D01C2FFC5EA33B813B1186 = {
+						LastSwiftMigration = 0800;
+					};
+				};
 			};
 			buildConfigurationList = 4B042458CF20756ED4563DF2 /* Build configuration list for PBXProject "MKHSequence" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -221,6 +229,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -281,6 +290,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -297,6 +307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = khatskevich.maxim.MKHSequenceTst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -322,6 +333,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

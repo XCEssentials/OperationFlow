@@ -3,6 +3,7 @@
 
 testSuffix = "Tst"
 iOSdeploymentTarget = 8.4
+currentSwiftVersion = 3.0
 
 #===
 
@@ -67,6 +68,8 @@ target do |target|
         # relies on proper/valid "PROVISIONING_PROFILE" value:
         configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = nil
 
+        configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
+
     end
 
     #=== Source Files
@@ -89,6 +92,8 @@ target do |target|
             configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
 
             configuration.settings["LD_RUNPATH_SEARCH_PATHS"] = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
+
+            configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
 
         end
 

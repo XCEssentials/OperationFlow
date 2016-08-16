@@ -11,11 +11,10 @@ import UIKit
 //===
 
 private
-func runOnMain(block: () -> Void)
+func runOnMain(_ block: @escaping () -> Void)
 {
-    NSOperationQueue
-        .mainQueue()
-        .addOperationWithBlock(block)
+    OperationQueue.main
+        .addOperation(block)
 }
 
 public
@@ -24,37 +23,37 @@ class Sequence
 {
     // MARK: Properties - Private
     
-    private
+    fileprivate
     var inputData: Any? = nil
     
-    private
+    fileprivate
     var tasks: [Task] = []
     
-    private
+    fileprivate
     var onComplete: CompletionHandler?
     
-    private
+    fileprivate
     var onFailure: FailureHandler?
     
-    private
+    fileprivate
     var isCancelled: Bool // calculated helper property
     {
-        return status == .Cancelled
+        return status == .cancelled
     }
     
-    private
+    fileprivate
     var targetTaskIndex = 0
     
     // MARK: Nested types and aliases
     
     public
-    typealias Task = (sequence: Sequence, previousResult: Any?) throws -> Any?
+    typealias Task = (_: Sequence, _ previousResult: Any?) throws -> Any?
     
     public
-    typealias FailureHandler = (sequence: Sequence, error: ErrorType) -> Void
+    typealias FailureHandler = (_: Sequence, _ error: Error) -> Void
     
     public
-    typealias CompletionHandler = (sequence: Sequence, lastResult: Any?) -> Void
+    typealias CompletionHandler = (_: Sequence, _ lastResult: Any?) -> Void
     
     // MARK: Properties - Public
     
@@ -63,32 +62,32 @@ class Sequence
     
     public
     static
-    var defaultTargetQueue = NSOperationQueue()
+    var defaultTargetQueue = OperationQueue()
     
     public
-    var targetQueue: NSOperationQueue!
+    var targetQueue: OperationQueue!
     
     public
     enum Status: String
     {
         case
-            Pending,
-            Processing,
-            Failed,
-            Completed,
-            Cancelled
+            pending,
+            processing,
+            failed,
+            completed,
+            cancelled
     }
     
-    public private(set)
-    var status: Status = .Pending
+    public fileprivate(set)
+    var status: Status = .pending
     
-    public private(set)
+    public fileprivate(set)
     var failedAttempts: UInt = 0
     
     // MARK: Init
     
     public
-    init(name: String? = nil, targetQueue: NSOperationQueue = Sequence.defaultTargetQueue)
+    init(name: String? = nil, targetQueue: OperationQueue = Sequence.defaultTargetQueue)
     {
         self.name = name
         self.targetQueue = targetQueue
@@ -105,7 +104,7 @@ extension Sequence
         return (targetTaskIndex < self.tasks.count)
     }
     
-    func executeNext(previousResult: Any? = nil)
+    func executeNext(_ previousResult: Any? = nil)
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
@@ -121,11 +120,11 @@ extension Sequence
             //===
             
             targetQueue
-                .addOperationWithBlock({ () -> Void in
+                .addOperation({ () -> Void in
                     
                     do
                     {
-                        let result = try task(sequence: self, previousResult: previousResult)
+                        let result = try task(self, previousResult)
                         
                         //===
                         
@@ -148,13 +147,13 @@ extension Sequence
         }
     }
     
-    func reportFailure(error: ErrorType)
+    func reportFailure(_ error: Error)
     {
         runOnMain {
             
-            if self.status == .Processing
+            if self.status == .processing
             {
-                self.status = .Failed
+                self.status = .failed
                 
                 //===
                 
@@ -164,17 +163,17 @@ extension Sequence
                 
                 if let failureHandler = self.onFailure
                 {
-                    failureHandler(sequence: self, error: error)
+                    failureHandler(self, error)
                 }
             }
         }
     }
     
-    func proceed(previousResult: Any? = nil)
+    func proceed(_ previousResult: Any? = nil)
     {
         runOnMain { 
             
-            if self.status == .Processing
+            if self.status == .processing
             {
                 self.targetTaskIndex += 1
                 
@@ -185,20 +184,20 @@ extension Sequence
         }
     }
     
-    func executeCompletion(lastResult: Any? = nil)
+    func executeCompletion(_ finalResult: Any? = nil)
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        status = .Completed
+        status = .completed
         
         //===
         
         if
             let completionHandler = self.onComplete
         {
-            completionHandler(sequence: self, lastResult: lastResult);
+            completionHandler(self, finalResult);
         }
     }
     
@@ -214,10 +213,10 @@ extension Sequence
         
         switch status
         {
-            case .Failed, .Completed, .Cancelled:
+            case .failed, .completed, .cancelled:
                 
                 targetTaskIndex = 0
-                status = .Pending
+                status = .pending
                 
                 //===
                 
@@ -238,9 +237,9 @@ extension Sequence
 public
 extension Sequence
 {
-    func input(data: Any) -> Self
+    func input(_ data: Any) -> Self
     {
-        if status == .Pending
+        if status == .pending
         {
             self.inputData = data
         }
@@ -250,9 +249,9 @@ extension Sequence
         return self
     }
     
-    func beginWith<InputDataType>(preparation: () -> InputDataType?) -> Self
+    func beginWith<InputDataType>(_ preparation: () -> InputDataType?) -> Self
     {
-        if status == .Pending
+        if status == .pending
         {
             self.inputData = preparation()
         }
@@ -263,21 +262,21 @@ extension Sequence
     }
     
     func add<PreviousResultType, ResultType>(
-        customTask: (sequence: Sequence, previousResult: PreviousResultType?) throws -> ResultType?
+        _ task: @escaping (_: Sequence, _: PreviousResultType?) throws -> ResultType?
         ) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        if status == .Pending
+        if status == .pending
         {
-            let genericTask: Task = { (sequence, previousResult) throws -> Any? in
+            let genericTask: Task = { (genSeq, genPrevRes) throws -> Any? in
                 
                 return
-                    try customTask(
-                        sequence: sequence,
-                        previousResult: previousResult as? PreviousResultType)
+                    try task(
+                        genSeq,
+                        genPrevRes as? PreviousResultType)
             }
             
             //===
@@ -291,7 +290,7 @@ extension Sequence
     }
     
     func then<PreviousResultType, ResultType>(
-        task: (sequence: Sequence, previousResult: PreviousResultType?) throws -> ResultType?
+        _ task: @escaping (_: Sequence, _: PreviousResultType?) throws -> ResultType?
         ) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -301,13 +300,13 @@ extension Sequence
         return add(task)
     }
     
-    func onFailure(failureHandler: FailureHandler) -> Self
+    func onFailure(_ failureHandler: FailureHandler) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        if status == .Pending
+        if status == .pending
         {
             onFailure = failureHandler
         }
@@ -318,18 +317,18 @@ extension Sequence
     }
     
     func finally<LastResultType: Any>(
-        completion: (sequence: Sequence, lastResult: LastResultType?) -> Void
+        _ completion: @escaping (_ sequence: Sequence, _ lastResult: LastResultType?) -> Void
         ) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        if status == .Pending
+        if status == .pending
         {
             let genericCompletion: CompletionHandler = { sequence, lastResult in
                 
-                return completion(sequence: sequence, lastResult: lastResult as? LastResultType)
+                return completion(sequence, lastResult as? LastResultType)
             }
             
             //===
@@ -346,15 +345,16 @@ extension Sequence
         return self
     }
     
+    @discardableResult
     func start() -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        if status == .Pending
+        if status == .pending
         {
-            status = .Processing
+            status = .processing
             
             //===
             
@@ -374,8 +374,8 @@ extension Sequence
         
         switch status
         {
-            case .Pending, .Processing:
-                status = .Cancelled
+            case .pending, .processing:
+                status = .cancelled
             
             default:
                 break // ignore
@@ -394,19 +394,16 @@ extension Sequence
         }
     }
     
-    func executeAgain(after interval: NSTimeInterval)
+    func executeAgain(after interval: TimeInterval)
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        let delay = dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(interval * Double(NSEC_PER_SEC)))
+        let delay = DispatchTime.now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         
-        dispatch_after(delay, dispatch_get_main_queue()) { 
-            
-            self.executeAgain()
-        }
+        DispatchQueue
+            .main
+            .asyncAfter(deadline: delay) { self.executeAgain() }
     }
 }

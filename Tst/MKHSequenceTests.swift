@@ -13,9 +13,9 @@ import MKHSequence
 
 //===
 
-enum TestError: ErrorType
+enum TestError: Error
 {
-    case One, Two(code: Int)
+    case one, two(code: Int)
 }
 
 //===
@@ -29,7 +29,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         let expectation =
-            expectationWithDescription("SimpleCase Sequence")
+            self.expectation(description: "SimpleCase Sequence")
         
         //===
         
@@ -107,13 +107,13 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithError()
     {
         let expectation =
-            expectationWithDescription("CaseWithError Sequence")
+            self.expectation(description: "CaseWithError Sequence")
         
         //===
         
@@ -196,7 +196,7 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithCancel()
@@ -273,7 +273,7 @@ class MKHSequenceTests: XCTestCase
     func testCaseWithErrorAndRepeat()
     {
         let expectation =
-            expectationWithDescription("CaseWithErrorAndRepeat Sequence")
+            self.expectation(description: "CaseWithErrorAndRepeat Sequence")
         
         //===
         
@@ -352,13 +352,13 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithErrorAndDefault()
     {
         let expectation =
-            expectationWithDescription("CaseWithErrorAndDefault Sequence")
+            self.expectation(description: "CaseWithErrorAndDefault Sequence")
         
         //===
         
@@ -392,13 +392,13 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithBegin()
     {
         let expectation =
-            expectationWithDescription("CaseWithBegin Sequence")
+            self.expectation(description: "CaseWithBegin Sequence")
         
         //===
         
@@ -436,13 +436,13 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithBegin2()
     {
         let expectation =
-            expectationWithDescription("CaseWithBegin2 Sequence")
+            self.expectation(description: "CaseWithBegin2 Sequence")
         
         //===
         
@@ -477,6 +477,6 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
 }
