@@ -1,7 +1,7 @@
 MKHSequence
 =============
 
-Lightweight tasks collection controller.
+Lightweight async operations controller.
 
 Swift vs. Objective-C
 ---
