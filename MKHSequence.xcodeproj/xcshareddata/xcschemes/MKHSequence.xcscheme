@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0800"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D27138F2A763E94A608E187A"
+               BlueprintIdentifier = "4BB20F78DE9EE1584DD28FBA"
                BuildableName = "MKHSequence.framework"
                BlueprintName = "MKHSequence"
                ReferencedContainer = "container:MKHSequence.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CB73507466DE92D958E07107"
+               BlueprintIdentifier = "52D01C2FFC5EA33B813B1186"
                BuildableName = "MKHSequenceTst.xctest"
                BlueprintName = "MKHSequenceTst"
                ReferencedContainer = "container:MKHSequence.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D27138F2A763E94A608E187A"
+            BlueprintIdentifier = "4BB20F78DE9EE1584DD28FBA"
             BuildableName = "MKHSequence.framework"
             BlueprintName = "MKHSequence"
             ReferencedContainer = "container:MKHSequence.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D27138F2A763E94A608E187A"
+            BlueprintIdentifier = "4BB20F78DE9EE1584DD28FBA"
             BuildableName = "MKHSequence.framework"
             BlueprintName = "MKHSequence"
             ReferencedContainer = "container:MKHSequence.xcodeproj">
@@ -82,7 +82,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D27138F2A763E94A608E187A"
+            BlueprintIdentifier = "4BB20F78DE9EE1584DD28FBA"
             BuildableName = "MKHSequence.framework"
             BlueprintName = "MKHSequence"
             ReferencedContainer = "container:MKHSequence.xcodeproj">

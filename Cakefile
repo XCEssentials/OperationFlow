@@ -1,6 +1,11 @@
 # https://github.com/jcampbell05/xcake
 # http://www.rubydoc.info/github/jcampbell05/xcake/master/file/docs/Cakefile.md
 
+testSuffix = "Tst"
+iOSdeploymentTarget = 8.4
+
+#===
+
 project.name = "MKHSequence"
 project.class_prefix = "SEQ"
 project.organization = "Maxim Khatskevich"
@@ -13,7 +18,7 @@ project.all_configurations.each do |configuration|
     configuration.settings["DEBUG_INFORMATION_FORMAT"] = "dwarf"
     configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Developer"
     configuration.settings["TARGETED_DEVICE_FAMILY"] = "1,2"
-    configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = 8.4
+    configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
     configuration.settings["VERSIONING_SYSTEM"] = "apple-generic"
 
     configuration.settings["GCC_NO_COMMON_BLOCKS"] = "YES"
@@ -56,6 +61,8 @@ target do |target|
 
         configuration.settings["PRODUCT_NAME"] = "$(TARGET_NAME)"
 
+        configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
+
         # This will show "Automatic" in Xcode,
         # relies on proper/valid "PROVISIONING_PROFILE" value:
         configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = nil
@@ -71,7 +78,7 @@ target do |target|
     
     unit_tests_for target do |test_target|
         
-        test_target.name = target.name + "Tst"
+        test_target.name = target.name + testSuffix
 
         test_target.all_configurations.each do |configuration|
 
@@ -79,13 +86,17 @@ target do |target|
 
             configuration.settings["INFOPLIST_FILE"] = "Info/" + test_target.name + ".plist"
 
+            configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
+
             configuration.settings["LD_RUNPATH_SEARCH_PATHS"] = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
 
         end
 
         #=== Source Files
 
-        test_target.include_files = ["Tst/**/*.*"]
+        testTargetSrcPath = testSuffix + "/**/*.*"
+
+        test_target.include_files = [testTargetSrcPath]
 
     end
 
