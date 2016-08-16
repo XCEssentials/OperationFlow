@@ -261,6 +261,7 @@ extension Sequence
         return self
     }
     
+    @discardableResult
     func add<PreviousResultType, ResultType>(
         _ task: @escaping (_: Sequence, _: PreviousResultType?) throws -> ResultType?
         ) -> Self
@@ -289,6 +290,7 @@ extension Sequence
         return self
     }
     
+    @discardableResult
     func then<PreviousResultType, ResultType>(
         _ task: @escaping (_: Sequence, _: PreviousResultType?) throws -> ResultType?
         ) -> Self
@@ -316,6 +318,7 @@ extension Sequence
         return self
     }
     
+    @discardableResult
     func finally<LastResultType: Any>(
         _ completion: @escaping (_ sequence: Sequence, _ lastResult: LastResultType?) -> Void
         ) -> Self

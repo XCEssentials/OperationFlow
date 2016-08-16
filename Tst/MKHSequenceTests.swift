@@ -48,7 +48,7 @@ class MKHSequenceTests: XCTestCase
             XCTAssertFalse(task1Completed)
             XCTAssertFalse(task2Completed)
             XCTAssertNil(previousResult)
-            XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+            XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
@@ -70,7 +70,7 @@ class MKHSequenceTests: XCTestCase
             XCTAssertFalse(task2Completed)
             XCTAssertNotNil(previousResult)
             XCTAssertEqual(previousResult, res1)
-            XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+            XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
@@ -92,7 +92,7 @@ class MKHSequenceTests: XCTestCase
             XCTAssertTrue(task2Completed)
             XCTAssertNotNil(lastResult)
             XCTAssertEqual(lastResult, res2)
-            XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+            XCTAssertEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
@@ -129,7 +129,7 @@ class MKHSequenceTests: XCTestCase
                 
                 XCTAssertFalse(task1Completed)
                 XCTAssertNil(previousResult)
-                XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
                 //===
                 
@@ -149,7 +149,7 @@ class MKHSequenceTests: XCTestCase
                 XCTAssertTrue(task1Completed)
                 XCTAssertNotNil(previousResult)
                 XCTAssertEqual(previousResult, res1)
-                XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
                 
                 //===
                 
@@ -162,12 +162,12 @@ class MKHSequenceTests: XCTestCase
                 
                 // lets return error here
                 
-                throw TestError.Two(code: errCode)
+                throw TestError.two(code: errCode)
             }
             .onFailure({ (_, error) -> Void in
                 
                 XCTAssertTrue(task1Completed)
-                XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+                XCTAssertEqual(OperationQueue.current, OperationQueue.main)
                 
                 //===
                 
@@ -175,7 +175,7 @@ class MKHSequenceTests: XCTestCase
                 
                 switch error
                 {
-                    case TestError.Two(let code):
+                    case TestError.two(let code):
                         XCTAssertEqual(code, errCode)
                     
                     default:
@@ -213,9 +213,9 @@ class MKHSequenceTests: XCTestCase
                 
                 XCTAssertFalse(task1Started)
                 XCTAssertFalse(task1Completed)
-                XCTAssertNotEqual(sequence.status, Sequence.Status.Cancelled)
+                XCTAssertNotEqual(sequence.status, Sequence.Status.cancelled)
                 XCTAssertNil(previousResult)
-                XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
                 
                 //===
                 
@@ -223,12 +223,13 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
-                NSOperationQueue.mainQueue()
-                    .addOperationWithBlock {
+                OperationQueue
+                    .main
+                    .addOperation {
                         
                         XCTAssertTrue(task1Started)
                         XCTAssertFalse(task1Completed)
-                        XCTAssertNotEqual(sequence.status, Sequence.Status.Cancelled)
+                        XCTAssertNotEqual(sequence.status, Sequence.Status.cancelled)
                         
                         //===
                         
@@ -236,7 +237,7 @@ class MKHSequenceTests: XCTestCase
                         
                         //===
                         
-                        XCTAssertEqual(sequence.status, Sequence.Status.Cancelled)
+                        XCTAssertEqual(sequence.status, Sequence.Status.cancelled)
                     }
                 
                 //===
@@ -251,7 +252,7 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
-                XCTAssertEqual(sequence.status, Sequence.Status.Cancelled)
+                XCTAssertEqual(sequence.status, Sequence.Status.cancelled)
                 
                 //===
                 
@@ -297,7 +298,7 @@ class MKHSequenceTests: XCTestCase
                 
                 if shouldReportFailure
                 {
-                    throw TestError.Two(code: errCode)
+                    throw TestError.two(code: errCode)
                 }
                 else
                 {
@@ -314,7 +315,7 @@ class MKHSequenceTests: XCTestCase
                 
                 switch error
                 {
-                    case TestError.Two(let code):
+                    case TestError.two(let code):
                         XCTAssertEqual(code, errCode)
                         
                     default:
@@ -365,7 +366,7 @@ class MKHSequenceTests: XCTestCase
         Sequence()
             .add { (_, previousResult: Any?) -> Any? in
                 
-                throw TestError.One
+                throw TestError.one
             }
             .onFailure({ (_, error) -> Void in
                 
@@ -373,7 +374,7 @@ class MKHSequenceTests: XCTestCase
                 
                 switch error
                 {
-                    case TestError.One:
+                    case TestError.one:
                         XCTAssert(true)
                         
                     default:
