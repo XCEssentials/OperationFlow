@@ -13,7 +13,7 @@ project.all_configurations.each do |configuration|
     configuration.settings["DEBUG_INFORMATION_FORMAT"] = "dwarf"
     configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Developer"
     configuration.settings["TARGETED_DEVICE_FAMILY"] = "1,2"
-    configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = "8.4"
+    configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = 8.4
     configuration.settings["VERSIONING_SYSTEM"] = "apple-generic"
 
     configuration.settings["GCC_NO_COMMON_BLOCKS"] = "YES"
