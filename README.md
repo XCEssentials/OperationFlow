@@ -85,6 +85,12 @@ How To Use
 
 Please, see [unit tests][5] to get an idea of how to use Sequence class.
 
+Swift 3
+---
+
+Starting from [version 0.7.0](https://github.com/maximkhatskevich/MKHSequence/releases/tag/7.0.0), this library supports Swift 3. For compatibility with Swift 2.2 and Swift 2.3 use [older version](https://github.com/maximkhatskevich/MKHSequence/releases/tag/2.6.3).
+
+
 [0]: https://github.com/maximkhatskevich/MKHSequence/releases/tag/1.0.3
 [1]: http://promisekit.org
 [2]: https://github.com/iMartinKiss/Objective-Chain

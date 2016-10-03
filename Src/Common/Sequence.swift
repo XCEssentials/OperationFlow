@@ -57,7 +57,7 @@ class Sequence
     
     // MARK: Properties - Public
     
-    public private(set)
+    public fileprivate(set)
     var name: String?
     
     public
@@ -305,7 +305,7 @@ extension Sequence
     }
     
     @discardableResult
-    func onFailure(_ failureHandler: FailureHandler) -> Self
+    func onFailure(_ failureHandler: @escaping FailureHandler) -> Self
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
