@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                      = 'MKHSequence'
-  s.version                   = '2.6.3'
+  s.version                   = '7.0.0'
   s.summary                   = 'Lightweight async operations controller.'
   s.homepage                  = 'https://github.com/maximkhatskevich/#{s.name}'
 
