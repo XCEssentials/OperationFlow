@@ -57,7 +57,7 @@ target do |target|
     target.type = :framework
     target.language = :swift
     target.platform = :ios
-    target.deployment_target = 8.0
+    target.deployment_target = iOSdeploymentTarget
 
     target.all_configurations.each do |configuration|
 
@@ -68,8 +68,6 @@ target do |target|
         configuration.settings["INFOPLIST_FILE"] = "Info/" + target.name + ".plist"
 
         configuration.settings["PRODUCT_NAME"] = "$(TARGET_NAME)"
-
-        configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
 
         # This will show "Automatic" in Xcode,
         # relies on proper/valid "PROVISIONING_PROFILE" value:
@@ -89,14 +87,13 @@ target do |target|
     unit_tests_for target do |test_target|
         
         test_target.name = target.name + testSuffix
+        test_target.deployment_target = iOSdeploymentTarget
 
         test_target.all_configurations.each do |configuration|
 
             configuration.product_bundle_identifier = "khatskevich.maxim." + test_target.name
 
             configuration.settings["INFOPLIST_FILE"] = "Info/" + test_target.name + ".plist"
-
-            configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
 
             configuration.settings["LD_RUNPATH_SEARCH_PATHS"] = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
 
