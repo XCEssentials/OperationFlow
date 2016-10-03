@@ -3,6 +3,7 @@
 
 testSuffix = "Tst"
 iOSdeploymentTarget = 8.4
+currentSwiftVersion = 3.0
 
 #===
 
@@ -31,11 +32,18 @@ project.all_configurations.each do |configuration|
 
     configuration.settings["CURRENT_PROJECT_VERSION"] = "1" # just default non-empty value
 
+    #=== Xcode 8:
+
+    configuration.settings["CLANG_WARN_INFINITE_RECURSION"] = "YES"
+    configuration.settings["CLANG_WARN_SUSPICIOUS_MOVE"] = "YES"
+    configuration.settings["ENABLE_STRICT_OBJC_MSGSEND"] = "YES"
+
     #===
 
     if configuration.name == "Release"
 
         configuration.settings["DEBUG_INFORMATION_FORMAT"] = "dwarf-with-dsym"
+        configuration.settings["SWIFT_OPTIMIZATION_LEVEL"] = "-Owholemodule" # Xcode 8
 
     end
 
@@ -49,7 +57,7 @@ target do |target|
     target.type = :framework
     target.language = :swift
     target.platform = :ios
-    target.deployment_target = 8.0
+    target.deployment_target = iOSdeploymentTarget
 
     target.all_configurations.each do |configuration|
 
@@ -61,11 +69,11 @@ target do |target|
 
         configuration.settings["PRODUCT_NAME"] = "$(TARGET_NAME)"
 
-        configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
-
         # This will show "Automatic" in Xcode,
         # relies on proper/valid "PROVISIONING_PROFILE" value:
         configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = nil
+
+        configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
 
     end
 
@@ -79,6 +87,7 @@ target do |target|
     unit_tests_for target do |test_target|
         
         test_target.name = target.name + testSuffix
+        test_target.deployment_target = iOSdeploymentTarget
 
         test_target.all_configurations.each do |configuration|
 
@@ -86,9 +95,9 @@ target do |target|
 
             configuration.settings["INFOPLIST_FILE"] = "Info/" + test_target.name + ".plist"
 
-            configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
-
             configuration.settings["LD_RUNPATH_SEARCH_PATHS"] = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
+
+            configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
 
         end
 

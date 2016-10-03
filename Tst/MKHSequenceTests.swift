@@ -13,9 +13,9 @@ import MKHSequence
 
 //===
 
-enum TestError: ErrorType
+enum TestError: Error
 {
-    case One, Two(code: Int)
+    case one, two(code: Int)
 }
 
 //===
@@ -29,7 +29,7 @@ class MKHSequenceTests: XCTestCase
         //===
         
         let expectation =
-            expectationWithDescription("SimpleCase Sequence")
+            self.expectation(description: "SimpleCase Sequence")
         
         //===
         
@@ -48,7 +48,7 @@ class MKHSequenceTests: XCTestCase
             XCTAssertFalse(task1Completed)
             XCTAssertFalse(task2Completed)
             XCTAssertNil(previousResult)
-            XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+            XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
@@ -70,7 +70,7 @@ class MKHSequenceTests: XCTestCase
             XCTAssertFalse(task2Completed)
             XCTAssertNotNil(previousResult)
             XCTAssertEqual(previousResult, res1)
-            XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+            XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
@@ -92,7 +92,7 @@ class MKHSequenceTests: XCTestCase
             XCTAssertTrue(task2Completed)
             XCTAssertNotNil(lastResult)
             XCTAssertEqual(lastResult, res2)
-            XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+            XCTAssertEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
@@ -107,13 +107,13 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithError()
     {
         let expectation =
-            expectationWithDescription("CaseWithError Sequence")
+            self.expectation(description: "CaseWithError Sequence")
         
         //===
         
@@ -129,7 +129,7 @@ class MKHSequenceTests: XCTestCase
                 
                 XCTAssertFalse(task1Completed)
                 XCTAssertNil(previousResult)
-                XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
                 //===
                 
@@ -149,7 +149,7 @@ class MKHSequenceTests: XCTestCase
                 XCTAssertTrue(task1Completed)
                 XCTAssertNotNil(previousResult)
                 XCTAssertEqual(previousResult, res1)
-                XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
                 
                 //===
                 
@@ -162,12 +162,12 @@ class MKHSequenceTests: XCTestCase
                 
                 // lets return error here
                 
-                throw TestError.Two(code: errCode)
+                throw TestError.two(code: errCode)
             }
             .onFailure({ (_, error) -> Void in
                 
                 XCTAssertTrue(task1Completed)
-                XCTAssertEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+                XCTAssertEqual(OperationQueue.current, OperationQueue.main)
                 
                 //===
                 
@@ -175,7 +175,7 @@ class MKHSequenceTests: XCTestCase
                 
                 switch error
                 {
-                    case TestError.Two(let code):
+                    case TestError.two(let code):
                         XCTAssertEqual(code, errCode)
                     
                     default:
@@ -196,7 +196,7 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithCancel()
@@ -213,9 +213,9 @@ class MKHSequenceTests: XCTestCase
                 
                 XCTAssertFalse(task1Started)
                 XCTAssertFalse(task1Completed)
-                XCTAssertNotEqual(sequence.status, Sequence.Status.Cancelled)
+                XCTAssertNotEqual(sequence.status, Sequence.Status.cancelled)
                 XCTAssertNil(previousResult)
-                XCTAssertNotEqual(NSOperationQueue.currentQueue(), NSOperationQueue.mainQueue())
+                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
                 
                 //===
                 
@@ -223,12 +223,13 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
-                NSOperationQueue.mainQueue()
-                    .addOperationWithBlock {
+                OperationQueue
+                    .main
+                    .addOperation {
                         
                         XCTAssertTrue(task1Started)
                         XCTAssertFalse(task1Completed)
-                        XCTAssertNotEqual(sequence.status, Sequence.Status.Cancelled)
+                        XCTAssertNotEqual(sequence.status, Sequence.Status.cancelled)
                         
                         //===
                         
@@ -236,7 +237,7 @@ class MKHSequenceTests: XCTestCase
                         
                         //===
                         
-                        XCTAssertEqual(sequence.status, Sequence.Status.Cancelled)
+                        XCTAssertEqual(sequence.status, Sequence.Status.cancelled)
                     }
                 
                 //===
@@ -251,7 +252,7 @@ class MKHSequenceTests: XCTestCase
                 
                 //===
                 
-                XCTAssertEqual(sequence.status, Sequence.Status.Cancelled)
+                XCTAssertEqual(sequence.status, Sequence.Status.cancelled)
                 
                 //===
                 
@@ -273,7 +274,7 @@ class MKHSequenceTests: XCTestCase
     func testCaseWithErrorAndRepeat()
     {
         let expectation =
-            expectationWithDescription("CaseWithErrorAndRepeat Sequence")
+            self.expectation(description: "CaseWithErrorAndRepeat Sequence")
         
         //===
         
@@ -297,7 +298,7 @@ class MKHSequenceTests: XCTestCase
                 
                 if shouldReportFailure
                 {
-                    throw TestError.Two(code: errCode)
+                    throw TestError.two(code: errCode)
                 }
                 else
                 {
@@ -314,7 +315,7 @@ class MKHSequenceTests: XCTestCase
                 
                 switch error
                 {
-                    case TestError.Two(let code):
+                    case TestError.two(let code):
                         XCTAssertEqual(code, errCode)
                         
                     default:
@@ -352,20 +353,20 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithErrorAndDefault()
     {
         let expectation =
-            expectationWithDescription("CaseWithErrorAndDefault Sequence")
+            self.expectation(description: "CaseWithErrorAndDefault Sequence")
         
         //===
         
         Sequence()
             .add { (_, previousResult: Any?) -> Any? in
                 
-                throw TestError.One
+                throw TestError.one
             }
             .onFailure({ (_, error) -> Void in
                 
@@ -373,7 +374,7 @@ class MKHSequenceTests: XCTestCase
                 
                 switch error
                 {
-                    case TestError.One:
+                    case TestError.one:
                         XCTAssert(true)
                         
                     default:
@@ -392,13 +393,13 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithBegin()
     {
         let expectation =
-            expectationWithDescription("CaseWithBegin Sequence")
+            self.expectation(description: "CaseWithBegin Sequence")
         
         //===
         
@@ -436,13 +437,13 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithBegin2()
     {
         let expectation =
-            expectationWithDescription("CaseWithBegin2 Sequence")
+            self.expectation(description: "CaseWithBegin2 Sequence")
         
         //===
         
@@ -477,6 +478,6 @@ class MKHSequenceTests: XCTestCase
         
         //===
         
-        waitForExpectationsWithTimeout(5.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
 }
