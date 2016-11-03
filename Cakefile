@@ -2,7 +2,7 @@
 # http://www.rubydoc.info/github/jcampbell05/xcake/master/file/docs/Cakefile.md
 
 testSuffix = "Tst"
-iOSdeploymentTarget = 8.4
+iOSdeploymentTarget = 8.0
 currentSwiftVersion = 3.0
 
 #===
