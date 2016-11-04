@@ -13,18 +13,34 @@ import UIKit
 private
 func runOnMain(_ block: @escaping () -> Void)
 {
-    OperationQueue.main
+    OperationQueue
+        .main
         .addOperation(block)
 }
 
+//===
+
+public
+enum SequenceState: String
+{
+    case
+        pending,
+        processing,
+        failed,
+        completed,
+        cancelled
+}
+
+//===
+
 public
 final
-class Sequence
+class Sequence<Input>
 {
     // MARK: Properties - Private
     
     fileprivate
-    var inputData: Any? = nil
+    var input: Input? = nil
     
     fileprivate
     var tasks: [Task] = []
@@ -61,22 +77,7 @@ class Sequence
     var name: String?
     
     public
-    static
-    var defaultTargetQueue = OperationQueue()
-    
-    public
     var targetQueue: OperationQueue!
-    
-    public
-    enum Status: String
-    {
-        case
-            pending,
-            processing,
-            failed,
-            completed,
-            cancelled
-    }
     
     public fileprivate(set)
     var status: Status = .pending
@@ -87,7 +88,7 @@ class Sequence
     // MARK: Init
     
     public
-    init(name: String? = nil, targetQueue: OperationQueue = Sequence.defaultTargetQueue)
+    init(name: String? = nil, targetQueue: OperationQueue = OperationQueue())
     {
         self.name = name
         self.targetQueue = targetQueue

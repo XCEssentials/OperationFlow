@@ -22,7 +22,7 @@ default_platform :ios
 
 #===
 
-projName = 'MKHSequence'
+projName = 'MKHOperationFlow'
 projFileName = projName + '.xcodeproj'
 
 #===
