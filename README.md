@@ -1,12 +1,12 @@
-MKHSequence
+MKHOperationFlow
 =============
 
-Lightweight async operations controller.
+Lightweight async serial operation flow controller.
 
 Swift vs. Objective-C
 ---
 
-Note, that this description is valid for version 2.x, which is done in Swift 2.0. If you are looking for an Objective-C implementation and documentation, see tag/release [1.0.3][0].
+Note, that this description is valid for version 2.*, which is done in Swift. If you are looking for an Objective-C implementation and documentation, see tag/release [1.0.3][0].
 
 
 Inspiration
@@ -74,10 +74,10 @@ Any sequence might be cancelled at any time. If cancelled, sequence won't force 
 How to add to your project
 ---
 
-Just import module "MKHSequence" like this:
+Just import module "MKHOperationFlow" like this:
 
 ```swift
-import MKHSequence
+import MKHOperationFlow
 ```
 
 How To Use
@@ -88,13 +88,15 @@ Please, see [unit tests][5] to get an idea of how to use Sequence class.
 Swift 3
 ---
 
-Starting from [version 0.7.0](https://github.com/maximkhatskevich/MKHSequence/releases/tag/7.0.0), this library supports Swift 3. For compatibility with Swift 2.2 and Swift 2.3 use [older version](https://github.com/maximkhatskevich/MKHSequence/releases/tag/2.6.3).
+Starting from [version 3.0][6], this library supports Swift 3. For compatibility with Swift 2.2 and Swift 2.3 use [older version][7].
 
 
-[0]: https://github.com/maximkhatskevich/MKHSequence/releases/tag/1.0.3
+[0]: https://github.com/maximkhatskevich/MKHOperationFlow/releases/tag/1.0.3
 [1]: http://promisekit.org
 [2]: https://github.com/iMartinKiss/Objective-Chain
 [3]: https://github.com/ReactiveCocoa/ReactiveCocoa
 [4]: https://www.google.ru/search?q=objective+c+block
-[5]: https://github.com/maximkhatskevich/MKHSequence/blob/master/Framework/iOS/MKHSequenceTests/MKHSequenceTests.swift
+[5]: https://github.com/maximkhatskevich/MKHOperationFlow/blob/master/Tst/Main.swift
+[6]: https://github.com/maximkhatskevich/MKHOperationFlow/releases/tag/3.0.0
+[7]: https://github.com/maximkhatskevich/MKHOperationFlow/releases/tag/2.6.3
 
