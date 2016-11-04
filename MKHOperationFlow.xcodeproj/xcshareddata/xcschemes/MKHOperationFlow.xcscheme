@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "092BD30EE55CD06A03887A75"
+               BlueprintIdentifier = "62EBD9CB59130D61F6A26718"
                BuildableName = "MKHOperationFlow.framework"
                BlueprintName = "MKHOperationFlow"
                ReferencedContainer = "container:MKHOperationFlow.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E8DE08E479557A952625C46E"
+               BlueprintIdentifier = "44A90C835304DE62AE33DF7C"
                BuildableName = "MKHOperationFlowTst.xctest"
                BlueprintName = "MKHOperationFlowTst"
                ReferencedContainer = "container:MKHOperationFlow.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "092BD30EE55CD06A03887A75"
+            BlueprintIdentifier = "62EBD9CB59130D61F6A26718"
             BuildableName = "MKHOperationFlow.framework"
             BlueprintName = "MKHOperationFlow"
             ReferencedContainer = "container:MKHOperationFlow.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "092BD30EE55CD06A03887A75"
+            BlueprintIdentifier = "62EBD9CB59130D61F6A26718"
             BuildableName = "MKHOperationFlow.framework"
             BlueprintName = "MKHOperationFlow"
             ReferencedContainer = "container:MKHOperationFlow.xcodeproj">
@@ -82,7 +82,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "092BD30EE55CD06A03887A75"
+            BlueprintIdentifier = "62EBD9CB59130D61F6A26718"
             BuildableName = "MKHOperationFlow.framework"
             BlueprintName = "MKHOperationFlow"
             ReferencedContainer = "container:MKHOperationFlow.xcodeproj">

@@ -1,6 +1,6 @@
 //
-//  MKHSequenceTests.swift
-//  MKHSequenceTests
+//  Main.swift
+//  MKHSequenceTst
 //
 //  Created by Maxim Khatskevich on 11/26/15.
 //  Copyright © 2015 Maxim Khatskevich. All rights reserved.
@@ -9,7 +9,7 @@
 import XCTest
 
 //@testable
-import MKHSequence
+import MKHOperationFlow
 
 //===
 
@@ -20,7 +20,7 @@ enum TestError: Error
 
 //===
 
-class MKHSequenceTests: XCTestCase
+class MKHOperationFlowTst: XCTestCase
 {
     func testSimpleCase()
     {

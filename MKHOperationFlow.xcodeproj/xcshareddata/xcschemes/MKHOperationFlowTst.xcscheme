@@ -16,7 +16,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E8DE08E479557A952625C46E"
+               BlueprintIdentifier = "44A90C835304DE62AE33DF7C"
                BuildableName = "MKHOperationFlowTst.xctest"
                BlueprintName = "MKHOperationFlowTst"
                ReferencedContainer = "container:MKHOperationFlow.xcodeproj">

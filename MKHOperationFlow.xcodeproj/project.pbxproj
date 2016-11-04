@@ -7,140 +7,124 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25BE2197C6205558BD76DF06 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170229F952A8ADF1A86E6DA1 /* Sequence.swift */; };
-		5C3F2BCC465A30B34238DCCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85B7D506AF91044B69814674 /* Foundation.framework */; };
-		69B76868A2FFFA13C2CE0978 /* MKHSequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75349AC837CB279F0E658E73 /* MKHSequenceTests.swift */; };
-		82EABD9D0AE65C89C8591DAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76F4BD40989D7788BBFA114 /* UIKit.framework */; };
-		8A25C66A01CE30DEFDAF9456 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85B7D506AF91044B69814674 /* Foundation.framework */; };
-		F63EC73E2845C4BF24863151 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76F4BD40989D7788BBFA114 /* UIKit.framework */; };
+		0184FDF6528CD318A58A4637 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA8565FF369E285B2CFA9C /* Foundation.framework */; };
+		430F12C8B32BFD5C1486A343 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C6DA5AA94FFDDF7A392381 /* Main.swift */; };
+		998D2E37AFA8FB807EA9D2F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA8565FF369E285B2CFA9C /* Foundation.framework */; };
+		B7E9D180DD3295BDBCA4AA85 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5830FEB9EC8A5B62CF00F9 /* Main.swift */; };
+		B9C00C2BDF8345280ACEF617 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */; };
+		EBFB63542511853961CC639E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		170229F952A8ADF1A86E6DA1 /* Sequence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
-		4AE83C45F141E455E5216945 /* MKHSequence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKHSequence.h; sourceTree = "<group>"; };
-		75349AC837CB279F0E658E73 /* MKHSequenceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MKHSequenceTests.swift; sourceTree = "<group>"; };
-		84D119DEAFFD1A1BA629D21D /* MKHOperationFlow. */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MKHOperationFlow.; path = MKHOperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		85B7D506AF91044B69814674 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		B8B67362D5ACB31964C2B89C /* MKHOperationFlowTst.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MKHOperationFlowTst.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F76F4BD40989D7788BBFA114 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		35CA8565FF369E285B2CFA9C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		4236A371284209582E8BA55E /* MKHOperationFlow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKHOperationFlow.h; sourceTree = "<group>"; };
+		55A9C8856BE7277CDE99765A /* MKHOperationFlowTst. */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; name = MKHOperationFlowTst.; path = MKHOperationFlowTst.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7986C357851447A9D71938BA /* MKHOperationFlow. */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MKHOperationFlow.; path = MKHOperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86C6DA5AA94FFDDF7A392381 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		8C5830FEB9EC8A5B62CF00F9 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9D1701230088D834D5DAF59E /* Frameworks */ = {
+		86D78A51E03927FDDCA6E32F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A25C66A01CE30DEFDAF9456 /* Foundation.framework in Frameworks */,
-				F63EC73E2845C4BF24863151 /* UIKit.framework in Frameworks */,
+				0184FDF6528CD318A58A4637 /* Foundation.framework in Frameworks */,
+				EBFB63542511853961CC639E /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FDD75F253B28316F7EF9515E /* Frameworks */ = {
+		F20A2F776E6FED2D6DE99059 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C3F2BCC465A30B34238DCCB /* Foundation.framework in Frameworks */,
-				82EABD9D0AE65C89C8591DAD /* UIKit.framework in Frameworks */,
+				998D2E37AFA8FB807EA9D2F0 /* Foundation.framework in Frameworks */,
+				B9C00C2BDF8345280ACEF617 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0FA09392902EEEFDBB892CDA /* Src-Extra */ = {
+		0C7E0EBBF011324A848DF1E9 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				4AE83C45F141E455E5216945 /* MKHSequence.h */,
-			);
-			path = "Src-Extra";
-			sourceTree = "<group>";
-		};
-		1EF9DED5E65777CDE6B66898 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				170229F952A8ADF1A86E6DA1 /* Sequence.swift */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		7EB1841A209689E8E88B2E1C = {
-			isa = PBXGroup;
-			children = (
-				D4B1278D9B0D6C652478D021 /* Products */,
-				D1BB4D582A6122F5D258DB97 /* Tst */,
-				BA00748C18E3004F46B270B5 /* Src */,
-				0FA09392902EEEFDBB892CDA /* Src-Extra */,
-				7F81414B4EB8D4AC3210624F /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		7F81414B4EB8D4AC3210624F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8AED66706BD40911AE142538 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		8AED66706BD40911AE142538 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				85B7D506AF91044B69814674 /* Foundation.framework */,
-				F76F4BD40989D7788BBFA114 /* UIKit.framework */,
+				35CA8565FF369E285B2CFA9C /* Foundation.framework */,
+				BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		BA00748C18E3004F46B270B5 /* Src */ = {
+		46C506E4DC15FDD8AD474432 /* Src-Extra */ = {
 			isa = PBXGroup;
 			children = (
-				1EF9DED5E65777CDE6B66898 /* Common */,
+				4236A371284209582E8BA55E /* MKHOperationFlow.h */,
+			);
+			path = "Src-Extra";
+			sourceTree = "<group>";
+		};
+		94506930C5886C8F987DCC65 /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				AF850C655F81AD46F4E293E7 /* Common */,
 			);
 			path = Src;
 			sourceTree = "<group>";
 		};
-		D1BB4D582A6122F5D258DB97 /* Tst */ = {
+		9650B70A19A64E32EC36FBDB = {
 			isa = PBXGroup;
 			children = (
-				75349AC837CB279F0E658E73 /* MKHSequenceTests.swift */,
+				A78183B25D8858B905C27AA1 /* Products */,
+				B6FFCE14E382941F25696EA0 /* Tst */,
+				94506930C5886C8F987DCC65 /* Src */,
+				46C506E4DC15FDD8AD474432 /* Src-Extra */,
+				DDC6D74565E56044EA5172C7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A78183B25D8858B905C27AA1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55A9C8856BE7277CDE99765A /* MKHOperationFlowTst. */,
+				7986C357851447A9D71938BA /* MKHOperationFlow. */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AF850C655F81AD46F4E293E7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8C5830FEB9EC8A5B62CF00F9 /* Main.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		B6FFCE14E382941F25696EA0 /* Tst */ = {
+			isa = PBXGroup;
+			children = (
+				86C6DA5AA94FFDDF7A392381 /* Main.swift */,
 			);
 			path = Tst;
 			sourceTree = "<group>";
 		};
-		D4B1278D9B0D6C652478D021 /* Products */ = {
+		DDC6D74565E56044EA5172C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B8B67362D5ACB31964C2B89C /* MKHOperationFlowTst.xctest */,
-				84D119DEAFFD1A1BA629D21D /* MKHOperationFlow. */,
+				0C7E0EBBF011324A848DF1E9 /* iOS */,
 			);
-			name = Products;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		092BD30EE55CD06A03887A75 /* MKHOperationFlow */ = {
+		44A90C835304DE62AE33DF7C /* MKHOperationFlowTst */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0755DC84A42F5AD2834B36E0 /* Build configuration list for PBXNativeTarget "MKHOperationFlow" */;
+			buildConfigurationList = 44512B758060A1F0CD2DDAD8 /* Build configuration list for PBXNativeTarget "MKHOperationFlowTst" */;
 			buildPhases = (
-				F8E701251DC0C35DE9571B33 /* Sources */,
-				FDD75F253B28316F7EF9515E /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MKHOperationFlow;
-			productName = MKHOperationFlow;
-			productReference = 84D119DEAFFD1A1BA629D21D /* MKHOperationFlow. */;
-			productType = "com.apple.product-type.framework";
-		};
-		E8DE08E479557A952625C46E /* MKHOperationFlowTst */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E8C2132124B66C64CE6E4850 /* Build configuration list for PBXNativeTarget "MKHOperationFlowTst" */;
-			buildPhases = (
-				7D7076F6C1266A1F550753D4 /* Sources */,
-				9D1701230088D834D5DAF59E /* Frameworks */,
+				2C9E78D7F47E815C93756AB7 /* Sources */,
+				F20A2F776E6FED2D6DE99059 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -148,13 +132,29 @@
 			);
 			name = MKHOperationFlowTst;
 			productName = MKHOperationFlowTst;
-			productReference = B8B67362D5ACB31964C2B89C /* MKHOperationFlowTst.xctest */;
+			productReference = 55A9C8856BE7277CDE99765A /* MKHOperationFlowTst. */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		62EBD9CB59130D61F6A26718 /* MKHOperationFlow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF270B466915FB10F1197C46 /* Build configuration list for PBXNativeTarget "MKHOperationFlow" */;
+			buildPhases = (
+				EAC4609C006168C5691ED099 /* Sources */,
+				86D78A51E03927FDDCA6E32F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MKHOperationFlow;
+			productName = MKHOperationFlow;
+			productReference = 7986C357851447A9D71938BA /* MKHOperationFlow. */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		018990D52BB3136442B320C2 /* Project object */ = {
+		661A6620D2DAA83711504758 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = OFL;
@@ -162,53 +162,53 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Maxim Khatskevich";
 				TargetAttributes = {
-					092BD30EE55CD06A03887A75 = {
+					44A90C835304DE62AE33DF7C = {
 						DevelopmentTeam = UJA88X59XP;
 					};
-					E8DE08E479557A952625C46E = {
+					62EBD9CB59130D61F6A26718 = {
 						DevelopmentTeam = UJA88X59XP;
 					};
 				};
 			};
-			buildConfigurationList = 7F3937F3EC9F138520E7087D /* Build configuration list for PBXProject "MKHOperationFlow" */;
+			buildConfigurationList = ACCFD4F736E32F00F310A193 /* Build configuration list for PBXProject "MKHOperationFlow" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 7EB1841A209689E8E88B2E1C;
-			productRefGroup = D4B1278D9B0D6C652478D021 /* Products */;
+			mainGroup = 9650B70A19A64E32EC36FBDB;
+			productRefGroup = A78183B25D8858B905C27AA1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E8DE08E479557A952625C46E /* MKHOperationFlowTst */,
-				092BD30EE55CD06A03887A75 /* MKHOperationFlow */,
+				44A90C835304DE62AE33DF7C /* MKHOperationFlowTst */,
+				62EBD9CB59130D61F6A26718 /* MKHOperationFlow */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		7D7076F6C1266A1F550753D4 /* Sources */ = {
+		2C9E78D7F47E815C93756AB7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69B76868A2FFFA13C2CE0978 /* MKHSequenceTests.swift in Sources */,
+				430F12C8B32BFD5C1486A343 /* Main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8E701251DC0C35DE9571B33 /* Sources */ = {
+		EAC4609C006168C5691ED099 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25BE2197C6205558BD76DF06 /* Sequence.swift in Sources */,
+				B7E9D180DD3295BDBCA4AA85 /* Main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		0D6B4288F0FD035A6E4C2E83 /* Release */ = {
+		7636AFAB6393DFBBA99B2CA7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -237,39 +237,10 @@
 			};
 			name = Release;
 		};
-		23CBE44D68F2D6A842343230 /* Debug */ = {
+		7D4C3186CB2B536210969A11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = UJA88X59XP;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Info/MKHOperationFlow.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = khatskevich.maxim.MKHOperationFlow;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		4CBF3729CF2DF48DC143293C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = UJA88X59XP;
@@ -283,30 +254,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MKHOperationFlow.app/MKHOperationFlow";
 			};
 			name = Release;
 		};
-		675C6EE364ECCA1CE3D4F56A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = UJA88X59XP;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Info/MKHOperationFlowTst.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = khatskevich.maxim.MKHOperationFlowTst;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		6DDD5D99E6F6259948F6D5C9 /* Debug */ = {
+		87B24A77B6EE2DA0CEDE9405 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -356,7 +308,29 @@
 			};
 			name = Debug;
 		};
-		E1FDF6263D3A88AD86EC2FED /* Release */ = {
+		9158D01A4E9E7551B61988D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = UJA88X59XP;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = Info/MKHOperationFlowTst.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = khatskevich.maxim.MKHOperationFlowTst;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MKHOperationFlow.app/MKHOperationFlow";
+			};
+			name = Debug;
+		};
+		A45462AED31E34B650938FFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -399,37 +373,67 @@
 			};
 			name = Release;
 		};
+		B09AEAE24FA3AF8DE7ADD49A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = UJA88X59XP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = Info/MKHOperationFlow.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = khatskevich.maxim.MKHOperationFlow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0755DC84A42F5AD2834B36E0 /* Build configuration list for PBXNativeTarget "MKHOperationFlow" */ = {
+		44512B758060A1F0CD2DDAD8 /* Build configuration list for PBXNativeTarget "MKHOperationFlowTst" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				23CBE44D68F2D6A842343230 /* Debug */,
-				0D6B4288F0FD035A6E4C2E83 /* Release */,
+				9158D01A4E9E7551B61988D5 /* Debug */,
+				7D4C3186CB2B536210969A11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7F3937F3EC9F138520E7087D /* Build configuration list for PBXProject "MKHOperationFlow" */ = {
+		ACCFD4F736E32F00F310A193 /* Build configuration list for PBXProject "MKHOperationFlow" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6DDD5D99E6F6259948F6D5C9 /* Debug */,
-				E1FDF6263D3A88AD86EC2FED /* Release */,
+				87B24A77B6EE2DA0CEDE9405 /* Debug */,
+				A45462AED31E34B650938FFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E8C2132124B66C64CE6E4850 /* Build configuration list for PBXNativeTarget "MKHOperationFlowTst" */ = {
+		BF270B466915FB10F1197C46 /* Build configuration list for PBXNativeTarget "MKHOperationFlow" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				675C6EE364ECCA1CE3D4F56A /* Debug */,
-				4CBF3729CF2DF48DC143293C /* Release */,
+				B09AEAE24FA3AF8DE7ADD49A /* Debug */,
+				7636AFAB6393DFBBA99B2CA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 018990D52BB3136442B320C2 /* Project object */;
+	rootObject = 661A6620D2DAA83711504758 /* Project object */;
 }

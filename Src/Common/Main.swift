@@ -1,6 +1,6 @@
 //
-//  Sequence.swift
-//  MKHSequence
+//  Main.swift
+//  MKHOperationFlow
 //
 //  Created by Maxim Khatskevich on 11/26/15.
 //  Copyright © 2015 Maxim Khatskevich. All rights reserved.
@@ -35,7 +35,7 @@ enum SequenceState: String
 
 public
 final
-class Sequence<Input>
+class OperationFlow<Input>
 {
     // MARK: Properties - Private
     
