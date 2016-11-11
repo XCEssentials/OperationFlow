@@ -9,8 +9,13 @@
 /* Begin PBXBuildFile section */
 		0184FDF6528CD318A58A4637 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA8565FF369E285B2CFA9C /* Foundation.framework */; };
 		430F12C8B32BFD5C1486A343 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C6DA5AA94FFDDF7A392381 /* Main.swift */; };
+		94C0ED911DD68D9C0060513C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED901DD68D9C0060513C /* Helpers.swift */; };
+		94C0ED931DD68DDA0060513C /* Declarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED921DD68DDA0060513C /* Declarations.swift */; };
+		94C0ED951DD68E0D0060513C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED941DD68E0D0060513C /* Errors.swift */; };
+		94C0ED971DD68E420060513C /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED961DD68E420060513C /* Defaults.swift */; };
+		94C0ED991DD68E7D0060513C /* Connectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED981DD68E7D0060513C /* Connectors.swift */; };
 		998D2E37AFA8FB807EA9D2F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA8565FF369E285B2CFA9C /* Foundation.framework */; };
-		B7E9D180DD3295BDBCA4AA85 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5830FEB9EC8A5B62CF00F9 /* Main.swift */; };
+		B7E9D180DD3295BDBCA4AA85 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5830FEB9EC8A5B62CF00F9 /* Flow.swift */; };
 		B9C00C2BDF8345280ACEF617 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */; };
 		EBFB63542511853961CC639E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */; };
 /* End PBXBuildFile section */
@@ -19,9 +24,14 @@
 		35CA8565FF369E285B2CFA9C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		4236A371284209582E8BA55E /* MKHOperationFlow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKHOperationFlow.h; sourceTree = "<group>"; };
 		55A9C8856BE7277CDE99765A /* MKHOperationFlowTst. */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; name = MKHOperationFlowTst.; path = MKHOperationFlowTst.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7986C357851447A9D71938BA /* MKHOperationFlow. */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MKHOperationFlow.; path = MKHOperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7986C357851447A9D71938BA /* MKHOperationFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MKHOperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C6DA5AA94FFDDF7A392381 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		8C5830FEB9EC8A5B62CF00F9 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		8C5830FEB9EC8A5B62CF00F9 /* Flow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
+		94C0ED901DD68D9C0060513C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		94C0ED921DD68DDA0060513C /* Declarations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Declarations.swift; sourceTree = "<group>"; };
+		94C0ED941DD68E0D0060513C /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		94C0ED961DD68E420060513C /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		94C0ED981DD68E7D0060513C /* Connectors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectors.swift; sourceTree = "<group>"; };
 		BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -87,7 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				55A9C8856BE7277CDE99765A /* MKHOperationFlowTst. */,
-				7986C357851447A9D71938BA /* MKHOperationFlow. */,
+				7986C357851447A9D71938BA /* MKHOperationFlow.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,7 +105,12 @@
 		AF850C655F81AD46F4E293E7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8C5830FEB9EC8A5B62CF00F9 /* Main.swift */,
+				94C0ED901DD68D9C0060513C /* Helpers.swift */,
+				94C0ED921DD68DDA0060513C /* Declarations.swift */,
+				94C0ED941DD68E0D0060513C /* Errors.swift */,
+				94C0ED961DD68E420060513C /* Defaults.swift */,
+				94C0ED981DD68E7D0060513C /* Connectors.swift */,
+				8C5830FEB9EC8A5B62CF00F9 /* Flow.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -148,7 +163,7 @@
 			);
 			name = MKHOperationFlow;
 			productName = MKHOperationFlow;
-			productReference = 7986C357851447A9D71938BA /* MKHOperationFlow. */;
+			productReference = 7986C357851447A9D71938BA /* MKHOperationFlow.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -159,7 +174,7 @@
 			attributes = {
 				CLASSPREFIX = OFL;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Maxim Khatskevich";
 				TargetAttributes = {
 					44A90C835304DE62AE33DF7C = {
@@ -201,7 +216,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7E9D180DD3295BDBCA4AA85 /* Main.swift in Sources */,
+				94C0ED951DD68E0D0060513C /* Errors.swift in Sources */,
+				94C0ED931DD68DDA0060513C /* Declarations.swift in Sources */,
+				94C0ED971DD68E420060513C /* Defaults.swift in Sources */,
+				94C0ED991DD68E7D0060513C /* Connectors.swift in Sources */,
+				B7E9D180DD3295BDBCA4AA85 /* Flow.swift in Sources */,
+				94C0ED911DD68D9C0060513C /* Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,7 +231,7 @@
 		7636AFAB6393DFBBA99B2CA7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -376,7 +396,7 @@
 		B09AEAE24FA3AF8DE7ADD49A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
