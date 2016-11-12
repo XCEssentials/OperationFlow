@@ -14,8 +14,8 @@
 		94C0ED951DD68E0D0060513C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED941DD68E0D0060513C /* Errors.swift */; };
 		94C0ED971DD68E420060513C /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED961DD68E420060513C /* Defaults.swift */; };
 		94C0ED991DD68E7D0060513C /* Connectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED981DD68E7D0060513C /* Connectors.swift */; };
+		94C0ED9B1DD691390060513C /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C0ED9A1DD691390060513C /* Flow.swift */; };
 		998D2E37AFA8FB807EA9D2F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA8565FF369E285B2CFA9C /* Foundation.framework */; };
-		B7E9D180DD3295BDBCA4AA85 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5830FEB9EC8A5B62CF00F9 /* Flow.swift */; };
 		B9C00C2BDF8345280ACEF617 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */; };
 		EBFB63542511853961CC639E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */; };
 /* End PBXBuildFile section */
@@ -26,12 +26,12 @@
 		55A9C8856BE7277CDE99765A /* MKHOperationFlowTst. */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; name = MKHOperationFlowTst.; path = MKHOperationFlowTst.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7986C357851447A9D71938BA /* MKHOperationFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MKHOperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C6DA5AA94FFDDF7A392381 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		8C5830FEB9EC8A5B62CF00F9 /* Flow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
 		94C0ED901DD68D9C0060513C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		94C0ED921DD68DDA0060513C /* Declarations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Declarations.swift; sourceTree = "<group>"; };
 		94C0ED941DD68E0D0060513C /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		94C0ED961DD68E420060513C /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		94C0ED981DD68E7D0060513C /* Connectors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectors.swift; sourceTree = "<group>"; };
+		94C0ED9A1DD691390060513C /* Flow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
 		BFFD4F7B0DFE836C3CBED98E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -110,7 +110,7 @@
 				94C0ED941DD68E0D0060513C /* Errors.swift */,
 				94C0ED961DD68E420060513C /* Defaults.swift */,
 				94C0ED981DD68E7D0060513C /* Connectors.swift */,
-				8C5830FEB9EC8A5B62CF00F9 /* Flow.swift */,
+				94C0ED9A1DD691390060513C /* Flow.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -220,7 +220,7 @@
 				94C0ED931DD68DDA0060513C /* Declarations.swift in Sources */,
 				94C0ED971DD68E420060513C /* Defaults.swift in Sources */,
 				94C0ED991DD68E7D0060513C /* Connectors.swift in Sources */,
-				B7E9D180DD3295BDBCA4AA85 /* Flow.swift in Sources */,
+				94C0ED9B1DD691390060513C /* Flow.swift in Sources */,
 				94C0ED911DD68D9C0060513C /* Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

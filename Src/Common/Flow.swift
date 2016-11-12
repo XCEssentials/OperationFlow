@@ -2,8 +2,8 @@
 //  Flow.swift
 //  MKHOperationFlow
 //
-//  Created by Maxim Khatskevich on 11/26/15.
-//  Copyright © 2015 Maxim Khatskevich. All rights reserved.
+//  Created by Maxim Khatskevich on 11/12/16.
+//  Copyright © 2016 Maxim Khatskevich. All rights reserved.
 //
 
 import Foundation
@@ -20,11 +20,11 @@ class OperationFlow
     enum State: String
     {
         case
-        pending,
-        processing,
-        failed,
-        completed,
-        cancelled
+            pending,
+            processing,
+            failed,
+            completed,
+            cancelled
     }
     
     // MARK: Types - Private
@@ -56,13 +56,13 @@ class OperationFlow
     
     // MARK: Properties - Private
     
-    private
+    fileprivate
     var operations: [CommonOperation] = []
     
-    private
+    fileprivate
     var completion: CommonCompletion?
     
-    private
+    fileprivate
     var failureHandler: CommonFailure?
     
     //===
@@ -87,10 +87,13 @@ class OperationFlow
         self.targetQueue = targetQueue
         self.maxAttempts = maxAttempts
     }
-    
-    //===
-    
-    public
+}
+
+//=== MARK: - Public methods
+
+public
+extension OperationFlow
+{
     func input<Input>(_ value: Input) -> FirstConnector<Input>
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -100,7 +103,6 @@ class OperationFlow
         return FirstConnector(self, initialInput: value)
     }
     
-    public
     func add<Output>(_ op: @escaping OperationShort<Output>) -> Connector<Output>
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -118,7 +120,6 @@ class OperationFlow
         return Connector<Output>(self)
     }
     
-    public
     func cancel()
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -127,15 +128,14 @@ class OperationFlow
         
         switch status
         {
-        case .pending, .processing:
-            status = .cancelled
-            
-        default:
-            break // ignore
+            case .pending, .processing:
+                status = .cancelled
+                
+            default:
+                break // ignore
         }
     }
     
-    public
     func executeAgain() // (after: NSTimeInterval = 0)
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -149,7 +149,6 @@ class OperationFlow
         }
     }
     
-    public
     func executeAgain(after interval: TimeInterval)
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -164,9 +163,12 @@ class OperationFlow
             .main
             .asyncAfter(deadline: delay) { self.executeAgain() }
     }
-    
-    //===
-    
+}
+
+//=== MARK: - Internal methods
+
+extension OperationFlow
+{
     func add<Input, Output>(_ op: @escaping Operation<Input, Output>)
     {
         operations
@@ -250,7 +252,13 @@ class OperationFlow
         
         return self
     }
-    
+}
+
+//=== MARK: - Private methods
+
+private
+extension OperationFlow
+{
     func shouldProceed() -> Bool
     {
         return (targetTaskIndex < self.operations.count)
@@ -377,15 +385,15 @@ class OperationFlow
         
         switch status
         {
-        case .failed, .completed, .cancelled:
-            
-            targetTaskIndex = 0
-            status = .pending
-            
-            result = true
-            
-        default:
-            break // ignore
+            case .failed, .completed, .cancelled:
+                
+                targetTaskIndex = 0
+                status = .pending
+                
+                result = true
+                
+            default:
+                break // ignore
         }
         
         //===
