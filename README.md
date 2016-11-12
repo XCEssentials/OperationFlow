@@ -18,19 +18,21 @@ This library has been inspired by [PromiseKit][1], [Objective-Chain][2] and [Rea
 The Goal
 ---
 
-A tool for simple and elegant management of sequence of tasks that are being executed **serially** on a background queue with shared (among all tasks) error handler and completion handler being called on main queue after all tasks have been executed and completed successfully.
+A tool for simple and elegant management of operations flow that are being executed **serially** on a background queue with shared (among all operations) error handlers and completion handler being called on main queue after all operations have been executed and completed successfully.
 
 
 How It Works?
 ---
 
-_Sequence_ class implements generic queue-based (FIFO) collection of tasks that are supposed to be executed one-by-one. Each task is represented by a [block][4] which is being executed on the sequence target queue. You can add as many tasks to a sequence as you need, but at least one task is expected to make use of this class meaningful. Each task should expect to receive result from  previous task as input parameter (expect the very first task where input parameter is always `nil`).
+`OperationFlow` class implements generic queue-based (FIFO) set of operations that are supposed to be executed one-by-one. Each operation is represented by a [closure][4] which is being executed on the target queue. You can add as many operations to the flow as you need, but at least one operation is expected to make use of this class meaningful. Each operation should expect to receive output of previous operation as _input_ parameter. The very first operation gets no input parameter, unless the flow has been set with input value before chaining first operation.
 
-Any sequence might be provided with **final** (completion) block which will be called when all tasks have completed successfully. Completion block is always being called on main queue. If you do not need completion block - feel free to just call `start()` instead.
+Any operation flow might be provided with **final** (completion) closure which will be called when all operations have completed successfully. Completion closure is always being called on main queue. If you do not need completion closure - feel free to just call `start()` instead of `finally(...)`.
 
-Sequence also might be configured with custom **error** handling block which will be called (with error as input parameter) if _ANY_ of the tasks in the sequence has failed. To indicate failure, a task must return an instance of _NSError_ class. In this case, the sequence will not call next task (or final/completion block). Instead it will call sequence error handling block and stop execution after that. Error handling block is always being called on main queue.
+Operation flow also might be configured with one or multiple **error** handling closures which will be called (with error as input parameter) if _ANY_ of the operations in the flow has failed. To indicate failure, operation must `throw` an `Error` value, or value of a type that conforms to `Error`. In this case, the flow will not execute next operation (as well as not execute final/completion closure). Instead, it will execute failure handlers one by one in the same order as they have been added, and then stop execution indefinitely. Failure handlers are always being called on main queue.
 
-NOTE: Each task in a sequence may be also called _step_.
+Note, that multiple error handlers might be added to the flow. When an error occures, the flow will attempt to call every failure handler, where expected input error type is the same as actual type of the error value, or where it is just `Error`.
+
+NOTE: Each operation in flow may be also called _step_.
 
 Key Features
 ---
@@ -45,31 +47,35 @@ Easy to use, minimal syntax. Minimum params have to be provided per each call to
 
 This library does not use block-return class methods or run time "magic", so in Xcode you have full code-completion support.
 
-### Independent target queue per each sequence
+### Independent target queue per each flow
 
-The target queue (where all tasks of that given sequence will be executed one by one) can be set for each sequence independently from other sequences.
+The target queue (where all operations of that given flow will be executed one by one) can be set for each flow independently from other flows.
 
-NOTE: The sequence target queue is automatically being set to global default value, so no need to setup target queue for each particular sequence explicitly. In turn, global default target queue is being set automatically to _current queue_, i.e. to the queue where sequence class has been used first time. It is **recommended** to setup global default target queue to a custom background serial queue explicitly before you start using Sequence class.
+NOTE: The flow target queue is automatically being set to global default value, so no need to set target queue for each particular flow explicitly. In turn, global default target queue is being set automatically to a dedicated background seriall queue. See `FlowDefaults` for more details.
 
 ### Pass result value between steps
 
-Each task in a sequence returns an _Any?_ value. This object is considered as a result of this step and will be passed to next task as input parameter.
+Each operation in a flow returns a value. This value is considered as result (_output_) of this operation and will be passed to next operation as _input_ parameter. Output of the last operation in the flow will be passed as input parameter of the completion closure.
+
+### Strongly typed operations
+
+Strong typization of input parameters and output values for each operation. That guarantees compilation time validation of the chain of operations (make sure output type of pervious operation in the chain is the same as input parameter type of the following operation).
 
 ### Operates via main queue
 
-Each sequence manages its flow on main queue, i.e. every step is being executed on target queue, but sequence passes results from previous task to next one and controls the flow via main queue.
+Each flow manages its execution on main queue, i.e. every step is being executed on target queue, but flow passes results from previous operation to next one and controls execution via main queue.
 
-### Completion block
+### Completion closure
 
-When all tasks from the sequence have been _successfully_ completed, the sequence will call completion block with result of the very last task in the sequence. 
+When all operations from the flow have been _successfully_ completed, completion closure will be called with output value of the very last operation in the flow. 
 
-### Shared error handling block
+### Shared failure handlers
 
-Each sequence can be configured with shared error handling block which will be called (with error as input parameter) if _ANY_ of the tasks in the sequence has indicated execution failure.
+Each flow can be configured with shared failure handlers (closures) which will be called (with error as input parameter) if _ANY_ of the operations in the flow has indicated execution failure.
 
 ### Cancellable
 
-Any sequence might be cancelled at any time. If cancelled, sequence won't force to stop current task execution immediately, but will NOT proceed to next task or completion block.
+The flow might be cancelled at any time. If cancelled, flow won't force to stop current operation execution immediately, but will NOT proceed to next operation and completion closure.
 
 How to add to your project
 ---
@@ -83,7 +89,7 @@ import MKHOperationFlow
 How To Use
 ---
 
-Please, see [unit tests][5] to get an idea of how to use Sequence class.
+Please, see [unit tests][5] to get an idea of how to use `OperationFlow` class.
 
 Swift 3
 ---
@@ -95,7 +101,7 @@ Starting from [version 3.0][6], this library supports Swift 3. For compatibility
 [1]: http://promisekit.org
 [2]: https://github.com/iMartinKiss/Objective-Chain
 [3]: https://github.com/ReactiveCocoa/ReactiveCocoa
-[4]: https://www.google.ru/search?q=objective+c+block
+[4]: https://www.google.ru/search?q=swift+closure
 [5]: https://github.com/maximkhatskevich/MKHOperationFlow/blob/master/Tst/Main.swift
 [6]: https://github.com/maximkhatskevich/MKHOperationFlow/releases/tag/3.0.0
 [7]: https://github.com/maximkhatskevich/MKHOperationFlow/releases/tag/2.6.3
