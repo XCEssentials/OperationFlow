@@ -88,7 +88,7 @@ struct Connector<NextInput> // NextInput - last Output and next Input at the sam
     
     @discardableResult
     public
-    func finally<Input>(_ handler: @escaping Completion<Input>) -> OperationFlow
+    func finally(_ handler: @escaping Completion<NextInput>) -> OperationFlow
     {
         return flow.finally(handler)
     }

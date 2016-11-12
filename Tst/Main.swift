@@ -1,6 +1,6 @@
 //
 //  Main.swift
-//  MKHSequenceTst
+//  MKHOperationFlowTst
 //
 //  Created by Maxim Khatskevich on 11/26/15.
 //  Copyright © 2015 Maxim Khatskevich. All rights reserved.
@@ -20,7 +20,7 @@ enum TestError: Error
 
 //===
 
-class MKHOperationFlowTst: XCTestCase
+class Main: XCTestCase
 {
     func testSimpleCase()
     {
@@ -28,33 +28,32 @@ class MKHOperationFlowTst: XCTestCase
         
         //===
         
+        let caseName = "SimpleCase"
+        
         let expectation =
-            self.expectation(description: "SimpleCase Sequence")
+            self.expectation(description: caseName)
         
         //===
         
-        let res1 = "SimpleCase - 1st result"
-        let res2 = "SimpleCase - 2nd result"
+        let res1 = caseName + " - 1st result"
+        let res2 = caseName + " - 2nd result"
         
         var task1Completed = false
         var task2Completed = false
         
         //===
         
-        let seq = Sequence()
+        let firstBlock = { (flow: OperationFlow) throws -> String in
         
-        seq.add { (_, previousResult: Any?) -> Any? in
-            
             XCTAssertFalse(task1Completed)
             XCTAssertFalse(task2Completed)
-            XCTAssertNil(previousResult)
             XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
             for i in 0...1000
             {
-                print("SimpleCase task 1, step \(i)")
+                print(caseName + " task 1, step \(i)")
             }
             
             task1Completed = true
@@ -64,19 +63,18 @@ class MKHOperationFlowTst: XCTestCase
             return res1
         }
         
-        seq.add { (_, previousResult: String?) -> Any? in
-            
+        let secondBlock = { (flow: OperationFlow, input: String) throws -> String in
+        
             XCTAssertTrue(task1Completed)
             XCTAssertFalse(task2Completed)
-            XCTAssertNotNil(previousResult)
-            XCTAssertEqual(previousResult, res1)
+            XCTAssertEqual(input, res1)
             XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
             for i in 0...10000
             {
-                print("SimpleCase task 2, step \(i)")
+                print(caseName + " task 2, step \(i)")
             }
             
             task2Completed = true
@@ -86,17 +84,16 @@ class MKHOperationFlowTst: XCTestCase
             return res2
         }
         
-        seq.finally { (_, lastResult: String?) in
-            
+        let finalBlock = { (flow: OperationFlow, input: String) in
+        
             XCTAssertTrue(task1Completed)
             XCTAssertTrue(task2Completed)
-            XCTAssertNotNil(lastResult)
-            XCTAssertEqual(lastResult, res2)
+            XCTAssertEqual(input, res2)
             XCTAssertEqual(OperationQueue.current, OperationQueue.main)
             
             //===
             
-            print("SimpleCase - DONE")
+            print(caseName + " - DONE")
             
             //===
             
@@ -107,91 +104,106 @@ class MKHOperationFlowTst: XCTestCase
         
         //===
         
+        OperationFlow(caseName)
+            .add(firstBlock)
+            .add(secondBlock)
+            .finally(finalBlock)
+        
+        //===
+        
         waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testCaseWithError()
     {
+        let caseName = "CaseWithError"
+        
         let expectation =
-            self.expectation(description: "CaseWithError Sequence")
+            self.expectation(description: caseName)
         
         //===
         
-        let res1 = "CaseWithError - 1st result"
+        let res1 = caseName + " - 1st result"
         let errCode = 1231481 // just random number
         
         var task1Completed = false
         
         //===
         
-        Sequence()
-            .add { (_, previousResult: Any?) -> Any? in
-                
-                XCTAssertFalse(task1Completed)
-                XCTAssertNil(previousResult)
-                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
+        let firstBlock = { (flow: OperationFlow) throws -> String in
             
-                //===
-                
-                for i in 0...1000
-                {
-                    print("CaseWithError task 1, step \(i)")
-                }
-                
-                task1Completed = true
-                
-                //===
-                
-                return res1
-            }
-            .add { (_, previousResult: String?) -> Any? in
+            XCTAssertFalse(task1Completed)
+            XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
-                XCTAssertTrue(task1Completed)
-                XCTAssertNotNil(previousResult)
-                XCTAssertEqual(previousResult, res1)
-                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
-                
-                //===
-                
-                for i in 0...10000
-                {
-                    print("CaseWithError task 2, step \(i)")
-                }
-                
-                //===
-                
-                // lets return error here
-                
-                throw TestError.two(code: errCode)
+            //===
+            
+            for i in 0...1000
+            {
+                print(caseName + " task 1, step \(i)")
             }
-            .onFailure({ (_, error) -> Void in
-                
-                XCTAssertTrue(task1Completed)
-                XCTAssertEqual(OperationQueue.current, OperationQueue.main)
-                
-                //===
-                
-                XCTAssertTrue(error is TestError)
-                
-                switch error
-                {
-                    case TestError.two(let code):
-                        XCTAssertEqual(code, errCode)
+            
+            task1Completed = true
+            
+            //===
+            
+            return res1
+        }
+        
+        let secondBlock = { (flow: OperationFlow, input: String) throws -> String in
+        
+            XCTAssertTrue(task1Completed)
+            XCTAssertEqual(input, res1)
+            XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
+            
+            //===
+            
+            for i in 0...10000
+            {
+                print(caseName + " task 2, step \(i)")
+            }
+            
+            //===
+            
+            // lets return error here
+            
+            throw TestError.two(code: errCode)
+        }
+        
+        let failureBlock = { (flow: OperationFlow, error: Error) in
+            
+            XCTAssertTrue(task1Completed)
+            XCTAssertEqual(OperationQueue.current, OperationQueue.main)
+            
+            //===
+            
+            XCTAssertTrue(error is TestError)
+            
+            switch error
+            {
+                case TestError.two(let code):
+                    XCTAssertEqual(code, errCode)
                     
-                    default:
-                        XCTAssert(false, "Received wrong error type")
-                }
-                
-                //===
-                
-                print("CaseWithError - FAILURE REPORTED")
-                
-                //===
-                
-                // this error block has been executed as expected
-                
-                expectation.fulfill()
-            })
+                default:
+                    XCTAssert(false, "Received wrong error type")
+            }
+            
+            //===
+            
+            print(caseName + " - FAILURE REPORTED")
+            
+            //===
+            
+            // this error block has been executed as expected
+            
+            expectation.fulfill()
+        }
+        
+        //===
+        
+        OperationFlow(caseName)
+            .add(firstBlock)
+            .add(secondBlock)
+            .onFailure(failureBlock)
             .start()
         
         //===
@@ -201,67 +213,76 @@ class MKHOperationFlowTst: XCTestCase
     
     func testCaseWithCancel()
     {
-        let res1 = "CaseWithCancel - 1st result"
+        let caseName = "CaseWithCancel"
+        
+        //===
+        
+        let res1 = caseName + " - 1st result"
         
         var task1Started = false
         var task1Completed = false
         
         //===
         
-        Sequence()
-            .add { (sequence, previousResult: Any?) -> Any? in
-                
-                XCTAssertFalse(task1Started)
-                XCTAssertFalse(task1Completed)
-                XCTAssertNotEqual(sequence.status, Sequence.Status.cancelled)
-                XCTAssertNil(previousResult)
-                XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
-                
-                //===
-                
-                task1Started = true
-                
-                //===
-                
-                OperationQueue
-                    .main
-                    .addOperation {
-                        
-                        XCTAssertTrue(task1Started)
-                        XCTAssertFalse(task1Completed)
-                        XCTAssertNotEqual(sequence.status, Sequence.Status.cancelled)
-                        
-                        //===
-                        
-                        sequence.cancel()
-                        
-                        //===
-                        
-                        XCTAssertEqual(sequence.status, Sequence.Status.cancelled)
-                    }
-                
-                //===
-                
-                for i in 0...10000
-                {
-
-                    print("CaseWithCancel task 1, step \(i)")
+        let firstBlock = { (flow: OperationFlow) throws -> String in
+        
+            XCTAssertFalse(task1Started)
+            XCTAssertFalse(task1Completed)
+            XCTAssertNotEqual(flow.status, .cancelled)
+            XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
+            
+            //===
+            
+            task1Started = true
+            
+            //===
+            
+            OperationQueue
+                .main
+                .addOperation {
+                    
+                    XCTAssertTrue(task1Started)
+                    XCTAssertFalse(task1Completed)
+                    XCTAssertNotEqual(flow.status, .cancelled)
+                    
+                    //===
+                    
+                    flow.cancel()
+                    
+                    //===
+                    
+                    XCTAssertEqual(flow.status, .cancelled)
                 }
+            
+            //===
+            
+            for i in 0...10000
+            {
                 
-                task1Completed = true
-                
-                //===
-                
-                XCTAssertEqual(sequence.status, Sequence.Status.cancelled)
-                
-                //===
-                
-                return res1
+                print(caseName + " task 1, step \(i)")
             }
-            .finally { (_, lastResult: Any?) in
-                
-                XCTAssert(false, "This blok should NOT be called ever.")
-            }
+            
+            task1Completed = true
+            
+            //===
+            
+            XCTAssertEqual(flow.status, .cancelled)
+            
+            //===
+            
+            return res1
+        }
+        
+        let finalBlock = { (flow: OperationFlow, _: String) in
+         
+            XCTAssert(false, "This blok should NOT be called ever.")
+        }
+        
+        //===
+        
+        OperationFlow(caseName)
+            .add(firstBlock)
+            .finally(finalBlock)
         
         //===
         
@@ -273,12 +294,14 @@ class MKHOperationFlowTst: XCTestCase
     
     func testCaseWithErrorAndRepeat()
     {
+        let caseName = "CaseWithErrorAndRepeat"
+        
         let expectation =
-            self.expectation(description: "CaseWithErrorAndRepeat Sequence")
+            self.expectation(description: caseName)
         
         //===
         
-        let res1 = "CaseWithErrorAndRepeat - 1st result"
+        let res1 = caseName + " - 1st result"
         let errCode = 1231481 // just random number
         
         var failureReported = false
@@ -286,70 +309,76 @@ class MKHOperationFlowTst: XCTestCase
         
         //===
         
-        Sequence()
-            .add { (_, previousResult: Any?) -> Any? in
-                
-                for i in 0...1000
-                {
-                    print("SimpleCase task 1, step \(i)")
-                }
-                
-                //===
-                
-                if shouldReportFailure
-                {
-                    throw TestError.two(code: errCode)
-                }
-                else
-                {
-                    return res1
-                }
+        let firstBlock = { (flow: OperationFlow) throws -> String in
+            
+            for i in 0...1000
+            {
+                print(caseName + " task 1, step \(i)")
             }
-            .onFailure({ (sequence, error) -> Void in
-                
-                XCTAssertFalse(failureReported)
-                
-                //===
-                
-                XCTAssertTrue(error is TestError)
-                
-                switch error
-                {
-                    case TestError.two(let code):
-                        XCTAssertEqual(code, errCode)
-                        
-                    default:
-                        XCTAssert(false, "Received wrong error type")
-                }
-                
-                //===
-                
-                failureReported = true
-                shouldReportFailure = false
-                
-                //===
-                
-                // re-try after 1.5 seconds
-                
-                sequence.executeAgain(after: 1.5)
-            })
-            .finally { (_, lastResult: Any?) in
-                
-                XCTAssertTrue(failureReported)
-                XCTAssertNotNil(lastResult)
-                XCTAssertTrue(lastResult is String)
-                XCTAssertEqual((lastResult as! String), res1)
-                
-                //===
-                
-                print("CaseWithErrorAndRepeat - DONE")
-                
-                //===
-                
-                // this error block has been executed as expected
-                
-                expectation.fulfill()
+            
+            //===
+            
+            if shouldReportFailure
+            {
+                throw TestError.two(code: errCode)
             }
+            else
+            {
+                return res1
+            }
+        }
+        
+        let failureBlock = { (flow: OperationFlow, error: Error) in
+           
+            XCTAssertFalse(failureReported)
+            
+            //===
+            
+            XCTAssertTrue(error is TestError)
+            
+            switch error
+            {
+                case TestError.two(let code):
+                    XCTAssertEqual(code, errCode)
+                    
+                default:
+                    XCTAssert(false, "Received wrong error type")
+            }
+            
+            //===
+            
+            failureReported = true
+            shouldReportFailure = false
+            
+            //===
+            
+            // re-try after 1.5 seconds
+            
+            flow.executeAgain(after: 1.5)
+        }
+        
+        let finalBlock = { (flow: OperationFlow, input: String) in
+            
+            XCTAssertTrue(failureReported)
+            XCTAssertEqual(input, res1)
+            
+            //===
+            
+            print(caseName + " - DONE")
+            
+            //===
+            
+            // this error block has been executed as expected
+            
+            expectation.fulfill()
+        }
+        
+        //===
+        
+        OperationFlow(caseName)
+            .add(firstBlock)
+            .onFailure(failureBlock)
+            .finally(finalBlock)
         
         //===
         
@@ -358,37 +387,45 @@ class MKHOperationFlowTst: XCTestCase
     
     func testCaseWithErrorAndDefault()
     {
+        let caseName = "CaseWithErrorAndDefault"
+        
         let expectation =
-            self.expectation(description: "CaseWithErrorAndDefault Sequence")
+            self.expectation(description: caseName)
         
         //===
         
-        Sequence()
-            .add { (_, previousResult: Any?) -> Any? in
-                
-                throw TestError.one
+        let firstBlock = { (flow: OperationFlow) throws -> String in
+        
+            throw TestError.one
+        }
+        
+        let failureBlock = { (flow: OperationFlow, error: Error) in
+        
+            XCTAssertTrue(error is TestError)
+            
+            switch error
+            {
+                case TestError.one:
+                    XCTAssert(true)
+                    
+                default:
+                    XCTAssert(false, "Received wrong error type")
             }
-            .onFailure({ (_, error) -> Void in
-                
-                XCTAssertTrue(error is TestError)
-                
-                switch error
-                {
-                    case TestError.one:
-                        XCTAssert(true)
-                        
-                    default:
-                        XCTAssert(false, "Received wrong error type")
-                }
-                
-                //===
-                
-                print("CaseWithError - FAILURE REPORTED")
-                
-                //===
-                
-                expectation.fulfill()
-            })
+            
+            //===
+            
+            print(caseName + " - FAILURE REPORTED")
+            
+            //===
+            
+            expectation.fulfill()
+        }
+        
+        //===
+        
+        OperationFlow(caseName)
+            .add(firstBlock)
+            .onFailure(failureBlock)
             .start()
         
         //===
@@ -396,85 +433,84 @@ class MKHOperationFlowTst: XCTestCase
         waitForExpectations(timeout: 5.0, handler: nil)
     }
     
-    func testCaseWithBegin()
+    func testCaseWithInput()
     {
+        let caseName = "CaseWithInput"
+        
         let expectation =
-            self.expectation(description: "CaseWithBegin Sequence")
+            self.expectation(description: caseName)
         
         //===
         
-        let res0 = "CaseWithBegin - input"
+        let res0 = caseName + " - input"
         
         //===
         
-        let seq = Sequence()
+        let firstBlock = { (flow: OperationFlow, input: String) throws -> Void in
         
-        seq.beginWith { () -> Any? in
-            
-            return res0
-        }
-        
-        seq.add { (_, previousResult: String?) -> Any? in
-            
-            XCTAssertEqual(res0, previousResult)
+            XCTAssertEqual(res0, input)
             
             //===
             
             for i in 0...1000
             {
-                print("CaseWithBegin task 1, step \(i)")
+                print(caseName + " task 1, step \(i)")
             }
-            
-            //===
-            
-            return nil
         }
         
-        seq.finally { (_, previousResult: Any?) in
+        let finalBlock = { (flow: OperationFlow, _: Void) in
             
             expectation.fulfill()
         }
+        
+        //===
+        
+        OperationFlow(caseName)
+            .input(res0)
+            .add(firstBlock)
+            .finally(finalBlock)
         
         //===
         
         waitForExpectations(timeout: 5.0, handler: nil)
     }
     
-    func testCaseWithBegin2()
+    func testCaseWithInput2()
     {
+        let caseName = "CaseWithInput2"
+        
         let expectation =
-            self.expectation(description: "CaseWithBegin2 Sequence")
+            self.expectation(description: caseName)
         
         //===
         
-        let res0 = "CaseWithBegin2 - input"
+        let res0 = caseName + " - input"
         
         //===
         
-        let seq = Sequence()
-        
-        seq.input(res0)
-        
-        seq.add { (_, previousResult: String?) -> Any? in
+        let firstBlock = { (flow: OperationFlow, input: String) throws -> Void in
             
-            XCTAssertEqual(res0, previousResult)
+            XCTAssertEqual(res0, input)
             
             //===
             
             for i in 0...1000
             {
-                print("CaseWithBegin2 task 1, step \(i)")
+                print(caseName + " task 1, step \(i)")
             }
-            
-            //===
-            
-            return nil
         }
         
-        seq.finally { (_, previousResult: Any?) in
+        let finalBlock = { (flow: OperationFlow, _: Void) in
             
             expectation.fulfill()
         }
+        
+        //===
+        
+        OperationFlow(caseName)
+            .input(res0)
+            .add(firstBlock)
+            .finally(finalBlock)
         
         //===
         
