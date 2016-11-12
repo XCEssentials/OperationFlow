@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                      = 'MKHOperationFlow'
-  s.version                   = '3.0.0'
+  s.version                   = '3.1.0'
   s.summary                   = 'Lightweight async serial operation flow controller.'
   s.homepage                  = 'https://github.com/maximkhatskevich/#{s.name}'
 
