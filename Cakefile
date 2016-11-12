@@ -7,8 +7,8 @@ currentSwiftVersion = 3.0
 
 #===
 
-project.name = "MKHSequence"
-project.class_prefix = "SEQ"
+project.name = "MKHOperationFlow"
+project.class_prefix = "OFL"
 project.organization = "Maxim Khatskevich"
 
 #===
@@ -69,11 +69,11 @@ target do |target|
 
         configuration.settings["PRODUCT_NAME"] = "$(TARGET_NAME)"
 
-        # This will show "Automatic" in Xcode,
-        # relies on proper/valid "PROVISIONING_PROFILE" value:
-        configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = nil
+        # Xcode 8 automati c signing support
+        configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Developer"
+        configuration.settings["DEVELOPMENT_TEAM"] = "UJA88X59XP" # Personal team
 
-        configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
+        configuration.settings["SWIFT_VERSION"] = currentSwiftVersion.to_s # Xcode 8
 
     end
 
@@ -97,7 +97,11 @@ target do |target|
 
             configuration.settings["LD_RUNPATH_SEARCH_PATHS"] = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
 
-            configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
+            # Xcode 8 automati c signing support
+            configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Developer"
+            configuration.settings["DEVELOPMENT_TEAM"] = "UJA88X59XP" # Personal team
+
+            configuration.settings["SWIFT_VERSION"] = currentSwiftVersion.to_s # Xcode 8
 
         end
 
