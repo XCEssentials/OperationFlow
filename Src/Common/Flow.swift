@@ -63,7 +63,7 @@ class OperationFlow
     var completion: CommonCompletion?
     
     fileprivate
-    var failureHandler: CommonFailure?
+    var failureHandlers: [CommonFailure] = []
     
     //===
     
@@ -186,6 +186,27 @@ extension OperationFlow
             })
     }
     
+    func onFailure<E: Error>(_ handler: @escaping Failure<E>)
+    {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
+        if
+            status == .pending
+        {
+            failureHandlers
+                .append({ (flow, error) in
+                
+                    if
+                        let error = error as? E
+                    {
+                        handler(flow, error)
+                    }
+                })
+        }
+    }
+    
     func onFailure(_ handler: @escaping CommonFailure)
     {
         // NOTE: this mehtod is supposed to be called on main queue
@@ -195,7 +216,22 @@ extension OperationFlow
         if
             status == .pending
         {
-            failureHandler = handler
+            failureHandlers
+                .append(handler)
+        }
+    }
+    
+    func onFailure(_ handlers: [CommonFailure])
+    {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
+        if
+            status == .pending
+        {
+            failureHandlers
+                .append(contentsOf: handlers)
         }
     }
     
@@ -322,10 +358,9 @@ extension OperationFlow
                 
                 //===
                 
-                if
-                    let failureHandler = self.failureHandler
+                for handler in self.failureHandlers
                 {
-                    failureHandler(self, error)
+                    handler(self, error)
                 }
             }
         }

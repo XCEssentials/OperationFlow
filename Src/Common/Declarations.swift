@@ -19,8 +19,8 @@ typealias OperationShort<Output> = (_ flow: OperationFlow) throws -> Output // n
 public
 typealias CommonFailure = (_ flow: OperationFlow, _ error: Error) -> Void
 
-//public
-//typealias Failure<Err> = (_ flow: OperationFlow, _ error: Err) -> Void
+public
+typealias Failure<E: Error> = (_ flow: OperationFlow, _ error: E) -> Void
 
 public
 typealias Completion<Input> = (_ flow: OperationFlow, _ input: Input) -> Void
