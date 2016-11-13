@@ -112,13 +112,21 @@ struct Connector<NextInput> // NextInput - last Output and next Input at the sam
     public
     func finally(_ handler: @escaping Completion<NextInput>) -> OperationFlow
     {
-        return flow.finally(handler)
+        flow.finally(handler)
+        
+        //===
+        
+        return flow
     }
     
     @discardableResult
     public
     func start() -> OperationFlow
     {
-        return flow.start()
+        flow.start()
+        
+        //===
+        
+        return flow
     }
 }

@@ -96,10 +96,6 @@ extension OperationFlow
 {
     func input<Input>(_ value: Input) -> FirstConnector<Input>
     {
-        // NOTE: this mehtod is supposed to be called on main queue
-        
-        //===
-        
         return FirstConnector(self, initialInput: value)
     }
     
@@ -109,11 +105,14 @@ extension OperationFlow
         
         //===
         
-        operations
-            .append({ (flow, _) throws -> Any? in
-                
-                return try op(flow)
-            })
+        ensureOnMain {
+            
+            self.operations
+                .append { (flow, _) throws -> Any? in
+                    
+                    return try op(flow)
+                }
+        }
         
         //===
         
@@ -126,42 +125,33 @@ extension OperationFlow
         
         //===
         
-        switch status
-        {
-            case .pending, .processing:
-                status = .cancelled
-                
-            default:
-                break // ignore
+        ensureOnMain {
+            
+            switch self.status
+            {
+                case .pending, .processing:
+                    self.status = .cancelled
+                    
+                default:
+                    break // ignore
+            }
         }
     }
     
-    func executeAgain() // (after: NSTimeInterval = 0)
+    func executeAgain(after delay: TimeInterval = 0)
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        if
-            reset()
-        {
-            start()
+        ensureOnMain(after: delay) {
+            
+            if
+                self.reset()
+            {
+                self.start()
+            }
         }
-    }
-    
-    func executeAgain(after interval: TimeInterval)
-    {
-        // NOTE: this mehtod is supposed to be called on main queue
-        
-        //===
-        
-        let delay =
-            DispatchTime.now() +
-                Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-        
-        DispatchQueue
-            .main
-            .asyncAfter(deadline: delay) { self.executeAgain() }
     }
 }
 
@@ -171,19 +161,22 @@ extension OperationFlow
 {
     func add<Input, Output>(_ op: @escaping Operation<Input, Output>)
     {
-        operations
-            .append({ (flow, input) throws -> Any? in
-                
-                if
-                    let typedInput = input as? Input
-                {
-                    return try op(flow, typedInput)
-                }
-                else
-                {
-                    throw InvalidInputType(expectedType: Input.self, actualType: type(of: input))
-                }
-            })
+        ensureOnMain {
+            
+            self.operations
+                .append { (flow, input) throws -> Any? in
+                    
+                    if
+                        let typedInput = input as? Input
+                    {
+                        return try op(flow, typedInput)
+                    }
+                    else
+                    {
+                        throw InvalidInputType(expectedType: Input.self, actualType: type(of: input))
+                    }
+            }
+        }
     }
     
     func onFailure<E: Error>(_ handler: @escaping Failure<E>)
@@ -192,18 +185,21 @@ extension OperationFlow
         
         //===
         
-        if
-            status == .pending
-        {
-            failureHandlers
-                .append({ (flow, error) in
-                
-                    if
-                        let error = error as? E
-                    {
-                        handler(flow, error)
-                    }
-                })
+        ensureOnMain {
+            
+            if
+                self.status == .pending
+            {
+                self.failureHandlers
+                    .append({ (flow, error) in
+                        
+                        if
+                            let error = error as? E
+                        {
+                            handler(flow, error)
+                        }
+                    })
+            }
         }
     }
     
@@ -213,11 +209,14 @@ extension OperationFlow
         
         //===
         
-        if
-            status == .pending
-        {
-            failureHandlers
-                .append(handler)
+        ensureOnMain {
+            
+            if
+                self.status == .pending
+            {
+                self.failureHandlers
+                    .append(handler)
+            }
         }
     }
     
@@ -227,66 +226,66 @@ extension OperationFlow
         
         //===
         
-        if
-            status == .pending
-        {
-            failureHandlers
-                .append(contentsOf: handlers)
-        }
-    }
-    
-    func finally<Input>(_ handler: @escaping Completion<Input>) -> Self
-    {
-        // NOTE: this mehtod is supposed to be called on main queue
-        
-        //===
-        
-        if
-            status == .pending
-        {
-            completion = { (flow, input) throws in
-                
-                if
-                    let typedInput = input as? Input
-                {
-                    return handler(flow, typedInput)
-                }
-                else
-                {
-                    throw InvalidInputType(expectedType: Input.self, actualType: type(of: input))
-                }
+        ensureOnMain {
+            
+            if
+                self.status == .pending
+            {
+                self.failureHandlers
+                    .append(contentsOf: handlers)
             }
-            
-            //===
-            
-            start()
         }
-        
-        //===
-        
-        return self
     }
     
-    @discardableResult
-    func start() -> Self
+    func finally<Input>(_ handler: @escaping Completion<Input>)
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        if
-            status == .pending
-        {
-            status = .processing
+        ensureOnMain {
             
-            //===
-            
-            executeNext()
+            if
+                self.status == .pending
+            {
+                self.completion = { (flow, input) throws in
+                    
+                    if
+                        let typedInput = input as? Input
+                    {
+                        return handler(flow, typedInput)
+                    }
+                    else
+                    {
+                        throw InvalidInputType(expectedType: Input.self, actualType: type(of: input))
+                    }
+                }
+                
+                //===
+                
+                self.start()
+            }
         }
+    }
+    
+    func start()
+    {
+        // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        return self
+        ensureOnMain {
+            
+            if
+                self.status == .pending
+            {
+                self.status = .processing
+                
+                //===
+                
+                self.executeNext()
+            }
+        }
     }
 }
 
@@ -345,7 +344,7 @@ extension OperationFlow
     
     func reportFailure(_ error: Error)
     {
-        runOnMain {
+        addToMain {
             
             if
                 self.status == .processing
@@ -368,7 +367,7 @@ extension OperationFlow
     
     func proceed(_ previousResult: Any? = nil)
     {
-        runOnMain {
+        addToMain {
             
             if
                 self.status == .processing
