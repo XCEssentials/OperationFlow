@@ -10,44 +10,6 @@ import Foundation
 
 //===
 
-public
-typealias OpWithInput<Input, Output> = (CompleteFlow, Input) throws -> Output
-
-public
-typealias Op<Output> = (CompleteFlow) throws -> Output // no input
-
-public
-typealias OpShortWithInput<Input, Output> = (Input) throws -> Output
-
-public
-typealias OpShortNoInput<Output> = () throws -> Output // no input
-
-public
-typealias FailureS<E: Error> = (CompleteFlow, E) -> Void
-
-public
-typealias FailureG = (CompleteFlow, Error) -> Void
-
-public
-typealias ComplWithInput<Input> = (CompleteFlow, Input) -> Void
-
-public
-typealias Compl<Input> = (CompleteFlow) -> Void
-
-public
-typealias ComplShortWithInput<Input> = (Input) -> Void
-
-public
-typealias ComplShort<Input> = () -> Void
-
-//===
-
-typealias GenericOperation = (CompleteFlow, Any?) throws -> Any?
-
-typealias GenericCompletion = (CompleteFlow, Any?) throws -> Void
-
-//===
-
 typealias FlowCore = (
 
     name: String,
@@ -56,7 +18,7 @@ typealias FlowCore = (
 
     operations: [GenericOperation],
     completion: GenericCompletion?,
-    failureHandlers: [FailureG]
+    failureHandlers: [FailureGeneric]
 )
 
 //===
@@ -81,7 +43,7 @@ struct NewFirstConnector<InitialInput>
     //===
     
     public
-    func add<Output>(_ op: @escaping OpWithInput<InitialInput, Output>) -> NewConnector<Output>
+    func add<Output>(_ op: @escaping ManagingOperation<InitialInput, Output>) -> NewConnector<Output>
     {
         flow.enq { [input = self.initialInput] (fl, _: Void) in
             
@@ -113,7 +75,7 @@ struct NewConnector<NextInput>
     //===
     
     public
-    func add<NextOutput>(_ op: @escaping OpWithInput<NextInput, NextOutput>) -> NewConnector<NextOutput>
+    func add<NextOutput>(_ op: @escaping ManagingOperation<NextInput, NextOutput>) -> NewConnector<NextOutput>
     {
         flow.enq(op)
         
@@ -123,7 +85,7 @@ struct NewConnector<NextInput>
     }
     
     public
-    func onFailure<E: Error>(_ handler: @escaping FailureS<E>) -> NewConnector<NextInput>
+    func onFailure<E: Error>(_ handler: @escaping Failure<E>) -> NewConnector<NextInput>
     {
         flow.onFailure(handler)
         
@@ -133,7 +95,7 @@ struct NewConnector<NextInput>
     }
     
     public
-    func onFailure(_ handler: @escaping FailureG) -> NewConnector<NextInput>
+    func onFailure(_ handler: @escaping FailureGeneric) -> NewConnector<NextInput>
     {
         flow.onFailure(handler)
         
@@ -143,7 +105,7 @@ struct NewConnector<NextInput>
     }
 
     public
-    func onFailure(_ handlers: [FailureG]) -> NewConnector<NextInput>
+    func onFailure(_ handlers: [FailureGeneric]) -> NewConnector<NextInput>
     {
         flow.onFailure(handlers)
         
@@ -154,7 +116,7 @@ struct NewConnector<NextInput>
     
     @discardableResult
     public
-    func finally(_ handler: @escaping ComplWithInput<NextInput>) -> CompleteFlow
+    func finally(_ handler: @escaping ManagingCompletion<NextInput>) -> CompleteFlow
     {
         return flow.finally(handler)
     }
@@ -204,7 +166,7 @@ extension PendingFlow
         return NewFirstConnector(self, value)
     }
     
-    func add<Output>(_ op: @escaping Op<Output>) -> NewConnector<Output>
+    func add<Output>(_ op: @escaping ManagingOperationNoInput<Output>) -> NewConnector<Output>
     {
         enq { (flow, _: Void) in return try op(flow) }
         
@@ -218,7 +180,7 @@ extension PendingFlow
 
 extension PendingFlow
 {
-    func enq<Input, Output>(_ op: @escaping OpWithInput<Input, Output>)
+    func enq<Input, Output>(_ op: @escaping ManagingOperation<Input, Output>)
     {
         ensureOnMain {
             
@@ -243,7 +205,7 @@ extension PendingFlow
         }
     }
     
-    func onFailure<E: Error>(_ handler: @escaping FailureS<E>)
+    func onFailure<E: Error>(_ handler: @escaping Failure<E>)
     {
         ensureOnMain {
             
@@ -260,7 +222,7 @@ extension PendingFlow
         }
     }
     
-    func onFailure(_ handler: @escaping FailureG)
+    func onFailure(_ handler: @escaping FailureGeneric)
     {
         ensureOnMain {
             
@@ -270,7 +232,7 @@ extension PendingFlow
         }
     }
     
-    func onFailure(_ handlers: [FailureG])
+    func onFailure(_ handlers: [FailureGeneric])
     {
         ensureOnMain {
             
@@ -280,7 +242,7 @@ extension PendingFlow
         }
     }
     
-    func finally<Input>(_ handler: @escaping ComplWithInput<Input>) -> CompleteFlow
+    func finally<Input>(_ handler: @escaping ManagingCompletion<Input>) -> CompleteFlow
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
