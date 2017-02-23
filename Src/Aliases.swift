@@ -14,7 +14,7 @@ public
 typealias OperationWithInput<Input, Output> = (OperationFlow, Input) throws -> Output
 
 public
-typealias OperationShort<Output> = (_ flow: OperationFlow) throws -> Output // no input
+typealias Operation<Output> = (_ flow: OperationFlow) throws -> Output // no input
 
 public
 typealias CommonFailure = (_ flow: OperationFlow, _ error: Error) -> Void

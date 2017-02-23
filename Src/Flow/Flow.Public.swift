@@ -18,7 +18,7 @@ extension OperationFlow
         return FirstConnector(self, initialInput: value)
     }
     
-    func add<Output>(_ op: @escaping OperationShort<Output>) -> Connector<Output>
+    func add<Output>(_ op: @escaping Operation<Output>) -> Connector<Output>
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
