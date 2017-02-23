@@ -39,7 +39,7 @@ struct Connector<NextInput> // NextInput - last Output and next Input at the sam
     
     @discardableResult
     public
-    func onFailure<E: Error>(_ handler: @escaping Failure<E>) -> Connector<NextInput>
+    func onFailure<E: Error>(_ handler: @escaping FailureSpecialized<E>) -> Connector<NextInput>
     {
         flow.onFailure(handler)
         

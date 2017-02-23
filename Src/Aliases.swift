@@ -20,7 +20,7 @@ public
 typealias FailureGeneric = (OperationFlow, Error) -> Void
 
 public
-typealias Failure<E: Error> = (_ flow: OperationFlow, _ error: E) -> Void
+typealias FailureSpecialized<CustomError: Error> = (OperationFlow, CustomError) -> Void
 
 public
 typealias Completion<Input> = (_ flow: OperationFlow, _ input: Input) -> Void

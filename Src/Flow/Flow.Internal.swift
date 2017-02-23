@@ -32,7 +32,7 @@ extension OperationFlow
         }
     }
     
-    func onFailure<E: Error>(_ handler: @escaping Failure<E>)
+    func onFailure<E: Error>(_ handler: @escaping FailureSpecialized<E>)
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
