@@ -1,9 +1,11 @@
 # https://github.com/jcampbell05/xcake
 # http://www.rubydoc.info/github/jcampbell05/xcake/master/file/docs/Cakefile.md
 
+iOSdeploymentTarget = "8.0"
+currentSwiftVersion = "3.0"
+companyIdentifier = "khatskevich.maxim"
+developmentTeamId = "UJA88X59XP"
 testSuffix = "Tst"
-iOSdeploymentTarget = 8.0
-currentSwiftVersion = 3.0
 
 #===
 
@@ -38,6 +40,8 @@ project.all_configurations.each do |configuration|
     configuration.settings["CLANG_WARN_SUSPICIOUS_MOVE"] = "YES"
     configuration.settings["ENABLE_STRICT_OBJC_MSGSEND"] = "YES"
 
+    configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
+
     #===
 
     if configuration.name == "Release"
@@ -63,17 +67,17 @@ target do |target|
 
         #=== Build Settings - Core
 
-        configuration.product_bundle_identifier = "khatskevich.maxim." + target.name
+        configuration.product_bundle_identifier = companyIdentifier + "." + target.name
 
         configuration.settings["INFOPLIST_FILE"] = "Info/" + target.name + ".plist"
 
         configuration.settings["PRODUCT_NAME"] = "$(TARGET_NAME)"
 
         # Xcode 8 automati c signing support
-        configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Developer"
-        configuration.settings["DEVELOPMENT_TEAM"] = "UJA88X59XP" # Personal team
+        configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Distribution"
+        configuration.settings["DEVELOPMENT_TEAM"] = developmentTeamId
 
-        configuration.settings["SWIFT_VERSION"] = currentSwiftVersion.to_s # Xcode 8
+        configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
 
     end
 
@@ -91,17 +95,17 @@ target do |target|
 
         test_target.all_configurations.each do |configuration|
 
-            configuration.product_bundle_identifier = "khatskevich.maxim." + test_target.name
+            configuration.product_bundle_identifier = companyIdentifier + "." + test_target.name
 
             configuration.settings["INFOPLIST_FILE"] = "Info/" + test_target.name + ".plist"
 
             configuration.settings["LD_RUNPATH_SEARCH_PATHS"] = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
 
             # Xcode 8 automati c signing support
-            configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Developer"
-            configuration.settings["DEVELOPMENT_TEAM"] = "UJA88X59XP" # Personal team
+            configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Distribution"
+            configuration.settings["DEVELOPMENT_TEAM"] = developmentTeamId
 
-            configuration.settings["SWIFT_VERSION"] = currentSwiftVersion.to_s # Xcode 8
+            configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
 
         end
 
