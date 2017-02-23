@@ -20,7 +20,7 @@ public
 typealias OpShortWithInput<Input, Output> = (Input) throws -> Output
 
 public
-typealias OpShort<Output> = () throws -> Output // no input
+typealias OpShortNoInput<Output> = () throws -> Output // no input
 
 public
 typealias FailureS<E: Error> = (CompleteFlow, E) -> Void
