@@ -1,5 +1,5 @@
 //
-//  Declarations.swift
+//  Aliases.swift
 //  MKHOperationFlow
 //
 //  Created by Maxim Khatskevich on 11/12/16.

@@ -11,7 +11,12 @@ import Foundation
 //===
 
 public
-struct InvalidInputType: Error
+protocol OperationFlowError: Error {}
+
+//===
+
+public
+struct InvalidInputType: OperationFlowError
 {
     let expectedType: Any.Type
     let actualType: Any.Type
