@@ -23,4 +23,4 @@ public
 typealias FailureSpecialized<CustomError: Error> = (OperationFlow, CustomError) -> Void
 
 public
-typealias Completion<Input> = (_ flow: OperationFlow, _ input: Input) -> Void
+typealias Completion<Input> = (OperationFlow, Input) -> Void
