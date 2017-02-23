@@ -56,7 +56,7 @@ extension OperationFlow
         }
     }
     
-    func onFailure(_ handler: @escaping CommonFailure)
+    func onFailure(_ handler: @escaping FailureGeneric)
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
@@ -73,7 +73,7 @@ extension OperationFlow
         }
     }
     
-    func onFailure(_ handlers: [CommonFailure])
+    func onFailure(_ handlers: [FailureGeneric])
     {
         // NOTE: this mehtod is supposed to be called on main queue
         

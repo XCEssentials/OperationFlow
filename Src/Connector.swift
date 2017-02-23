@@ -50,7 +50,7 @@ struct Connector<NextInput> // NextInput - last Output and next Input at the sam
     
     @discardableResult
     public
-    func onFailure(_ handler: @escaping CommonFailure) -> Connector<NextInput>
+    func onFailure(_ handler: @escaping FailureGeneric) -> Connector<NextInput>
     {
         flow.onFailure(handler)
         
@@ -61,7 +61,7 @@ struct Connector<NextInput> // NextInput - last Output and next Input at the sam
     
     @discardableResult
     public
-    func onFailure(_ handlers: [CommonFailure]) -> Connector<NextInput>
+    func onFailure(_ handlers: [FailureGeneric]) -> Connector<NextInput>
     {
         flow.onFailure(handlers)
         

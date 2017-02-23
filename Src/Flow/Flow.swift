@@ -60,7 +60,7 @@ class OperationFlow
     
     var completion: CommonCompletion?
     
-    var failureHandlers: [CommonFailure] = []
+    var failureHandlers: [FailureGeneric] = []
     
     //===
     

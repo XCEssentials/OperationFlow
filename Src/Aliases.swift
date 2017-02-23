@@ -14,10 +14,10 @@ public
 typealias OperationWithInput<Input, Output> = (OperationFlow, Input) throws -> Output
 
 public
-typealias Operation<Output> = (_ flow: OperationFlow) throws -> Output // no input
+typealias Operation<Output> = (OperationFlow) throws -> Output // no input
 
 public
-typealias CommonFailure = (_ flow: OperationFlow, _ error: Error) -> Void
+typealias FailureGeneric = (OperationFlow, Error) -> Void
 
 public
 typealias Failure<E: Error> = (_ flow: OperationFlow, _ error: E) -> Void
