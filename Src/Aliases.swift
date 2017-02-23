@@ -11,7 +11,7 @@ import Foundation
 //===
 
 public
-typealias Operation<Input, Output> = (_ flow: OperationFlow, _ input: Input) throws -> Output
+typealias OperationWithInput<Input, Output> = (OperationFlow, Input) throws -> Output
 
 public
 typealias OperationShort<Output> = (_ flow: OperationFlow) throws -> Output // no input

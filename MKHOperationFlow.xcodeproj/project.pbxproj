@@ -122,9 +122,9 @@
 		943FCAC41E5F6A0E00441585 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
-				943FCAC51E5F6A0E00441585 /* Flow.Internal.swift */,
-				943FCAC61E5F6A0E00441585 /* Flow.Public.swift */,
 				943FCAC71E5F6A0E00441585 /* Flow.swift */,
+				943FCAC61E5F6A0E00441585 /* Flow.Public.swift */,
+				943FCAC51E5F6A0E00441585 /* Flow.Internal.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";

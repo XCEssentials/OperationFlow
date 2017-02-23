@@ -12,7 +12,7 @@ import Foundation
 
 extension OperationFlow
 {
-    func add<Input, Output>(_ op: @escaping Operation<Input, Output>)
+    func add<Input, Output>(_ op: @escaping OperationWithInput<Input, Output>)
     {
         ensureOnMain {
             

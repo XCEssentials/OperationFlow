@@ -32,7 +32,7 @@ struct FirstConnector<InitialInput> // NextInput - last Output and next Input at
     
     @discardableResult
     public
-    func add<Output>(_ op: @escaping Operation<InitialInput, Output>) -> Connector<Output>
+    func add<Output>(_ op: @escaping OperationWithInput<InitialInput, Output>) -> Connector<Output>
     {
         let input = self.initialInput
         

@@ -28,7 +28,7 @@ struct Connector<NextInput> // NextInput - last Output and next Input at the sam
     
     @discardableResult
     public
-    func add<NextOutput>(_ op: @escaping Operation<NextInput, NextOutput>) -> Connector<NextOutput>
+    func add<NextOutput>(_ op: @escaping OperationWithInput<NextInput, NextOutput>) -> Connector<NextOutput>
     {
         flow.add(op)
         
