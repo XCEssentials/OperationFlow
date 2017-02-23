@@ -30,7 +30,7 @@ struct FirstConnector<InitialInput>
     //===
     
     public
-    func add<Output>(_ op: @escaping ManagingOperation<InitialInput, Output>) -> NewConnector<Output>
+    func add<Output>(_ op: @escaping ManagingOperation<InitialInput, Output>) -> Connector<Output>
     {
         flow.enq { [input = self.initialInput] (fl, _: Void) in
             
@@ -39,6 +39,6 @@ struct FirstConnector<InitialInput>
         
         //===
         
-        return NewConnector<Output>(flow)
+        return Connector<Output>(flow)
     }
 }

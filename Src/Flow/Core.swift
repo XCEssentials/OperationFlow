@@ -24,79 +24,6 @@ typealias FlowCore = (
 //===
 
 public
-struct NewConnector<NextInput>
-{
-    private
-    let flow: PendingFlow
-    
-    //===
-    
-    public
-    init(_ flow: PendingFlow)
-    {
-        self.flow = flow
-    }
-    
-    //===
-    
-    public
-    func add<NextOutput>(_ op: @escaping ManagingOperation<NextInput, NextOutput>) -> NewConnector<NextOutput>
-    {
-        flow.enq(op)
-        
-        //===
-        
-        return NewConnector<NextOutput>(flow)
-    }
-    
-    public
-    func onFailure<E: Error>(_ handler: @escaping Failure<E>) -> NewConnector<NextInput>
-    {
-        flow.onFailure(handler)
-        
-        //===
-        
-        return self
-    }
-    
-    public
-    func onFailure(_ handler: @escaping FailureGeneric) -> NewConnector<NextInput>
-    {
-        flow.onFailure(handler)
-        
-        //===
-        
-        return self
-    }
-
-    public
-    func onFailure(_ handlers: [FailureGeneric]) -> NewConnector<NextInput>
-    {
-        flow.onFailure(handlers)
-        
-        //===
-        
-        return self
-    }
-    
-    @discardableResult
-    public
-    func finally(_ handler: @escaping ManagingCompletion<NextInput>) -> CompleteFlow
-    {
-        return flow.finally(handler)
-    }
-    
-    @discardableResult
-    public
-    func start() -> CompleteFlow
-    {
-        return flow.start()
-    }
-}
-
-//===
-
-public
 final
 class PendingFlow // just OperationFlow later
 {
@@ -131,13 +58,13 @@ extension PendingFlow
         return FirstConnector(self, value)
     }
     
-    func add<Output>(_ op: @escaping ManagingOperationNoInput<Output>) -> NewConnector<Output>
+    func add<Output>(_ op: @escaping ManagingOperationNoInput<Output>) -> Connector<Output>
     {
         enq { (flow, _: Void) in return try op(flow) }
         
         //===
         
-        return NewConnector<Output>(self)
+        return Connector<Output>(self)
     }
 }
 

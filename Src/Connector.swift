@@ -8,6 +8,75 @@
 
 import Foundation
 
-//=== MARK: -
+//===
 
-//
+public
+struct Connector<NextInput>
+{
+    private
+    let flow: PendingFlow
+    
+    //===
+    
+    public
+    init(_ flow: PendingFlow)
+    {
+        self.flow = flow
+    }
+    
+    //===
+    
+    public
+    func add<NextOutput>(_ op: @escaping ManagingOperation<NextInput, NextOutput>) -> Connector<NextOutput>
+    {
+        flow.enq(op)
+        
+        //===
+        
+        return Connector<NextOutput>(flow)
+    }
+    
+    public
+    func onFailure<E: Error>(_ handler: @escaping Failure<E>) -> Connector<NextInput>
+    {
+        flow.onFailure(handler)
+        
+        //===
+        
+        return self
+    }
+    
+    public
+    func onFailure(_ handler: @escaping FailureGeneric) -> Connector<NextInput>
+    {
+        flow.onFailure(handler)
+        
+        //===
+        
+        return self
+    }
+    
+    public
+    func onFailure(_ handlers: [FailureGeneric]) -> Connector<NextInput>
+    {
+        flow.onFailure(handlers)
+        
+        //===
+        
+        return self
+    }
+    
+    @discardableResult
+    public
+    func finally(_ handler: @escaping ManagingCompletion<NextInput>) -> CompleteFlow
+    {
+        return flow.finally(handler)
+    }
+    
+    @discardableResult
+    public
+    func start() -> CompleteFlow
+    {
+        return flow.start()
+    }
+}
