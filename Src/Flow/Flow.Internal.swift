@@ -196,7 +196,7 @@ extension OperationFlow
     
     func reportFailure(_ error: Error)
     {
-        addToMain {
+        asyncOnMain {
             
             if
                 self.status == .processing
@@ -219,7 +219,7 @@ extension OperationFlow
     
     func proceed(_ previousResult: Any? = nil)
     {
-        addToMain {
+        asyncOnMain {
             
             if
                 self.status == .processing

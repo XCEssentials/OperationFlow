@@ -10,7 +10,7 @@ import Foundation
 
 //===
 
-func addToMain(after delay: TimeInterval = 0, _ block: @escaping () -> Void)
+func asyncOnMain(after delay: TimeInterval = 0, _ block: @escaping () -> Void)
 {
     if
         delay > 0.0
@@ -36,7 +36,7 @@ func ensureOnMain(after delay: TimeInterval = 0, _ block: @escaping () -> Void)
     if
         delay > 0.0
     {
-        addToMain(after: delay, block)
+        asyncOnMain(after: delay, block)
     }
     else
     if
@@ -46,6 +46,6 @@ func ensureOnMain(after delay: TimeInterval = 0, _ block: @escaping () -> Void)
     }
     else
     {
-        addToMain(block)
+        asyncOnMain(block)
     }
 }
