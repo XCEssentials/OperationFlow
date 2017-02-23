@@ -10,17 +10,4 @@ import Foundation
 
 //===
 
-//public
-//typealias OperationWithInput<Input, Output> = (OperationFlow, Input) throws -> Output
 //
-//public
-//typealias Operation<Output> = (OperationFlow) throws -> Output // no input
-//
-//public
-//typealias FailureGeneric = (OperationFlow, Error) -> Void
-//
-//public
-//typealias FailureSpecialized<CustomError: Error> = (OperationFlow, CustomError) -> Void
-//
-//public
-//typealias Completion<Input> = (OperationFlow, Input) -> Void
