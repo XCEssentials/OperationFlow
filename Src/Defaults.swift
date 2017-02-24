@@ -19,5 +19,5 @@ enum FlowDefaults
     
     public
     static
-    var maxAttempts: UInt = 3
+    var maxRetries: UInt = 3
 }

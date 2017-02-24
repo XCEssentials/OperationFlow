@@ -18,10 +18,9 @@ class PendingOperationFlow
     
     //===
     
-    public
     init(_ name: String = NSUUID().uuidString,
          on targetQueue: OperationQueue = FlowDefaults.targetQueue,
-         maxRetries: UInt = FlowDefaults.maxAttempts)
+         maxRetries: UInt = FlowDefaults.maxRetries)
     {
         self.core = (
             
@@ -36,42 +35,6 @@ class PendingOperationFlow
 }
 
 /*
- 
- OperationFlow
-     .named("Fetching something from Yelp API")
-     .on(theQueue)
-     .retry(3)
- 
- Operation
-    .flow("Fetching something from Yelp API")
-    .on(theQueue)
-    .retry(3)
- 
- Operation
-    .flow("Fetching something from Yelp API").on(theQueue).retry(3)
- 
- Operation
-    .flow("Fetching something from Yelp API", on: theQueue, retry: 3)
-    .add(step1)
-    .add(step2)
- 
- OperationFlow("Fetching something from Yelp API", on: theQueue, retry: 3)
-     .add(step1)
-     .add(step2)
- 
- OperationFlow("Fetching something from Yelp API", on: theQueue, retry: 3)
-     .add(step1(initialInput)) // @autoclosure version of 'add'
-     .add(step2)
- 
- OperationFlow
-     .new("Fetching something from Yelp API", on: theQueue, retry: 3)
-     .add(step1(initialInput)) // @autoclosure version of 'add'
-     .add(step2)
- 
- "Fetching something from Yelp API"
-     .asOperationFlow(on: theQueue, retry: 3)
-     .add(step1(initialInput)) // @autoclosure version of 'add'
-     .add(step2)
  
  OperationFlow
      .new("Fetching something from Yelp API", on: theQueue, retry: 3)

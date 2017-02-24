@@ -18,11 +18,11 @@ class OperationFlow
     enum State: String
     {
         case
-        ready,
-        processing,
-        failed,
-        completed,
-        cancelled
+            ready,
+            processing,
+            failed,
+            completed,
+            cancelled
     }
     
     //===
@@ -32,7 +32,7 @@ class OperationFlow
     //===
     
     public internal(set)
-    var status: State
+    var state: State
     
     var targetTaskIndex = 0
     
@@ -41,14 +41,14 @@ class OperationFlow
     
     //===
     
-    var isCancelled: Bool { return status == .cancelled }
+    var isCancelled: Bool { return state == .cancelled }
     
     //===
     
     init(_ core: FlowCore)
     {
         self.core = core
-        self.status = .ready
+        self.state = .ready
         
         //===
         
@@ -66,9 +66,9 @@ extension OperationFlow
         ensureOnMain {
             
             if
-                self.status == .ready
+                self.state == .ready
             {
-                self.status = .processing
+                self.state = .processing
                 
                 //===
                 
@@ -82,9 +82,9 @@ extension OperationFlow
         ensureOnMain {
             
             if
-                self.status == .processing
+                self.state == .processing
             {
-                self.status = .cancelled
+                self.state = .cancelled
             }
         }
     }
@@ -160,7 +160,7 @@ extension OperationFlow
         asyncOnMain {
             
             if
-                self.status == .processing
+                self.state == .processing
             {
                 self.targetTaskIndex += 1
                 
@@ -177,7 +177,7 @@ extension OperationFlow
         
         //===
         
-        status = .completed
+        state = .completed
         
         //===
         
@@ -200,9 +200,9 @@ extension OperationFlow
     func processFailure(_ error: Error)
     {
         if
-            status == .processing
+            state == .processing
         {
-            status = .failed
+            state = .failed
             
             //===
             
@@ -231,19 +231,19 @@ extension OperationFlow
         
         //===
         
-        switch status
+        switch state
         {
-        case .failed,
-             .completed,
-             .cancelled:
-            
-            targetTaskIndex = 0
-            status = .ready
-            
-            start()
-            
-        default:
-            break // ignore
+            case .failed,
+                 .completed,
+                 .cancelled:
+                
+                targetTaskIndex = 0
+                state = .ready
+                
+                start()
+                
+            default:
+                break // ignore
         }
     }
 }
