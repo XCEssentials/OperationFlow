@@ -10,8 +10,8 @@ import Foundation
 
 //===
 
-typealias FlowCore = (
-
+typealias FlowCore =
+(
     name: String,
     targetQueue: OperationQueue,
     maxRetries: UInt, // how many times to retry on failure

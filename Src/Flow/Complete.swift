@@ -12,7 +12,7 @@ import Foundation
 
 public
 final
-class CompleteFlow // just CompleteOperationFlow later
+class OperationFlow
 {
     public
     enum State: String
@@ -59,7 +59,7 @@ class CompleteFlow // just CompleteOperationFlow later
 //===
 
 public
-extension CompleteFlow
+extension OperationFlow
 {
     func start()
     {
@@ -100,7 +100,7 @@ extension CompleteFlow
 
 //===
 
-extension CompleteFlow
+extension OperationFlow
 {
     func shouldProceed() -> Bool
     {

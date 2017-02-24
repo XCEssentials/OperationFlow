@@ -14,12 +14,12 @@ public
 struct Connector<NextInput>
 {
     private
-    let flow: PendingFlow
+    let flow: PendingOperationFlow
     
     //===
     
     public
-    init(_ flow: PendingFlow)
+    init(_ flow: PendingOperationFlow)
     {
         self.flow = flow
     }
@@ -68,14 +68,14 @@ struct Connector<NextInput>
     
     @discardableResult
     public
-    func finally(_ handler: @escaping ManagingCompletion<NextInput>) -> CompleteFlow
+    func finally(_ handler: @escaping ManagingCompletion<NextInput>) -> OperationFlow
     {
         return flow.finally(handler)
     }
     
     @discardableResult
     public
-    func start() -> CompleteFlow
+    func start() -> OperationFlow
     {
         return flow.start()
     }

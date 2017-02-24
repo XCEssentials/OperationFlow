@@ -12,7 +12,7 @@ import Foundation
 
 public
 final
-class PendingFlow // just OperationFlow later
+class PendingOperationFlow
 {
     var core: FlowCore
     
@@ -35,10 +35,63 @@ class PendingFlow // just OperationFlow later
     }
 }
 
+/*
+ 
+ OperationFlow
+     .named("Fetching something from Yelp API")
+     .on(theQueue)
+     .retry(3)
+ 
+ Operation
+    .flow("Fetching something from Yelp API")
+    .on(theQueue)
+    .retry(3)
+ 
+ Operation
+    .flow("Fetching something from Yelp API").on(theQueue).retry(3)
+ 
+ Operation
+    .flow("Fetching something from Yelp API", on: theQueue, retry: 3)
+    .add(step1)
+    .add(step2)
+ 
+ OperationFlow("Fetching something from Yelp API", on: theQueue, retry: 3)
+     .add(step1)
+     .add(step2)
+ 
+ OperationFlow("Fetching something from Yelp API", on: theQueue, retry: 3)
+     .add(step1(initialInput)) // @autoclosure version of 'add'
+     .add(step2)
+ 
+ OperationFlow
+     .new("Fetching something from Yelp API", on: theQueue, retry: 3)
+     .add(step1(initialInput)) // @autoclosure version of 'add'
+     .add(step2)
+ 
+ "Fetching something from Yelp API"
+     .asOperationFlow(on: theQueue, retry: 3)
+     .add(step1(initialInput)) // @autoclosure version of 'add'
+     .add(step2)
+ 
+ OperationFlow
+     .new("Fetching something from Yelp API", on: theQueue, retry: 3)
+     .new()
+     .begin(step1(initialInput)) // @autoclosure version of 'add'
+     .first(step1(initialInput)) // @autoclosure version of 'add'
+     .then(step2)
+     .add(step2)
+ 
+ '.first' (or '.begin') should reset the list of operations on the flow
+ and set the passed operation as the very first one
+ 
+ add 'shouldRetry' inout param in the failure handler
+ 
+ */
+
 //===
 
 public
-extension PendingFlow
+extension PendingOperationFlow
 {
     func input<Input>(_ value: Input) -> FirstConnector<Input>
     {
@@ -57,7 +110,7 @@ extension PendingFlow
 
 //===
 
-extension PendingFlow
+extension PendingOperationFlow
 {
     func enq<Input, Output>(_ op: @escaping ManagingOperation<Input, Output>)
     {
@@ -121,7 +174,7 @@ extension PendingFlow
         }
     }
     
-    func finally<Input>(_ handler: @escaping ManagingCompletion<Input>) -> CompleteFlow
+    func finally<Input>(_ handler: @escaping ManagingCompletion<Input>) -> OperationFlow
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
@@ -148,12 +201,12 @@ extension PendingFlow
         return start()
     }
     
-    func start() -> CompleteFlow
+    func start() -> OperationFlow
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        return CompleteFlow(core)
+        return OperationFlow(core)
     }
 }

@@ -11,10 +11,10 @@ import Foundation
 //===
 
 public
-typealias ManagingOperation<Input, Output> = (CompleteFlow, Input) throws -> Output
+typealias ManagingOperation<Input, Output> = (OperationFlow, Input) throws -> Output
 
 public
-typealias ManagingOperationNoInput<Output> = (CompleteFlow) throws -> Output // no input
+typealias ManagingOperationNoInput<Output> = (OperationFlow) throws -> Output // no input
 
 public
 typealias Operation<Input, Output> = (Input) throws -> Output
@@ -23,16 +23,16 @@ public
 typealias OperationNoInput<Output> = () throws -> Output // no input
 
 public
-typealias Failure<E: Error> = (CompleteFlow, E) -> Void
+typealias Failure<E: Error> = (OperationFlow, E) -> Void
 
 public
-typealias FailureGeneric = (CompleteFlow, Error) -> Void
+typealias FailureGeneric = (OperationFlow, Error) -> Void
 
 public
-typealias ManagingCompletion<Input> = (CompleteFlow, Input) -> Void
+typealias ManagingCompletion<Input> = (OperationFlow, Input) -> Void
 
 public
-typealias ManagingCompletionNoInput = (CompleteFlow) -> Void
+typealias ManagingCompletionNoInput = (OperationFlow) -> Void
 
 public
 typealias Completion<Input> = (Input) -> Void
@@ -42,6 +42,6 @@ typealias CompletionNoInput = () -> Void
 
 //===
 
-typealias GenericOperation = (CompleteFlow, Any?) throws -> Any?
+typealias GenericOperation = (OperationFlow, Any?) throws -> Any?
 
-typealias GenericCompletion = (CompleteFlow, Any?) throws -> Void
+typealias GenericCompletion = (OperationFlow, Any?) throws -> Void
