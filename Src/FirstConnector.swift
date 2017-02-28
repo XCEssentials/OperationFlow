@@ -2,7 +2,7 @@
 //  FirstConnector.swift
 //  MKHOperationFlow
 //
-//  Created by Maxim Khatskevich on 2/23/17.
+//  Created by Maxim Khatskevich on 2/28/17.
 //  Copyright © 2017 Maxim Khatskevich. All rights reserved.
 //
 
@@ -11,34 +11,39 @@ import Foundation
 //===
 
 public
-struct FirstConnector<InitialInput>
+struct FirstConnector<Input>
 {
-    private
+    fileprivate
     let flow: PendingOperationFlow
     
-    private
-    let initialInput: InitialInput
+    fileprivate
+    let input: Input
     
     //===
     
-    init(_ flow: PendingOperationFlow, _ initialInput: InitialInput)
+    init(_ flow: PendingOperationFlow, _ input: Input)
     {
         self.flow = flow
-        self.initialInput = initialInput
+        self.input = input
+    }
+}
+
+//===
+
+public
+extension FirstConnector
+{
+    func first<Output>(
+        _ op: @escaping ManagingOperation<Input, Output>
+        ) -> Connector<Output>
+    {
+        return flow.first { try op($0, self.input) }
     }
     
-    //===
-    
-    public
-    func add<Output>(_ op: @escaping ManagingOperation<InitialInput, Output>) -> Connector<Output>
+    func first<Output>(
+        _ op: @escaping Operation<Input, Output>
+        ) -> Connector<Output>
     {
-        flow.enq { [input = self.initialInput] (fl, _: Void) in
-            
-            return try op(fl, input)
-        }
-        
-        //===
-        
-        return Connector<Output>(flow)
+        return flow.first { try op(self.input) }
     }
 }

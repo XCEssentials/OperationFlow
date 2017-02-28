@@ -11,72 +11,111 @@ import Foundation
 //===
 
 public
-struct Connector<NextInput>
+struct Connector<Input>
 {
-    private
+    fileprivate
     let flow: PendingOperationFlow
     
     //===
     
-    public
     init(_ flow: PendingOperationFlow)
     {
         self.flow = flow
     }
-    
-    //===
-    
-    public
-    func add<NextOutput>(_ op: @escaping ManagingOperation<NextInput, NextOutput>) -> Connector<NextOutput>
+}
+
+//===
+
+public
+extension Connector
+{
+    func then<Input, Output>(
+        _ op: @escaping ManagingOperation<Input, Output>
+        ) -> Connector<Output>
     {
-        flow.enq(op)
+        flow.core.operations.append { flow, input in
+            
+            guard
+                let typedInput = input as? Input
+            else
+            {
+                throw
+                    InvalidInputType(
+                        expectedType: Input.self,
+                        actualType: type(of: input))
+            }
+            
+            //===
+            
+            return try op(flow, typedInput)
+        }
         
         //===
         
-        return Connector<NextOutput>(flow)
+        return Connector<Output>(flow)
     }
     
-    public
-    func onFailure<E: Error>(_ handler: @escaping Failure<E>) -> Connector<NextInput>
+    func then<Input, Output>(
+        _ op: @escaping Operation<Input, Output>
+        ) -> Connector<Output>
     {
-        flow.onFailure(handler)
-        
-        //===
-        
-        return self
+        return
+            then { (_: OperationFlow, input) in try op(input) }
     }
-    
-    public
-    func onFailure(_ handler: @escaping FailureGeneric) -> Connector<NextInput>
-    {
-        flow.onFailure(handler)
-        
-        //===
-        
-        return self
-    }
-    
-    public
-    func onFailure(_ handlers: [FailureGeneric]) -> Connector<NextInput>
-    {
-        flow.onFailure(handlers)
-        
-        //===
-        
-        return self
-    }
-    
-    @discardableResult
-    public
-    func finally(_ handler: @escaping ManagingCompletion<NextInput>) -> OperationFlow
-    {
-        return flow.finally(handler)
-    }
-    
-    @discardableResult
-    public
-    func start() -> OperationFlow
-    {
-        return flow.start()
-    }
+}
+
+//===
+
+public
+extension Connector
+{
+//    public
+//    func onFailure<E: Error>(_ handler: @escaping Failure<E>) -> Connector<Input>
+//    {
+//        flow.onFailure(handler)
+//        
+//        //===
+//        
+//        return self
+//    }
+//    
+//    public
+//    func onFailure(_ handler: @escaping FailureGeneric) -> Connector<Input>
+//    {
+//        flow.onFailure(handler)
+//        
+//        //===
+//        
+//        return self
+//    }
+//    
+//    public
+//    func onFailure(_ handlers: [FailureGeneric]) -> Connector<Input>
+//    {
+//        flow.onFailure(handlers)
+//        
+//        //===
+//        
+//        return self
+//    }
+}
+
+//===
+
+public
+extension Connector
+{
+//    @discardableResult
+//    public
+//    func finally(_ handler: @escaping ManagingCompletion<Input>) -> OperationFlow
+//    {
+//        return flow.finally(handler)
+//    }
+//    
+//    @discardableResult
+//    public
+//    func start() -> OperationFlow
+//    {
+//        return flow.start()
+//    }
 }

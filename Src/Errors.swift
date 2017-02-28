@@ -16,6 +16,11 @@ protocol OperationFlowError: Error {}
 //===
 
 public
+struct UsedNotOnMainQueue: OperationFlowError {}
+
+//===
+
+public
 struct InvalidInputType: OperationFlowError
 {
     let expectedType: Any.Type

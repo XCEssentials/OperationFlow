@@ -14,6 +14,10 @@ public
 final
 class OperationFlow
 {
+    let core: FlowCore
+    
+    //===
+    
     public
     enum State: String
     {
@@ -27,17 +31,15 @@ class OperationFlow
     
     //===
     
-    let core: FlowCore
-    
-    //===
-    
     public internal(set)
     var state: State
     
-    var targetTaskIndex = 0
-    
     public internal(set)
     var failedAttempts: UInt = 0
+    
+    //===
+    
+    var targetTaskIndex = 0
     
     //===
     
@@ -53,6 +55,53 @@ class OperationFlow
         //===
         
         self.start()
+    }
+}
+
+//===
+
+public
+extension OperationFlow
+{
+    static
+    func new(
+        _ name: String = NSUUID().uuidString,
+        on targetQueue: OperationQueue = FlowDefaults.targetQueue,
+        maxRetries: UInt = FlowDefaults.maxRetries
+        ) -> PendingOperationFlow
+    {
+        return
+            PendingOperationFlow(name,
+                                 on: targetQueue,
+                                 maxRetries: maxRetries)
+    }
+}
+
+//=== Alternative ways to start new Flow with default params
+
+public
+extension OperationFlow
+{
+    static
+    func take<Input>(_ input: Input) -> FirstConnector<Input>
+    {
+        return new().take(input)
+    }
+    
+    static
+    func first<Output>(
+        _ op: @escaping ManagingOperationNoInput<Output>
+        ) -> Connector<Output>
+    {
+        return new().first(op)
+    }
+    
+    static
+    func first<Output>(
+        _ op: @escaping OperationNoInput<Output>
+        ) -> Connector<Output>
+    {
+        return new().first(op)
     }
 }
 
