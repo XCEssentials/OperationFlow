@@ -59,8 +59,7 @@ extension Connector
         _ op: @escaping Operation<Input, Output>
         ) -> Connector<Output>
     {
-        return
-            then { (_: OperationFlow, input) in try op(input) }
+        return then { (_: OperationFlow, input) in try op(input) }
     }
 }
 
