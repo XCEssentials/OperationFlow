@@ -31,8 +31,12 @@ extension Connector
 {
     func then<Input, Output>(
         _ op: @escaping ManagingOperation<Input, Output>
-        ) -> Connector<Output>
+        ) throws -> Connector<Output>
     {
+        try OFL.checkMainQueue()
+        
+        //===
+        
         flow.core.operations.append { flow, input in
             
             guard
@@ -57,9 +61,9 @@ extension Connector
     
     func then<Input, Output>(
         _ op: @escaping Operation<Input, Output>
-        ) -> Connector<Output>
+        ) throws -> Connector<Output>
     {
-        return then { (_: OperationFlow, input) in try op(input) }
+        return try then { (_: OperationFlow, input) in try op(input) }
     }
 }
 
@@ -72,6 +76,10 @@ extension Connector
         _ handler: @escaping FailureGeneric
         ) throws -> Connector<Input>
     {
+        try OFL.checkMainQueue()
+        
+        //===
+        
         flow.core
             .failureHandlers
             .append(handler)
@@ -85,6 +93,10 @@ extension Connector
         _ handler: @escaping Failure<E>
         ) throws -> Connector<Input>
     {
+        try OFL.checkMainQueue()
+        
+        //===
+        
         flow.core
             .failureHandlers
             .append { flow, error, shouldRetry in
@@ -105,6 +117,10 @@ extension Connector
         _ handlers: [FailureGeneric]
         ) throws -> Connector<Input>
     {
+        try OFL.checkMainQueue()
+        
+        //===
+        
         flow.core
             .failureHandlers
             .append(contentsOf: handlers)
@@ -121,34 +137,44 @@ public
 extension Connector
 {
     @discardableResult
-    func finally<Input>(_ handler: @escaping ManagingCompletion<Input>) throws -> OperationFlow
+    func finally<Input>(
+        _ handler: @escaping ManagingCompletion<Input>
+        ) throws -> OperationFlow
     {
-        flow.core
-            .completion = { flow, input in
-            
-            if
-                let typedInput = input as? Input
-            {
-                return handler(flow, typedInput)
-            }
-            else
-            {
-                throw
-                    InvalidInputType(
-                        expectedType: Input.self,
-                        actualType: type(of: input))
-            }
-        }
+        try OFL.checkMainQueue()
         
         //===
         
-        return start()
+        flow.core
+            .completion = { flow, input in
+                
+                if
+                    let typedInput = input as? Input
+                {
+                    return handler(flow, typedInput)
+                }
+                else
+                {
+                    throw
+                        InvalidInputType(
+                            expectedType: Input.self,
+                            actualType: type(of: input))
+                }
+            }
+        
+        //===
+        
+        return try start()
     }
     
     @discardableResult
     public
-    func start() -> OperationFlow
+    func start() throws -> OperationFlow
     {
+        try OFL.checkMainQueue()
+        
+        //===
+        
         return OperationFlow(flow.core)
     }
 }

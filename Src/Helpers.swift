@@ -13,7 +13,10 @@ import Foundation
 enum OFL
 {
     static
-    func asyncOnMain(after delay: TimeInterval = 0, _ block: @escaping () -> Void)
+    func asyncOnMain(
+        after delay: TimeInterval = 0,
+        _ block: @escaping () -> Void
+        )
     {
         if
             delay > 0.0
@@ -35,7 +38,10 @@ enum OFL
     }
     
     static
-    func ensureOnMain(after delay: TimeInterval = 0, _ block: @escaping () -> Void)
+    func ensureOnMain(
+        after delay: TimeInterval = 0,
+        _ block: @escaping () -> Void
+        )
     {
         if
             delay > 0.0
@@ -63,6 +69,20 @@ enum OFL
         else
         {
             throw WrongQueueUsage.outOfMain(actual: OperationQueue.current)
+        }
+    }
+    
+    static
+    func checkFlowState(
+        _ flow: OperationFlow,
+        _ expectedStates: [OperationFlow.State]
+        ) throws
+    {
+        guard
+            expectedStates.contains(flow.state)
+        else
+        {
+            throw InvalidFlowState(expected: expectedStates, actual: flow.state)
         }
     }
 }

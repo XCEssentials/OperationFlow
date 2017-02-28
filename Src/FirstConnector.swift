@@ -35,15 +35,15 @@ extension FirstConnector
 {
     func first<Output>(
         _ op: @escaping ManagingOperation<Input, Output>
-        ) -> Connector<Output>
+        ) throws -> Connector<Output>
     {
-        return flow.first { try op($0, self.input) }
+        return try flow.first { try op($0, self.input) }
     }
     
     func first<Output>(
         _ op: @escaping Operation<Input, Output>
-        ) -> Connector<Output>
+        ) throws -> Connector<Output>
     {
-        return flow.first { try op(self.input) }
+        return try flow.first { try op(self.input) }
     }
 }

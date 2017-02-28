@@ -54,7 +54,7 @@ class OperationFlow
         
         //===
         
-        self.start()
+        try! start()
     }
 }
 
@@ -68,8 +68,12 @@ extension OperationFlow
         _ name: String = NSUUID().uuidString,
         on targetQueue: OperationQueue = FlowDefaults.targetQueue,
         maxRetries: UInt = FlowDefaults.maxRetries
-        ) -> PendingOperationFlow
+        ) throws -> PendingOperationFlow
     {
+        try OFL.checkMainQueue()
+        
+        //===
+        
         return
             PendingOperationFlow(name,
                                  on: targetQueue,
@@ -83,25 +87,27 @@ public
 extension OperationFlow
 {
     static
-    func take<Input>(_ input: Input) -> FirstConnector<Input>
+    func take<Input>(
+        _ input: Input
+        ) throws -> FirstConnector<Input>
     {
-        return new().take(input)
+        return try new().take(input)
     }
     
     static
     func first<Output>(
         _ op: @escaping ManagingOperationNoInput<Output>
-        ) -> Connector<Output>
+        )throws -> Connector<Output>
     {
-        return new().first(op)
+        return try new().first(op)
     }
     
     static
     func first<Output>(
         _ op: @escaping OperationNoInput<Output>
-        ) -> Connector<Output>
+        )throws -> Connector<Output>
     {
-        return new().first(op)
+        return try new().first(op)
     }
 }
 
@@ -110,40 +116,45 @@ extension OperationFlow
 public
 extension OperationFlow
 {
-    func start()
+    func start() throws
     {
+        try OFL.checkMainQueue()
         
-        OFL.ensureOnMain {
-            
-            if
-                self.state == .ready
-            {
-                self.state = .processing
-                
-                //===
-                
-                self.executeNext()
-            }
-        }
+        //===
+        
+        try OFL.checkFlowState(self, [.ready])
+        
+        //===
+        
+        state = .processing
+        
+        //===
+        
+        executeNext()
     }
     
-    func cancel()
+    func cancel() throws
     {
-        OFL.ensureOnMain {
-            
-            if
-                self.state == .processing
-            {
-                self.state = .cancelled
-            }
-        }
+        try OFL.checkMainQueue()
+        
+        //===
+        
+        try OFL.checkFlowState(self, [.processing])
+        
+        //===
+        
+        state = .cancelled
     }
     
-    func executeAgain(after delay: TimeInterval = 0)
+    func executeAgain(after delay: TimeInterval = 0) throws
     {
+        try OFL.checkFlowState(self, [.failed, .completed, .cancelled])
+        
+        //===
+        
         OFL.ensureOnMain(after: delay) {
             
-            self.reset()
+            try! self.reset()
         }
     }
 }
@@ -154,6 +165,10 @@ extension OperationFlow
 {
     func shouldProceed() -> Bool
     {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
         return (targetTaskIndex < self.core.operations.count)
     }
     
@@ -249,6 +264,10 @@ extension OperationFlow
     
     func processFailure(_ error: Error)
     {
+        // NOTE: this mehtod is supposed to be called on main queue
+        
+        //===
+        
         if
             state == .processing
         {
@@ -270,30 +289,24 @@ extension OperationFlow
             if
                 shouldRetry
             {
-                executeAgain(after: 0.25 * Double(failedAttempts))
+                try! executeAgain(after: 0.25 * Double(failedAttempts))
             }
         }
     }
     
-    func reset()
+    func reset() throws
     {
         // NOTE: this mehtod is supposed to be called on main queue
         
         //===
         
-        switch state
-        {
-            case .failed,
-                 .completed,
-                 .cancelled:
-                
-                targetTaskIndex = 0
-                state = .ready
-                
-                start()
-                
-            default:
-                break // ignore
-        }
+        try OFL.checkFlowState(self, [.failed, .completed, .cancelled])
+        
+        //===
+        
+        targetTaskIndex = 0
+        state = .ready
+        
+        try start()
     }
 }

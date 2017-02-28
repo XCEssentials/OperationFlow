@@ -39,8 +39,12 @@ class PendingOperationFlow
 public
 extension PendingOperationFlow
 {
-    func take<Input>(_ input: Input) -> FirstConnector<Input>
+    func take<Input>(_ input: Input) throws -> FirstConnector<Input>
     {
+        try OFL.checkMainQueue()
+        
+        //===
+        
         return FirstConnector(self, input)
     }
 }
@@ -52,8 +56,12 @@ extension PendingOperationFlow
 {
     func first<Output>(
         _ op: @escaping ManagingOperationNoInput<Output>
-        ) -> Connector<Output>
+        ) throws -> Connector<Output>
     {
+        try OFL.checkMainQueue()
+        
+        //===
+        
         core.operations.removeAll()
         
         //===
@@ -70,9 +78,9 @@ extension PendingOperationFlow
 
     func first<Output>(
         _ op: @escaping OperationNoInput<Output>
-        ) -> Connector<Output>
+        ) throws -> Connector<Output>
     {
-        return first { (_: OperationFlow) in try op() }
+        return try first { (_: OperationFlow) in try op() }
     }
 }
 

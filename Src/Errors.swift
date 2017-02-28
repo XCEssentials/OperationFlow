@@ -41,3 +41,12 @@ struct InvalidInputType: OperationFlowError
     let expectedType: Any.Type
     let actualType: Any.Type
 }
+
+//===
+
+public
+struct InvalidFlowState: OperationFlowError
+{
+    let expected: [OperationFlow.State]
+    let actual: OperationFlow.State
+}
