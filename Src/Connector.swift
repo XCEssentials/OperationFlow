@@ -69,35 +69,51 @@ extension Connector
 public
 extension Connector
 {
-//    public
-//    func onFailure<E: Error>(_ handler: @escaping Failure<E>) -> Connector<Input>
-//    {
-//        flow.onFailure(handler)
-//        
-//        //===
-//        
-//        return self
-//    }
-//    
-//    public
-//    func onFailure(_ handler: @escaping FailureGeneric) -> Connector<Input>
-//    {
-//        flow.onFailure(handler)
-//        
-//        //===
-//        
-//        return self
-//    }
-//    
-//    public
-//    func onFailure(_ handlers: [FailureGeneric]) -> Connector<Input>
-//    {
-//        flow.onFailure(handlers)
-//        
-//        //===
-//        
-//        return self
-//    }
+    func onFailure(
+        _ handler: @escaping FailureGeneric
+        ) throws -> Connector<Input>
+    {
+        flow.core
+            .failureHandlers
+            .append(handler)
+        
+        //===
+        
+        return self
+    }
+    
+    func onFailure<E: Error>(
+        _ handler: @escaping Failure<E>
+        ) throws -> Connector<Input>
+    {
+        flow.core
+            .failureHandlers
+            .append { flow, error, shouldRetry in
+                
+                if
+                    let e = error as? E
+                {
+                    handler(flow, e, &shouldRetry)
+                }
+            }
+        
+        //===
+        
+        return self
+    }
+    
+    func onFailure(
+        _ handlers: [FailureGeneric]
+        ) throws -> Connector<Input>
+    {
+        flow.core
+            .failureHandlers
+            .append(contentsOf: handlers)
+        
+        //===
+        
+        return self
+    }
 }
 
 //===

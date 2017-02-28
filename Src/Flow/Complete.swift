@@ -112,7 +112,8 @@ extension OperationFlow
 {
     func start()
     {
-        ensureOnMain {
+        
+        OFL.ensureOnMain {
             
             if
                 self.state == .ready
@@ -128,7 +129,7 @@ extension OperationFlow
     
     func cancel()
     {
-        ensureOnMain {
+        OFL.ensureOnMain {
             
             if
                 self.state == .processing
@@ -140,7 +141,7 @@ extension OperationFlow
     
     func executeAgain(after delay: TimeInterval = 0)
     {
-        ensureOnMain(after: delay) {
+        OFL.ensureOnMain(after: delay) {
             
             self.reset()
         }
@@ -189,7 +190,7 @@ extension OperationFlow
                     {
                         // the task thrown an error
                         
-                        asyncOnMain { self.processFailure(error) }
+                        OFL.asyncOnMain { self.processFailure(error) }
                     }
             }
         }
@@ -206,7 +207,7 @@ extension OperationFlow
         
         //===
         
-        asyncOnMain {
+        OFL.asyncOnMain {
             
             if
                 self.state == .processing
@@ -259,15 +260,15 @@ extension OperationFlow
             
             //===
             
-            if
-                failedAttempts > core.maxRetries
+            var shouldRetry = (failedAttempts - 1) < core.maxRetries
+            
+            for handler in core.failureHandlers
             {
-                for handler in core.failureHandlers
-                {
-                    handler(self, error)
-                }
+                handler(self, error, &shouldRetry)
             }
-            else
+            
+            if
+                shouldRetry
             {
                 executeAgain(after: 0.25 * Double(failedAttempts))
             }

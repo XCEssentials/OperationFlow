@@ -16,7 +16,22 @@ protocol OperationFlowError: Error {}
 //===
 
 public
-struct UsedNotOnMainQueue: OperationFlowError {}
+struct WrongQueueUsage: OperationFlowError
+{
+    let expected: OperationQueue
+    let actual: OperationQueue?
+    
+    //===
+    
+    static
+    func outOfMain(actual: OperationQueue?) -> WrongQueueUsage
+    {
+        return
+            WrongQueueUsage(
+                expected: OperationQueue.main,
+                actual: actual)
+    }
+}
 
 //===
 

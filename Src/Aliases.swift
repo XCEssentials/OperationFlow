@@ -8,7 +8,7 @@
 
 import Foundation
 
-//===
+//=== Operation - managing (accepting link on the Flow)
 
 public
 typealias ManagingOperation<Input, Output> = (OperationFlow, Input) throws -> Output
@@ -16,23 +16,31 @@ typealias ManagingOperation<Input, Output> = (OperationFlow, Input) throws -> Ou
 public
 typealias ManagingOperationNoInput<Output> = (OperationFlow) throws -> Output // no input
 
+//=== Operation - NON-managing (NOT accepting link on the Flow)
+
 public
 typealias Operation<Input, Output> = (Input) throws -> Output
 
 public
 typealias OperationNoInput<Output> = () throws -> Output // no input
 
-public
-typealias Failure<E: Error> = (OperationFlow, E) -> Void
+//=== Failure handlers
 
 public
-typealias FailureGeneric = (OperationFlow, Error) -> Void
+typealias Failure<E: Error> = (OperationFlow, E, inout Bool) -> Void
+
+public
+typealias FailureGeneric = (OperationFlow, Error, inout Bool) -> Void
+
+//=== Completion - managing (accepting link on the Flow)
 
 public
 typealias ManagingCompletion<Input> = (OperationFlow, Input) -> Void
 
 public
 typealias ManagingCompletionNoInput = (OperationFlow) -> Void
+
+//=== Completion - NON-managing (NOT accepting link on the Flow)
 
 public
 typealias Completion<Input> = (Input) -> Void
