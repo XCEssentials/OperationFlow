@@ -104,9 +104,11 @@ class Main: XCTestCase
         
         //===
         
-        OperationFlow(caseName)
-            .add(firstBlock)
-            .add(secondBlock)
+        try!
+        OperationFlow
+            .new(caseName)
+            .first(firstBlock)
+            .then(secondBlock)
             .finally(finalBlock)
         
         //===
@@ -169,7 +171,7 @@ class Main: XCTestCase
             throw TestError.two(code: errCode)
         }
         
-        let failureBlock = { (flow: OperationFlow, error: Error) in
+        let failureBlock: FailureGeneric = { flow, error, _ in
             
             XCTAssertTrue(task1Completed)
             XCTAssertEqual(OperationQueue.current, OperationQueue.main)
@@ -200,9 +202,11 @@ class Main: XCTestCase
         
         //===
         
-        OperationFlow(caseName)
-            .add(firstBlock)
-            .add(secondBlock)
+        try!
+        OperationFlow
+            .new(caseName, maxRetries: 0)
+            .first(firstBlock)
+            .then(secondBlock)
             .onFailure(failureBlock)
             .start()
         
@@ -228,7 +232,7 @@ class Main: XCTestCase
         
             XCTAssertFalse(task1Started)
             XCTAssertFalse(task1Completed)
-            XCTAssertNotEqual(flow.status, .cancelled)
+            XCTAssertNotEqual(flow.state, .cancelled)
             XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
             //===
@@ -243,15 +247,15 @@ class Main: XCTestCase
                     
                     XCTAssertTrue(task1Started)
                     XCTAssertFalse(task1Completed)
-                    XCTAssertNotEqual(flow.status, .cancelled)
+                    XCTAssertNotEqual(flow.state, .cancelled)
                     
                     //===
                     
-                    flow.cancel()
+                    try! flow.cancel()
                     
                     //===
                     
-                    XCTAssertEqual(flow.status, .cancelled)
+                    XCTAssertEqual(flow.state, .cancelled)
                 }
             
             //===
@@ -266,7 +270,7 @@ class Main: XCTestCase
             
             //===
             
-            XCTAssertEqual(flow.status, .cancelled)
+            XCTAssertEqual(flow.state, .cancelled)
             
             //===
             
@@ -280,8 +284,10 @@ class Main: XCTestCase
         
         //===
         
-        OperationFlow(caseName)
-            .add(firstBlock)
+        try!
+        OperationFlow
+            .new(caseName)
+            .first(firstBlock)
             .finally(finalBlock)
         
         //===
@@ -328,7 +334,7 @@ class Main: XCTestCase
             }
         }
         
-        let failureBlock = { (flow: OperationFlow, error: Error) in
+        let failureBlock: FailureGeneric = { flow, error, _ in
            
             XCTAssertFalse(failureReported)
             
@@ -349,12 +355,6 @@ class Main: XCTestCase
             
             failureReported = true
             shouldReportFailure = false
-            
-            //===
-            
-            // re-try after 1.5 seconds
-            
-            flow.executeAgain(after: 1.5)
         }
         
         let finalBlock = { (flow: OperationFlow, input: String) in
@@ -375,8 +375,10 @@ class Main: XCTestCase
         
         //===
         
-        OperationFlow(caseName)
-            .add(firstBlock)
+        try!
+        OperationFlow
+            .new(caseName, maxRetries: 1)
+            .first(firstBlock)
             .onFailure(failureBlock)
             .finally(finalBlock)
         
@@ -399,7 +401,7 @@ class Main: XCTestCase
             throw TestError.one
         }
         
-        let failureBlock = { (flow: OperationFlow, error: Error) in
+        let failureBlock: FailureGeneric = { flow, error, shouldRetry in
         
             XCTAssertTrue(error is TestError)
             
@@ -418,13 +420,16 @@ class Main: XCTestCase
             
             //===
             
+            shouldRetry = false // because default retries == 3
             expectation.fulfill()
         }
         
         //===
         
-        OperationFlow(caseName)
-            .add(firstBlock)
+        try!
+        OperationFlow
+            .new(caseName)
+            .first(firstBlock)
             .onFailure(failureBlock)
             .start()
         
@@ -465,9 +470,11 @@ class Main: XCTestCase
         
         //===
         
-        OperationFlow(caseName)
-            .input(res0)
-            .add(firstBlock)
+        try!
+        OperationFlow
+            .new(caseName)
+            .take(res0)
+            .first(firstBlock)
             .finally(finalBlock)
         
         //===
@@ -507,9 +514,11 @@ class Main: XCTestCase
         
         //===
         
-        OperationFlow(caseName)
-            .input(res0)
-            .add(firstBlock)
+        try!
+        OperationFlow
+            .new(caseName)
+            .take(res0)
+            .first(firstBlock)
             .finally(finalBlock)
         
         //===
