@@ -121,17 +121,35 @@ extension Connector
 public
 extension Connector
 {
-//    @discardableResult
-//    public
-//    func finally(_ handler: @escaping ManagingCompletion<Input>) -> OperationFlow
-//    {
-//        return flow.finally(handler)
-//    }
-//    
-//    @discardableResult
-//    public
-//    func start() -> OperationFlow
-//    {
-//        return flow.start()
-//    }
+    @discardableResult
+    func finally<Input>(_ handler: @escaping ManagingCompletion<Input>) throws -> OperationFlow
+    {
+        flow.core
+            .completion = { flow, input in
+            
+            if
+                let typedInput = input as? Input
+            {
+                return handler(flow, typedInput)
+            }
+            else
+            {
+                throw
+                    InvalidInputType(
+                        expectedType: Input.self,
+                        actualType: type(of: input))
+            }
+        }
+        
+        //===
+        
+        return start()
+    }
+    
+    @discardableResult
+    public
+    func start() -> OperationFlow
+    {
+        return OperationFlow(flow.core)
+    }
 }
