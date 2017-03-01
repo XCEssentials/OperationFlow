@@ -43,7 +43,7 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock = { (flow: OperationFlow) throws -> String in
+        let firstBlock: OperationNoInput<String> = {
         
             XCTAssertFalse(task1Completed)
             XCTAssertFalse(task2Completed)
@@ -63,7 +63,7 @@ class Main: XCTestCase
             return res1
         }
         
-        let secondBlock = { (flow: OperationFlow, input: String) throws -> String in
+        let secondBlock = { (input: String) -> String in
         
             XCTAssertTrue(task1Completed)
             XCTAssertFalse(task2Completed)
@@ -84,7 +84,7 @@ class Main: XCTestCase
             return res2
         }
         
-        let finalBlock = { (flow: OperationFlow, input: String) in
+        let finalBlock = { (input: String) in
         
             XCTAssertTrue(task1Completed)
             XCTAssertTrue(task2Completed)
@@ -131,7 +131,7 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock = { (flow: OperationFlow) throws -> String in
+        let firstBlock = { () -> String in
             
             XCTAssertFalse(task1Completed)
             XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
@@ -150,7 +150,7 @@ class Main: XCTestCase
             return res1
         }
         
-        let secondBlock = { (flow: OperationFlow, input: String) throws -> String in
+        let secondBlock = { (input: String) -> String in
         
             XCTAssertTrue(task1Completed)
             XCTAssertEqual(input, res1)
@@ -170,7 +170,7 @@ class Main: XCTestCase
             throw TestError.two(code: errCode)
         }
         
-        let failureBlock: FailureGeneric = { flow, error, _ in
+        let failureBlock: FailureGeneric = { _, error, _ in
             
             XCTAssertTrue(task1Completed)
             XCTAssertEqual(OperationQueue.current, OperationQueue.main)
@@ -226,11 +226,10 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock = { (flow: OperationFlow) throws -> String in
+        let firstBlock = { (flow: OperationFlow.ActiveProxy) -> String in
         
             XCTAssertFalse(task1Started)
             XCTAssertFalse(task1Completed)
-            XCTAssertNotEqual(flow.state, .cancelled)
             XCTAssertNotEqual(OperationQueue.current, OperationQueue.main)
             
             //===
@@ -245,15 +244,17 @@ class Main: XCTestCase
                     
                     XCTAssertTrue(task1Started)
                     XCTAssertFalse(task1Completed)
-                    XCTAssertNotEqual(flow.state, .cancelled)
                     
                     //===
                     
-                    try! flow.cancel()
-                    
-                    //===
-                    
-                    XCTAssertEqual(flow.state, .cancelled)
+                    do
+                    {
+                        try flow.cancel()
+                    }
+                    catch
+                    {
+                        XCTAssert(error is OperationFlowError)
+                    }
                 }
             
             //===
@@ -268,14 +269,10 @@ class Main: XCTestCase
             
             //===
             
-            XCTAssertEqual(flow.state, .cancelled)
-            
-            //===
-            
             return res1
         }
         
-        let finalBlock = { (flow: OperationFlow, _: String) in
+        let finalBlock = { (_: String) in
          
             XCTAssert(false, "This blok should NOT be called ever.")
         }
@@ -312,7 +309,7 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock = { (flow: OperationFlow) throws -> String in
+        let firstBlock = { () -> String in
             
             for i in 0...1000
             {
@@ -331,7 +328,7 @@ class Main: XCTestCase
             }
         }
         
-        let failureBlock: FailureGeneric = { flow, error, _ in
+        let failureBlock: FailureGeneric = { _, error, _ in
            
             XCTAssertFalse(failureReported)
             
@@ -354,7 +351,7 @@ class Main: XCTestCase
             shouldReportFailure = false
         }
         
-        let finalBlock = { (flow: OperationFlow, input: String) in
+        let finalBlock = { (input: String) in
             
             XCTAssertTrue(failureReported)
             XCTAssertEqual(input, res1)
@@ -392,12 +389,12 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock = { (flow: OperationFlow) throws -> String in
+        let firstBlock = { () throws -> String in
         
             throw TestError.one
         }
         
-        let failureBlock: FailureGeneric = { flow, error, shouldRetry in
+        let failureBlock: FailureGeneric = { _, error, shouldRetry in
         
             XCTAssertTrue(error is TestError)
             
@@ -446,7 +443,7 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock = { (flow: OperationFlow, input: String) throws -> Void in
+        let firstBlock = { (input: String) throws in
         
             XCTAssertEqual(res0, input)
             
@@ -458,7 +455,7 @@ class Main: XCTestCase
             }
         }
         
-        let finalBlock = { (flow: OperationFlow, _: Void) in
+        let finalBlock = { () in
             
             expectation.fulfill()
         }
@@ -489,7 +486,7 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock = { (flow: OperationFlow, input: String) throws -> Void in
+        let firstBlock = { (input: String) in
             
             XCTAssertEqual(res0, input)
             
@@ -501,7 +498,7 @@ class Main: XCTestCase
             }
         }
         
-        let finalBlock = { (flow: OperationFlow, _: Void) in
+        let finalBlock = {
             
             expectation.fulfill()
         }

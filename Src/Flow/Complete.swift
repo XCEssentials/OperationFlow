@@ -114,14 +114,29 @@ extension OperationFlow
     public
     typealias ActiveProxy =
     (
-        info: InfoProxy,
+        name: String,
+        targetQueue: OperationQueue,
+        maxRetries: UInt,
+        totalOperationsCount: UInt,
+        
+        failedAttempts: UInt,
+        targetOperationIndex: UInt,
+        
         cancel: () throws -> Void
     )
     
     var proxy: ActiveProxy {
         
         return (
-            infoProxy,
+            
+            core.name,
+            core.targetQueue,
+            core.maxRetries,
+            UInt(core.operations.count),
+            
+            failedAttempts,
+            targetOperationIndex,
+            
             cancel
         )
     }
@@ -201,7 +216,7 @@ extension OperationFlow
                     
                     do
                     {
-                        let result = try task(self, previousResult)
+                        let result = try task(self.proxy, previousResult)
                         
                         //===
                         

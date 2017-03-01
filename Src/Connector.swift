@@ -56,10 +56,10 @@ extension Connector
     }
     
     func then<Input, Output>(
-        _ op: @escaping Operation<Input, Output>
+        _ op: @escaping OFLOperation<Input, Output>
         ) -> Connector<Output>
     {
-        return then { (_: OperationFlow, input) in try op(input) }
+        return then { (_: OperationFlow.ActiveProxy, input) in try op(input) }
     }
 }
 
@@ -69,42 +69,28 @@ public
 extension OperationFlow
 {
     public
-    typealias CoreInfo =
+    typealias InfoProxy =
     (
         name: String,
         targetQueue: OperationQueue,
         maxRetries: UInt,
-        totalOperationsCount: UInt
-    )
-    
-    public
-    typealias ExecutionStats =
-    (
+        totalOperationsCount: UInt,
+        
         failedAttempts: UInt,
         targetOperationIndex: UInt
-    )
-    
-    public
-    typealias InfoProxy =
-    (
-        core: CoreInfo,
-        stats: ExecutionStats
     )
     
     var infoProxy: InfoProxy {
         
         return (
         
-            (
-                core.name,
-                core.targetQueue,
-                core.maxRetries,
-                UInt(core.operations.count)
-            ),
-            (
-                failedAttempts,
-                targetOperationIndex
-            )
+            core.name,
+            core.targetQueue,
+            core.maxRetries,
+            UInt(core.operations.count),
+            
+            failedAttempts,
+            targetOperationIndex
         )
     }
 }
@@ -185,6 +171,14 @@ extension Connector
         //===
         
         return start()
+    }
+    
+    @discardableResult
+    func finally<Input>(
+        _ handler: @escaping Completion<Input>
+        ) -> OperationFlow
+    {
+        return finally { (_: OperationFlow.InfoProxy, input) in handler(input) }
     }
     
     @discardableResult

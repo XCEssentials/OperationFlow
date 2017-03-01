@@ -8,18 +8,22 @@
 
 import Foundation
 
+//===
+
+
+
 //=== Operation - managing (accepting link on the Flow)
 
 public
-typealias ManagingOperation<Input, Output> = (OperationFlow, Input) throws -> Output
+typealias ManagingOperation<Input, Output> = (OperationFlow.ActiveProxy, Input) throws -> Output
 
 public
-typealias ManagingOperationNoInput<Output> = (OperationFlow) throws -> Output // no input
+typealias ManagingOperationNoInput<Output> = (OperationFlow.ActiveProxy) throws -> Output // no input
 
 //=== Operation - NON-managing (NOT accepting link on the Flow)
 
 public
-typealias Operation<Input, Output> = (Input) throws -> Output
+typealias OFLOperation<Input, Output> = (Input) throws -> Output
 
 public
 typealias OperationNoInput<Output> = () throws -> Output // no input
@@ -50,6 +54,6 @@ typealias CompletionNoInput = () -> Void
 
 //===
 
-typealias GenericOperation = (OperationFlow, Any?) throws -> Any?
+typealias GenericOperation = (OperationFlow.ActiveProxy, Any?) throws -> Any?
 
 typealias GenericCompletion = (OperationFlow.InfoProxy, Any?) throws -> Void

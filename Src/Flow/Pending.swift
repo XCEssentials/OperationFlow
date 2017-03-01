@@ -69,6 +69,6 @@ extension PendingOperationFlow
         _ op: @escaping OperationNoInput<Output>
         ) -> Connector<Output>
     {
-        return first { (_: OperationFlow) in try op() }
+        return first { (_: OperationFlow.ActiveProxy) in try op() }
     }
 }
