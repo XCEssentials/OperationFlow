@@ -16,21 +16,11 @@ protocol OperationFlowError: Error {}
 //===
 
 public
-struct WrongQueueUsage: OperationFlowError
+struct WrongQueue: OperationFlowError
 {
+    let context: String
     let expected: OperationQueue
     let actual: OperationQueue?
-    
-    //===
-    
-    static
-    func outOfMain(actual: OperationQueue?) -> WrongQueueUsage
-    {
-        return
-            WrongQueueUsage(
-                expected: OperationQueue.main,
-                actual: actual)
-    }
 }
 
 //===
@@ -38,8 +28,8 @@ struct WrongQueueUsage: OperationFlowError
 public
 struct InvalidInputType: OperationFlowError
 {
-    let expectedType: Any.Type
-    let actualType: Any.Type
+    let expected: Any.Type
+    let actual: Any.Type
 }
 
 //===
@@ -47,6 +37,8 @@ struct InvalidInputType: OperationFlowError
 public
 struct InvalidFlowState: OperationFlowError
 {
+    let flow: String
+    let context: String
     let expected: [OperationFlow.State]
     let actual: OperationFlow.State
 }

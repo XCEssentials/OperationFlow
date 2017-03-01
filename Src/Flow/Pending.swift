@@ -39,12 +39,8 @@ class PendingOperationFlow
 public
 extension PendingOperationFlow
 {
-    func take<Input>(_ input: Input) throws -> FirstConnector<Input>
+    func take<Input>(_ input: Input) -> FirstConnector<Input>
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
         return FirstConnector(self, input)
     }
 }
@@ -56,20 +52,13 @@ extension PendingOperationFlow
 {
     func first<Output>(
         _ op: @escaping ManagingOperationNoInput<Output>
-        ) throws -> Connector<Output>
+        ) -> Connector<Output>
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
         core.operations.removeAll()
         
         //===
         
-        core.operations.append { flow, _ in
-            
-            return try op(flow)
-        }
+        core.operations.append { flow, _ in try op(flow) }
         
         //===
         
@@ -78,28 +67,8 @@ extension PendingOperationFlow
 
     func first<Output>(
         _ op: @escaping OperationNoInput<Output>
-        ) throws -> Connector<Output>
+        ) -> Connector<Output>
     {
-        return try first { (_: OperationFlow) in try op() }
+        return first { (_: OperationFlow) in try op() }
     }
 }
-
-/*
- 
- OperationFlow
-     .new("Fetching something from Yelp API", on: theQueue, retry: 3)
-     .new()
- 
-     // --- Pending ---
- 
-     .first(step1(initialInput)) // @autoclosure version
-     .then(step2)
-     .add(step2)
-     .add { step2() }
- 
- '.first' (or '.begin') should reset the list of operations on the flow
- and set the passed operation as the very first one
- 
- add 'shouldRetry' inout param in the failure handler
- 
- */

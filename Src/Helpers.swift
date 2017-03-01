@@ -59,30 +59,70 @@ enum OFL
             asyncOnMain(block)
         }
     }
-
+    
     static
-    func checkMainQueue() throws
+    func checkQueue(
+        context: String = #function,
+        _ actual: OperationQueue?,
+        is expected: OperationQueue
+        ) throws
     {
         guard
-            let cur = OperationQueue.current,
-            cur == OperationQueue.main
+            let a = actual,
+            expected == a
         else
         {
-            throw WrongQueueUsage.outOfMain(actual: OperationQueue.current)
+            throw
+                WrongQueue(
+                    context: context,
+                    expected: expected,
+                    actual: actual)
         }
+    }
+
+    static
+    func checkCurrentQueue(
+        context: String = #function,
+        is expected: OperationQueue) throws
+    {
+        try checkQueue(
+            context: context,
+            OperationQueue.current,
+            is: expected)
+    }
+    
+    static
+    func checkCurrentQueueIsMain(
+        _ context: String = #function
+        ) throws
+    {
+        try checkQueue(
+            context: context,
+            OperationQueue.current,
+            is: OperationQueue.main)
     }
     
     static
     func checkFlowState(
+        context: String = #function,
         _ flow: OperationFlow,
         _ expectedStates: [OperationFlow.State]
         ) throws
     {
+        try checkCurrentQueueIsMain()
+        
+        //===
+        
         guard
             expectedStates.contains(flow.state)
         else
         {
-            throw InvalidFlowState(expected: expectedStates, actual: flow.state)
+            throw
+                InvalidFlowState(
+                    flow: flow.core.name,
+                    context: context,
+                    expected: expectedStates,
+                    actual: flow.state)
         }
     }
 }

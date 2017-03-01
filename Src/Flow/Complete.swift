@@ -54,7 +54,7 @@ class OperationFlow
         
         //===
         
-        try! start()
+        OFL.ensureOnMain { try! self.start() }
     }
 }
 
@@ -68,16 +68,11 @@ extension OperationFlow
         _ name: String = NSUUID().uuidString,
         on targetQueue: OperationQueue = FlowDefaults.targetQueue,
         maxRetries: UInt = FlowDefaults.maxRetries
-        ) throws -> PendingOperationFlow
+        ) -> PendingOperationFlow
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
-        return
-            PendingOperationFlow(name,
-                                 on: targetQueue,
-                                 maxRetries: maxRetries)
+        return PendingOperationFlow(name,
+                                    on: targetQueue,
+                                    maxRetries: maxRetries)
     }
 }
 
@@ -89,25 +84,25 @@ extension OperationFlow
     static
     func take<Input>(
         _ input: Input
-        ) throws -> FirstConnector<Input>
+        ) -> FirstConnector<Input>
     {
-        return try new().take(input)
+        return new().take(input)
     }
     
     static
     func first<Output>(
         _ op: @escaping ManagingOperationNoInput<Output>
-        )throws -> Connector<Output>
+        ) -> Connector<Output>
     {
-        return try new().first(op)
+        return new().first(op)
     }
     
     static
     func first<Output>(
         _ op: @escaping OperationNoInput<Output>
-        )throws -> Connector<Output>
+        ) -> Connector<Output>
     {
-        return try new().first(op)
+        return new().first(op)
     }
 }
 
@@ -116,29 +111,8 @@ extension OperationFlow
 public
 extension OperationFlow
 {
-    func start() throws
-    {
-        try OFL.checkMainQueue()
-        
-        //===
-        
-        try OFL.checkFlowState(self, [.ready])
-        
-        //===
-        
-        state = .processing
-        
-        //===
-        
-        executeNext()
-    }
-    
     func cancel() throws
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
         try OFL.checkFlowState(self, [.processing])
         
         //===
@@ -148,9 +122,11 @@ extension OperationFlow
     
     func executeAgain(after delay: TimeInterval = 0) throws
     {
-        try OFL.checkFlowState(self, [.failed, .completed, .cancelled])
+        try OFL.checkFlowState(self, OperationFlow.validStatesBeforeReset)
         
         //===
+        
+        // use 'ensure...' here only because of the delay
         
         OFL.ensureOnMain(after: delay) {
             
@@ -163,23 +139,36 @@ extension OperationFlow
 
 extension OperationFlow
 {
-    func shouldProceed() -> Bool
+    func start() throws
     {
-        // NOTE: this mehtod is supposed to be called on main queue
+        try OFL.checkFlowState(self, [.ready])
+        
+        //===
+        
+        self.state = .processing
+        
+        //===
+        
+        try self.executeNext()
+    }
+    
+    func shouldProceed() throws -> Bool
+    {
+        try OFL.checkCurrentQueueIsMain()
         
         //===
         
         return (targetTaskIndex < self.core.operations.count)
     }
     
-    func executeNext(_ previousResult: Any? = nil)
+    func executeNext(_ previousResult: Any? = nil) throws
     {
-        // NOTE: this mehtod is supposed to be called on main queue
+        try OFL.checkFlowState(self, [.processing])
         
         //===
         
         if
-            shouldProceed()
+            try shouldProceed()
         {
             // regular block
             
@@ -205,13 +194,13 @@ extension OperationFlow
                     {
                         // the task thrown an error
                         
-                        OFL.asyncOnMain { self.processFailure(error) }
+                        OFL.asyncOnMain { try! self.processFailure(error) }
                     }
-            }
+                }
         }
         else
         {
-            executeCompletion(previousResult)
+            try! executeCompletion(previousResult)
         }
     }
     
@@ -220,25 +209,28 @@ extension OperationFlow
         // NOTE: use 'async...' here,
         // as we call this function from background queue
         
-        //===
-        
         OFL.asyncOnMain {
             
             if
-                self.state == .processing
+                self.state == .cancelled
+            {
+                // process cancellation somehow???
+            }
+            else
+            if self.state == .processing
             {
                 self.targetTaskIndex += 1
                 
                 //===
                 
-                self.executeNext(previousResult)
+                try! self.executeNext(previousResult)
             }
         }
     }
     
-    func executeCompletion(_ finalResult: Any?)
+    func executeCompletion(_ finalResult: Any?) throws
     {
-        // NOTE: this mehtod is supposed to be called on main queue
+        try OFL.checkFlowState(self, [.processing])
         
         //===
         
@@ -257,50 +249,47 @@ extension OperationFlow
             {
                 // the task thrown an error
                 
-                self.processFailure(error)
+                try! self.processFailure(error)
             }
         }
     }
     
-    func processFailure(_ error: Error)
+    func processFailure(_ error: Error) throws
     {
-        // NOTE: this mehtod is supposed to be called on main queue
+        try OFL.checkFlowState(self, [.processing])
+        
+        //===
+        
+        state = .failed
+        
+        //===
+        
+        failedAttempts += 1
+        
+        //===
+        
+        var shouldRetry = (failedAttempts - 1) < core.maxRetries
+        
+        for handler in core.failureHandlers
+        {
+            handler(self, error, &shouldRetry)
+        }
         
         //===
         
         if
-            state == .processing
+            shouldRetry
         {
-            state = .failed
-            
-            //===
-            
-            failedAttempts += 1
-            
-            //===
-            
-            var shouldRetry = (failedAttempts - 1) < core.maxRetries
-            
-            for handler in core.failureHandlers
-            {
-                handler(self, error, &shouldRetry)
-            }
-            
-            if
-                shouldRetry
-            {
-                try! executeAgain(after: 0.25 * Double(failedAttempts))
-            }
+            try! executeAgain(after: 0.25 * Double(failedAttempts))
         }
     }
     
+    static
+    var validStatesBeforeReset: [State] = [.failed, .completed, .cancelled]
+    
     func reset() throws
     {
-        // NOTE: this mehtod is supposed to be called on main queue
-        
-        //===
-        
-        try OFL.checkFlowState(self, [.failed, .completed, .cancelled])
+        try OFL.checkFlowState(self, OperationFlow.validStatesBeforeReset)
         
         //===
         

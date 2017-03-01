@@ -31,12 +31,8 @@ extension Connector
 {
     func then<Input, Output>(
         _ op: @escaping ManagingOperation<Input, Output>
-        ) throws -> Connector<Output>
+        ) -> Connector<Output>
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
         flow.core.operations.append { flow, input in
             
             guard
@@ -45,8 +41,8 @@ extension Connector
             {
                 throw
                     InvalidInputType(
-                        expectedType: Input.self,
-                        actualType: type(of: input))
+                        expected: Input.self,
+                        actual: type(of: input))
             }
             
             //===
@@ -61,9 +57,9 @@ extension Connector
     
     func then<Input, Output>(
         _ op: @escaping Operation<Input, Output>
-        ) throws -> Connector<Output>
+        ) -> Connector<Output>
     {
-        return try then { (_: OperationFlow, input) in try op(input) }
+        return then { (_: OperationFlow, input) in try op(input) }
     }
 }
 
@@ -74,12 +70,8 @@ extension Connector
 {
     func onFailure(
         _ handler: @escaping FailureGeneric
-        ) throws -> Connector<Input>
+        ) -> Connector<Input>
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
         flow.core
             .failureHandlers
             .append(handler)
@@ -91,36 +83,22 @@ extension Connector
     
     func onFailure<E: Error>(
         _ handler: @escaping Failure<E>
-        ) throws -> Connector<Input>
+        ) -> Connector<Input>
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
-        flow.core
-            .failureHandlers
-            .append { flow, error, shouldRetry in
-                
-                if
-                    let e = error as? E
-                {
-                    handler(flow, e, &shouldRetry)
-                }
+        return onFailure { flow, error, shouldRetry in
+            
+            if
+                let e = error as? E
+            {
+                handler(flow, e, &shouldRetry)
             }
-        
-        //===
-        
-        return self
+        }
     }
     
     func onFailure(
         _ handlers: [FailureGeneric]
-        ) throws -> Connector<Input>
+        ) -> Connector<Input>
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
         flow.core
             .failureHandlers
             .append(contentsOf: handlers)
@@ -139,12 +117,8 @@ extension Connector
     @discardableResult
     func finally<Input>(
         _ handler: @escaping ManagingCompletion<Input>
-        ) throws -> OperationFlow
+        ) -> OperationFlow
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
         flow.core
             .completion = { flow, input in
                 
@@ -157,24 +131,20 @@ extension Connector
                 {
                     throw
                         InvalidInputType(
-                            expectedType: Input.self,
-                            actualType: type(of: input))
+                            expected: Input.self,
+                            actual: type(of: input))
                 }
             }
         
         //===
         
-        return try start()
+        return start()
     }
     
     @discardableResult
     public
-    func start() throws -> OperationFlow
+    func start() -> OperationFlow
     {
-        try OFL.checkMainQueue()
-        
-        //===
-        
         return OperationFlow(flow.core)
     }
 }

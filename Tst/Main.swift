@@ -104,7 +104,6 @@ class Main: XCTestCase
         
         //===
         
-        try!
         OperationFlow
             .new(caseName)
             .first(firstBlock)
@@ -202,7 +201,6 @@ class Main: XCTestCase
         
         //===
         
-        try!
         OperationFlow
             .new(caseName, maxRetries: 0)
             .first(firstBlock)
@@ -284,7 +282,6 @@ class Main: XCTestCase
         
         //===
         
-        try!
         OperationFlow
             .new(caseName)
             .first(firstBlock)
@@ -375,7 +372,6 @@ class Main: XCTestCase
         
         //===
         
-        try!
         OperationFlow
             .new(caseName, maxRetries: 1)
             .first(firstBlock)
@@ -426,7 +422,6 @@ class Main: XCTestCase
         
         //===
         
-        try!
         OperationFlow
             .new(caseName)
             .first(firstBlock)
@@ -470,7 +465,6 @@ class Main: XCTestCase
         
         //===
         
-        try!
         OperationFlow
             .new(caseName)
             .take(res0)
@@ -514,7 +508,6 @@ class Main: XCTestCase
         
         //===
         
-        try!
         OperationFlow
             .new(caseName)
             .take(res0)
