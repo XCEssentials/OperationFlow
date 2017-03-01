@@ -27,10 +27,10 @@ typealias OperationNoInput<Output> = () throws -> Output // no input
 //=== Failure handlers
 
 public
-typealias Failure<E: Error> = (OperationFlow, E, inout Bool) -> Void
+typealias Failure<E: Error> = (OperationFlow.InfoProxy, E, inout Bool) -> Void
 
 public
-typealias FailureGeneric = (OperationFlow, Error, inout Bool) -> Void
+typealias FailureGeneric = (OperationFlow.InfoProxy, Error, inout Bool) -> Void
 
 //=== Completion - managing (accepting link on the Flow)
 

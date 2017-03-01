@@ -292,7 +292,7 @@ extension OperationFlow
         
         for handler in core.failureHandlers
         {
-            handler(self, error, &shouldRetry)
+            handler(self.infoProxy, error, &shouldRetry)
         }
         
         //===
