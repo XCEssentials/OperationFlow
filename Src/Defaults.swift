@@ -11,13 +11,14 @@ import Foundation
 //===
 
 public
-enum FlowDefaults
+extension OFL
 {
-    public
-    static
-    var targetQueue = OperationQueue()
-    
-    public
-    static
-    var maxAttempts: UInt = 3
+    enum Defaults
+    {
+        static
+        var targetQueue = OperationQueue()
+        
+        static
+        var maxRetries: UInt = 3
+    }
 }
