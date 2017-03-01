@@ -11,7 +11,7 @@ import Foundation
 //===
 
 public
-enum OFL {} // main scope
+typealias OFL = OperationFlow // for scoping when necessary
 
 //===
 
@@ -66,7 +66,7 @@ class OperationFlow
 //===
 
 public
-extension OperationFlow
+extension OFL
 {
     func cancel() throws
     {

@@ -30,7 +30,7 @@ public
 extension Connector
 {
     func then<Input, Output>(
-        _ op: @escaping ManagingOperation<Input, Output>
+        _ op: @escaping OFL.ManagingOperation<Input, Output>
         ) -> Connector<Output>
     {
         flow.core.then(op)
@@ -41,7 +41,7 @@ extension Connector
     }
     
     func then<Input, Output>(
-        _ op: @escaping OFL.Operation<Input, Output>
+        _ op: @escaping OperationFlow.Operation<Input, Output>
         ) -> Connector<Output>
     {
         return then { (_: OperationFlow.ActiveProxy, input) in
@@ -57,7 +57,7 @@ public
 extension Connector
 {
     func onFailure(
-        _ handler: @escaping FailureGeneric
+        _ handler: @escaping OFL.FailureGeneric
         ) -> Connector<Input>
     {
         flow.core.onFailure(handler)
@@ -68,7 +68,7 @@ extension Connector
     }
     
     func onFailure<E: Error>(
-        _ handler: @escaping Failure<E>
+        _ handler: @escaping OFL.Failure<E>
         ) -> Connector<Input>
     {
         return onFailure { flow, error, shouldRetry in
@@ -82,7 +82,7 @@ extension Connector
     }
     
     func onFailure(
-        _ handlers: [FailureGeneric]
+        _ handlers: [OFL.FailureGeneric]
         ) -> Connector<Input>
     {
         flow.core.onFailure(handlers)
@@ -100,7 +100,7 @@ extension Connector
 {
     @discardableResult
     func finally<Input>(
-        _ handler: @escaping ManagingCompletion<Input>
+        _ handler: @escaping OFL.ManagingCompletion<Input>
         ) -> OperationFlow
     {
         flow.core.finally(handler)
@@ -112,7 +112,7 @@ extension Connector
     
     @discardableResult
     func finally<Input>(
-        _ handler: @escaping Completion<Input>
+        _ handler: @escaping OFL.Completion<Input>
         ) -> OperationFlow
     {
         return finally { (_: OperationFlow.InfoProxy, input) in

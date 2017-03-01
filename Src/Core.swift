@@ -35,7 +35,7 @@ extension OperationFlow.Core
 {
     mutating
     func first<Output>(
-        _ op: @escaping ManagingOperationNoInput<Output>
+        _ op: @escaping OFL.ManagingOperationNoInput<Output>
         ) // -> Connector<Output>
     {
         operations.removeAll()
@@ -49,7 +49,7 @@ extension OperationFlow.Core
     
     mutating
     func then<Input, Output>(
-        _ op: @escaping ManagingOperation<Input, Output>
+        _ op: @escaping OFL.ManagingOperation<Input, Output>
         )
     {
         operations.append { flow, input in
@@ -74,7 +74,7 @@ extension OperationFlow.Core
     
     mutating
     func onFailure(
-        _ handler: @escaping FailureGeneric
+        _ handler: @escaping OFL.FailureGeneric
         )
     {
         failureHandlers.append(handler)
@@ -82,7 +82,7 @@ extension OperationFlow.Core
     
     mutating
     func onFailure(
-        _ handlers: [FailureGeneric]
+        _ handlers: [OFL.FailureGeneric]
         )
     {
         failureHandlers.append(contentsOf: handlers)
@@ -92,7 +92,7 @@ extension OperationFlow.Core
     
     mutating
     func finally<Input>(
-        _ handler: @escaping ManagingCompletion<Input>
+        _ handler: @escaping OFL.ManagingCompletion<Input>
         )
     {
         completion = { flow, input in

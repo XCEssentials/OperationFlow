@@ -55,7 +55,7 @@ public
 extension OperationFlow.Pending
 {
     func first<Output>(
-        _ op: @escaping ManagingOperationNoInput<Output>
+        _ op: @escaping OFL.ManagingOperationNoInput<Output>
         ) -> Connector<Output>
     {
         core.first(op)
@@ -66,7 +66,7 @@ extension OperationFlow.Pending
     }
 
     func first<Output>(
-        _ op: @escaping OperationNoInput<Output>
+        _ op: @escaping OFL.OperationNoInput<Output>
         ) -> Connector<Output>
     {
         return first { (_: OperationFlow.ActiveProxy) in
