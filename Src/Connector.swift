@@ -33,22 +33,7 @@ extension Connector
         _ op: @escaping ManagingOperation<Input, Output>
         ) -> Connector<Output>
     {
-        flow.core.operations.append { flow, input in
-            
-            guard
-                let typedInput = input as? Input
-            else
-            {
-                throw
-                    InvalidInputType(
-                        expected: Input.self,
-                        actual: type(of: input))
-            }
-            
-            //===
-            
-            return try op(flow, typedInput)
-        }
+        flow.core.then(op)
         
         //===
         
@@ -59,7 +44,10 @@ extension Connector
         _ op: @escaping OFLOperation<Input, Output>
         ) -> Connector<Output>
     {
-        return then { (_: OperationFlow.ActiveProxy, input) in try op(input) }
+        return then { (_: OperationFlow.ActiveProxy, input) in
+                
+            try op(input)
+        }
     }
 }
 
@@ -104,9 +92,7 @@ extension Connector
         _ handler: @escaping FailureGeneric
         ) -> Connector<Input>
     {
-        flow.core
-            .failureHandlers
-            .append(handler)
+        flow.core.onFailure(handler)
         
         //===
         
@@ -131,9 +117,7 @@ extension Connector
         _ handlers: [FailureGeneric]
         ) -> Connector<Input>
     {
-        flow.core
-            .failureHandlers
-            .append(contentsOf: handlers)
+        flow.core.onFailure(handlers)
         
         //===
         
@@ -151,22 +135,7 @@ extension Connector
         _ handler: @escaping ManagingCompletion<Input>
         ) -> OperationFlow
     {
-        flow.core
-            .completion = { flow, input in
-                
-                if
-                    let typedInput = input as? Input
-                {
-                    return handler(flow, typedInput)
-                }
-                else
-                {
-                    throw
-                        InvalidInputType(
-                            expected: Input.self,
-                            actual: type(of: input))
-                }
-            }
+        flow.core.finally(handler)
         
         //===
         
@@ -178,7 +147,10 @@ extension Connector
         _ handler: @escaping Completion<Input>
         ) -> OperationFlow
     {
-        return finally { (_: OperationFlow.InfoProxy, input) in handler(input) }
+        return finally { (_: OperationFlow.InfoProxy, input) in
+            
+            handler(input)
+        }
     }
     
     @discardableResult

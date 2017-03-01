@@ -27,6 +27,7 @@ class PendingOperationFlow
             name: name,
             targetQueue: targetQueue,
             maxRetries: maxRetries,
+            
             operations: [],
             completion: nil,
             failureHandlers: []
@@ -54,11 +55,7 @@ extension PendingOperationFlow
         _ op: @escaping ManagingOperationNoInput<Output>
         ) -> Connector<Output>
     {
-        core.operations.removeAll()
-        
-        //===
-        
-        core.operations.append { flow, _ in try op(flow) }
+        core.first(op)
         
         //===
         
