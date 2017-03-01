@@ -19,7 +19,7 @@ project.all_configurations.each do |configuration|
 
     configuration.settings["SDKROOT"] = "iphoneos"
     configuration.settings["DEBUG_INFORMATION_FORMAT"] = "dwarf"
-    configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Developer"
+    configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = ""
     configuration.settings["TARGETED_DEVICE_FAMILY"] = "1,2"
     configuration.settings["IPHONEOS_DEPLOYMENT_TARGET"] = iOSdeploymentTarget
     configuration.settings["VERSIONING_SYSTEM"] = "apple-generic"
@@ -33,8 +33,6 @@ project.all_configurations.each do |configuration|
     configuration.settings["SWIFT_OPTIMIZATION_LEVEL"] = "-Onone"
 
     configuration.settings["CURRENT_PROJECT_VERSION"] = "1" # just default non-empty value
-
-    #=== Xcode 8:
 
     configuration.settings["CLANG_WARN_INFINITE_RECURSION"] = "YES"
     configuration.settings["CLANG_WARN_SUSPICIOUS_MOVE"] = "YES"
@@ -73,9 +71,11 @@ target do |target|
 
         configuration.settings["PRODUCT_NAME"] = "$(TARGET_NAME)"
 
-        # Xcode 8 automati c signing support
-        configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Distribution"
+        # Xcode 8 automatic code signing support
+        configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = ""
         configuration.settings["DEVELOPMENT_TEAM"] = developmentTeamId
+
+        #===
 
         configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
 
@@ -101,11 +101,12 @@ target do |target|
 
             configuration.settings["LD_RUNPATH_SEARCH_PATHS"] = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
 
-            # Xcode 8 automati c signing support
-            configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = "iPhone Distribution"
+            # Xcode 8 automatic code signing support
+            configuration.settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] = ""
             configuration.settings["DEVELOPMENT_TEAM"] = developmentTeamId
 
-            configuration.settings["SWIFT_VERSION"] = currentSwiftVersion # Xcode 8
+            configuration.settings["FRAMEWORK_SEARCH_PATHS"] = "$BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/**",
+                    "$(inherited)"
 
         end
 
