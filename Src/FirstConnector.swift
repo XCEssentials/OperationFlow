@@ -41,7 +41,7 @@ extension FirstConnector
     }
     
     func first<Output>(
-        _ op: @escaping OFLOperation<Input, Output>
+        _ op: @escaping OFL.Operation<Input, Output>
         ) -> Connector<Output>
     {
         return flow.first { try op(self.input) }

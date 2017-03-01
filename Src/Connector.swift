@@ -41,7 +41,7 @@ extension Connector
     }
     
     func then<Input, Output>(
-        _ op: @escaping OFLOperation<Input, Output>
+        _ op: @escaping OFL.Operation<Input, Output>
         ) -> Connector<Output>
     {
         return then { (_: OperationFlow.ActiveProxy, input) in

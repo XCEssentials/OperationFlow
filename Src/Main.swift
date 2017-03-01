@@ -11,6 +11,11 @@ import Foundation
 //===
 
 public
+enum OFL {} // main scope
+
+//===
+
+public
 final
 class OperationFlow
 {

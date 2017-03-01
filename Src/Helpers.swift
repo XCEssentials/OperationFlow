@@ -10,7 +10,7 @@ import Foundation
 
 //===
 
-enum OFL
+extension OFL
 {
     static
     func asyncOnMain(

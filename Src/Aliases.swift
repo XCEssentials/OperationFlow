@@ -10,8 +10,6 @@ import Foundation
 
 //===
 
-
-
 //=== Operation - managing (accepting link on the Flow)
 
 public
@@ -23,7 +21,11 @@ typealias ManagingOperationNoInput<Output> = (OperationFlow.ActiveProxy) throws 
 //=== Operation - NON-managing (NOT accepting link on the Flow)
 
 public
-typealias OFLOperation<Input, Output> = (Input) throws -> Output
+extension OFL
+{
+    public
+    typealias Operation<Input, Output> = (Input) throws -> Output
+}
 
 public
 typealias OperationNoInput<Output> = () throws -> Output // no input
