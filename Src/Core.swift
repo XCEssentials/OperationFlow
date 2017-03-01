@@ -10,25 +10,28 @@ import Foundation
 
 //===
 
-struct FlowCore
+extension OperationFlow
 {
-    let name: String
-    let targetQueue: OperationQueue
-    let maxRetries: UInt // how many times to retry on failure
-
-    fileprivate(set)
-    var operations: [GenericOperation]
-    
-    fileprivate(set)
-    var completion: GenericCompletion?
-    
-    fileprivate(set)
-    var failureHandlers: [FailureGeneric]
+    struct Core
+    {
+        let name: String
+        let targetQueue: OperationQueue
+        let maxRetries: UInt // how many times to retry on failure
+        
+        fileprivate(set)
+        var operations: [GenericOperation]
+        
+        fileprivate(set)
+        var completion: GenericCompletion?
+        
+        fileprivate(set)
+        var failureHandlers: [FailureGeneric]
+    }
 }
 
 //===
 
-extension FlowCore
+extension OperationFlow.Core
 {
     mutating
     func first<Output>(
@@ -41,12 +44,9 @@ extension FlowCore
         
         operations.append { flow, _ in try op(flow) }
     }
-}
-
-//===
-
-extension FlowCore
-{
+    
+    //===
+    
     mutating
     func then<Input, Output>(
         _ op: @escaping ManagingOperation<Input, Output>
@@ -69,12 +69,9 @@ extension FlowCore
             return try op(flow, typedInput)
         }
     }
-}
-
-//===
-
-extension FlowCore
-{
+    
+    //===
+    
     mutating
     func onFailure(
         _ handler: @escaping FailureGeneric
@@ -90,12 +87,9 @@ extension FlowCore
     {
         failureHandlers.append(contentsOf: handlers)
     }
-}
 
-//===
-
-extension FlowCore
-{
+    //===
+    
     mutating
     func finally<Input>(
         _ handler: @escaping ManagingCompletion<Input>

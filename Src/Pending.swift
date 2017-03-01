@@ -11,34 +11,37 @@ import Foundation
 //===
 
 public
-final
-class PendingOperationFlow
+extension OperationFlow
 {
-    var core: FlowCore
-    
-    //===
-    
-    init(_ name: String,
-         on targetQueue: OperationQueue,
-         maxRetries: UInt)
+    final
+    class Pending
     {
-        self.core = FlowCore(
-            
-            name: name,
-            targetQueue: targetQueue,
-            maxRetries: maxRetries,
-            
-            operations: [],
-            completion: nil,
-            failureHandlers: []
-        )
+        var core: Core
+        
+        //===
+        
+        init(_ name: String,
+             on targetQueue: OperationQueue,
+             maxRetries: UInt)
+        {
+            self.core = Core(
+                
+                name: name,
+                targetQueue: targetQueue,
+                maxRetries: maxRetries,
+                
+                operations: [],
+                completion: nil,
+                failureHandlers: []
+            )
+        }
     }
 }
 
 //===
 
 public
-extension PendingOperationFlow
+extension OperationFlow.Pending
 {
     func take<Input>(_ input: Input) -> FirstConnector<Input>
     {
@@ -49,7 +52,7 @@ extension PendingOperationFlow
 //===
 
 public
-extension PendingOperationFlow
+extension OperationFlow.Pending
 {
     func first<Output>(
         _ op: @escaping ManagingOperationNoInput<Output>
@@ -66,6 +69,9 @@ extension PendingOperationFlow
         _ op: @escaping OperationNoInput<Output>
         ) -> Connector<Output>
     {
-        return first { (_: OperationFlow.ActiveProxy) in try op() }
+        return first { (_: OperationFlow.ActiveProxy) in
+            
+            try op()
+        }
     }
 }

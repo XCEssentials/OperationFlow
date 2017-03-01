@@ -8,14 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		943070B41E660B6E004044C5 /* FirstConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943070B31E660B6E004044C5 /* FirstConnector.swift */; };
+		943070C31E678465004044C5 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943070BD1E678465004044C5 /* Core.swift */; };
+		943070C41E678465004044C5 /* Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943070BE1E678465004044C5 /* Processing.swift */; };
+		943070C51E678465004044C5 /* New.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943070BF1E678465004044C5 /* New.swift */; };
+		943070C61E678465004044C5 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943070C01E678465004044C5 /* Main.swift */; };
+		943070C71E678465004044C5 /* Pending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943070C11E678465004044C5 /* Pending.swift */; };
+		943070C81E678465004044C5 /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943070C21E678465004044C5 /* Proxy.swift */; };
 		943FCAB71E5F627700441585 /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FCAB11E5F627700441585 /* Connector.swift */; };
 		943FCAB81E5F627700441585 /* Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FCAB21E5F627700441585 /* Aliases.swift */; };
 		943FCAB91E5F627700441585 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FCAB31E5F627700441585 /* Defaults.swift */; };
 		943FCABA1E5F627700441585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FCAB41E5F627700441585 /* Errors.swift */; };
 		943FCABC1E5F627700441585 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FCAB61E5F627700441585 /* Helpers.swift */; };
-		943FCACA1E5F6A0E00441585 /* Pending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FCAC71E5F6A0E00441585 /* Pending.swift */; };
-		943FCACC1E5F7C8B00441585 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FCACB1E5F7C8B00441585 /* Core.swift */; };
-		943FCACE1E5FA9DE00441585 /* Complete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FCACD1E5FA9DE00441585 /* Complete.swift */; };
 		94BC07311DD769FC00CFC5A8 /* MKHOperationFlowTst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BC07301DD769FC00CFC5A8 /* MKHOperationFlowTst.swift */; };
 		94BC07331DD769FC00CFC5A8 /* MKHOperationFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E563D8C80B565D0A263118C5 /* MKHOperationFlow.framework */; };
 		94BC07391DD76A0300CFC5A8 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323DE54E2C459094ED0A3159 /* Main.swift */; };
@@ -36,14 +39,17 @@
 /* Begin PBXFileReference section */
 		323DE54E2C459094ED0A3159 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		943070B31E660B6E004044C5 /* FirstConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstConnector.swift; sourceTree = "<group>"; };
+		943070BD1E678465004044C5 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		943070BE1E678465004044C5 /* Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processing.swift; sourceTree = "<group>"; };
+		943070BF1E678465004044C5 /* New.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = New.swift; sourceTree = "<group>"; };
+		943070C01E678465004044C5 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		943070C11E678465004044C5 /* Pending.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pending.swift; sourceTree = "<group>"; };
+		943070C21E678465004044C5 /* Proxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
 		943FCAB11E5F627700441585 /* Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
 		943FCAB21E5F627700441585 /* Aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
 		943FCAB31E5F627700441585 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		943FCAB41E5F627700441585 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		943FCAB61E5F627700441585 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		943FCAC71E5F6A0E00441585 /* Pending.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pending.swift; sourceTree = "<group>"; };
-		943FCACB1E5F7C8B00441585 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
-		943FCACD1E5FA9DE00441585 /* Complete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Complete.swift; sourceTree = "<group>"; };
 		94BC072E1DD769FC00CFC5A8 /* MKHOperationFlowTst.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MKHOperationFlowTst.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94BC07301DD769FC00CFC5A8 /* MKHOperationFlowTst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKHOperationFlowTst.swift; sourceTree = "<group>"; };
 		94BC07321DD769FC00CFC5A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -119,16 +125,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		943FCAC41E5F6A0E00441585 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				943FCACB1E5F7C8B00441585 /* Core.swift */,
-				943FCAC71E5F6A0E00441585 /* Pending.swift */,
-				943FCACD1E5FA9DE00441585 /* Complete.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
 		94BC072F1DD769FC00CFC5A8 /* MKHOperationFlowTst */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,13 +137,18 @@
 		C8EBC14CB5969299E27AFAD3 /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				943070C01E678465004044C5 /* Main.swift */,
+				943070BD1E678465004044C5 /* Core.swift */,
+				943070BF1E678465004044C5 /* New.swift */,
+				943070C11E678465004044C5 /* Pending.swift */,
+				943070C21E678465004044C5 /* Proxy.swift */,
+				943070BE1E678465004044C5 /* Processing.swift */,
 				943FCAB21E5F627700441585 /* Aliases.swift */,
 				943FCAB31E5F627700441585 /* Defaults.swift */,
 				943FCAB11E5F627700441585 /* Connector.swift */,
 				943070B31E660B6E004044C5 /* FirstConnector.swift */,
 				943FCAB41E5F627700441585 /* Errors.swift */,
 				943FCAB61E5F627700441585 /* Helpers.swift */,
-				943FCAC41E5F6A0E00441585 /* Flow */,
 			);
 			path = Src;
 			sourceTree = "<group>";
@@ -262,14 +263,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				943070C51E678465004044C5 /* New.swift in Sources */,
 				943FCABA1E5F627700441585 /* Errors.swift in Sources */,
 				943FCABC1E5F627700441585 /* Helpers.swift in Sources */,
 				943FCAB91E5F627700441585 /* Defaults.swift in Sources */,
-				943FCACA1E5F6A0E00441585 /* Pending.swift in Sources */,
+				943070C81E678465004044C5 /* Proxy.swift in Sources */,
+				943070C31E678465004044C5 /* Core.swift in Sources */,
+				943070C61E678465004044C5 /* Main.swift in Sources */,
 				943FCAB81E5F627700441585 /* Aliases.swift in Sources */,
-				943FCACE1E5FA9DE00441585 /* Complete.swift in Sources */,
 				943070B41E660B6E004044C5 /* FirstConnector.swift in Sources */,
-				943FCACC1E5F7C8B00441585 /* Core.swift in Sources */,
+				943070C41E678465004044C5 /* Processing.swift in Sources */,
+				943070C71E678465004044C5 /* Pending.swift in Sources */,
 				943FCAB71E5F627700441585 /* Connector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

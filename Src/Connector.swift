@@ -14,11 +14,11 @@ public
 struct Connector<Input>
 {
     fileprivate
-    let flow: PendingOperationFlow
+    let flow: OperationFlow.Pending
     
     //===
     
-    init(_ flow: PendingOperationFlow)
+    init(_ flow: OperationFlow.Pending)
     {
         self.flow = flow
     }
@@ -48,38 +48,6 @@ extension Connector
                 
             try op(input)
         }
-    }
-}
-
-//===
-
-public
-extension OperationFlow
-{
-    public
-    typealias InfoProxy =
-    (
-        name: String,
-        targetQueue: OperationQueue,
-        maxRetries: UInt,
-        totalOperationsCount: UInt,
-        
-        failedAttempts: UInt,
-        targetOperationIndex: UInt
-    )
-    
-    var infoProxy: InfoProxy {
-        
-        return (
-        
-            core.name,
-            core.targetQueue,
-            core.maxRetries,
-            UInt(core.operations.count),
-            
-            failedAttempts,
-            targetOperationIndex
-        )
     }
 }
 

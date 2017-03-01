@@ -1,174 +1,12 @@
 //
-//  Complete.swift
+//  Processing.swift
 //  MKHOperationFlow
 //
-//  Created by Maxim Khatskevich on 2/24/17.
+//  Created by Maxim Khatskevich on 3/1/17.
 //  Copyright © 2017 Maxim Khatskevich. All rights reserved.
 //
 
 import Foundation
-
-//===
-
-public
-final
-class OperationFlow
-{
-    let core: FlowCore
-    
-    //===
-    
-    public
-    enum State: String
-    {
-        case
-            ready,
-            processing,
-            failed,
-            completed,
-            cancelled
-    }
-    
-    //===
-    
-    public internal(set)
-    var state: State
-    
-    public internal(set)
-    var failedAttempts: UInt = 0
-    
-    //===
-    
-    var targetOperationIndex: UInt = 0
-    
-    //===
-    
-    var isCancelled: Bool { return state == .cancelled }
-    
-    //===
-    
-    init(_ core: FlowCore)
-    {
-        self.core = core
-        self.state = .ready
-        
-        //===
-        
-        OFL.ensureOnMain { try! self.start() }
-    }
-}
-
-//===
-
-public
-extension OperationFlow
-{
-    static
-    func new(
-        _ name: String = NSUUID().uuidString,
-        on targetQueue: OperationQueue = FlowDefaults.targetQueue,
-        maxRetries: UInt = FlowDefaults.maxRetries
-        ) -> PendingOperationFlow
-    {
-        return PendingOperationFlow(name,
-                                    on: targetQueue,
-                                    maxRetries: maxRetries)
-    }
-}
-
-//=== Alternative ways to start new Flow with default params
-
-public
-extension OperationFlow
-{
-    static
-    func take<Input>(
-        _ input: Input
-        ) -> FirstConnector<Input>
-    {
-        return new().take(input)
-    }
-    
-    static
-    func first<Output>(
-        _ op: @escaping ManagingOperationNoInput<Output>
-        ) -> Connector<Output>
-    {
-        return new().first(op)
-    }
-    
-    static
-    func first<Output>(
-        _ op: @escaping OperationNoInput<Output>
-        ) -> Connector<Output>
-    {
-        return new().first(op)
-    }
-}
-
-//===
-
-public
-extension OperationFlow
-{
-    public
-    typealias ActiveProxy =
-    (
-        name: String,
-        targetQueue: OperationQueue,
-        maxRetries: UInt,
-        totalOperationsCount: UInt,
-        
-        failedAttempts: UInt,
-        targetOperationIndex: UInt,
-        
-        cancel: () throws -> Void
-    )
-    
-    var proxy: ActiveProxy {
-        
-        return (
-            
-            core.name,
-            core.targetQueue,
-            core.maxRetries,
-            UInt(core.operations.count),
-            
-            failedAttempts,
-            targetOperationIndex,
-            
-            cancel
-        )
-    }
-}
-
-//===
-
-extension OperationFlow
-{
-    func cancel() throws
-    {
-        try OFL.checkFlowState(self, [.processing])
-        
-        //===
-        
-        state = .cancelled
-    }
-    
-    func executeAgain(after delay: TimeInterval = 0) throws
-    {
-        try OFL.checkFlowState(self, OperationFlow.validStatesBeforeReset)
-        
-        //===
-        
-        // use 'ensure...' here only because of the delay
-        
-        OFL.ensureOnMain(after: delay) {
-            
-            try! self.reset()
-        }
-    }
-}
 
 //===
 
@@ -231,7 +69,7 @@ extension OperationFlow
                         
                         OFL.asyncOnMain { try! self.processFailure(error) }
                     }
-                }
+            }
         }
         else
         {
@@ -252,13 +90,13 @@ extension OperationFlow
                 // process cancellation somehow???
             }
             else
-            if self.state == .processing
-            {
-                self.targetOperationIndex += 1
-                
-                //===
-                
-                try! self.executeNext(previousResult)
+                if self.state == .processing
+                {
+                    self.targetOperationIndex += 1
+                    
+                    //===
+                    
+                    try! self.executeNext(previousResult)
             }
         }
     }
