@@ -39,7 +39,7 @@ class OperationFlow
     
     //===
     
-    var targetTaskIndex = 0
+    var targetOperationIndex: UInt = 0
     
     //===
     
@@ -111,6 +111,26 @@ extension OperationFlow
 public
 extension OperationFlow
 {
+    public
+    typealias ActiveProxy =
+    (
+        info: InfoProxy,
+        cancel: () throws -> Void
+    )
+    
+    var proxy: ActiveProxy {
+        
+        return (
+            infoProxy,
+            cancel
+        )
+    }
+}
+
+//===
+
+extension OperationFlow
+{
     func cancel() throws
     {
         try OFL.checkFlowState(self, [.processing])
@@ -158,7 +178,7 @@ extension OperationFlow
         
         //===
         
-        return (targetTaskIndex < self.core.operations.count)
+        return (Int(targetOperationIndex) < self.core.operations.count)
     }
     
     func executeNext(_ previousResult: Any? = nil) throws
@@ -172,7 +192,7 @@ extension OperationFlow
         {
             // regular block
             
-            let task = core.operations[targetTaskIndex]
+            let task = core.operations[Int(targetOperationIndex)]
             
             //===
             
@@ -219,7 +239,7 @@ extension OperationFlow
             else
             if self.state == .processing
             {
-                self.targetTaskIndex += 1
+                self.targetOperationIndex += 1
                 
                 //===
                 
@@ -243,7 +263,7 @@ extension OperationFlow
         {
             do
             {
-                try completion(self, finalResult)
+                try completion(self.infoProxy, finalResult)
             }
             catch
             {
@@ -293,7 +313,7 @@ extension OperationFlow
         
         //===
         
-        targetTaskIndex = 0
+        targetOperationIndex = 0
         state = .ready
         
         try start()

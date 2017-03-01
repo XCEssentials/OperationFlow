@@ -66,6 +66,52 @@ extension Connector
 //===
 
 public
+extension OperationFlow
+{
+    public
+    typealias CoreInfo =
+    (
+        name: String,
+        targetQueue: OperationQueue,
+        maxRetries: UInt,
+        totalOperationsCount: UInt
+    )
+    
+    public
+    typealias ExecutionStats =
+    (
+        failedAttempts: UInt,
+        targetOperationIndex: UInt
+    )
+    
+    public
+    typealias InfoProxy =
+    (
+        core: CoreInfo,
+        stats: ExecutionStats
+    )
+    
+    var infoProxy: InfoProxy {
+        
+        return (
+        
+            (
+                core.name,
+                core.targetQueue,
+                core.maxRetries,
+                UInt(core.operations.count)
+            ),
+            (
+                failedAttempts,
+                targetOperationIndex
+            )
+        )
+    }
+}
+
+//===
+
+public
 extension Connector
 {
     func onFailure(

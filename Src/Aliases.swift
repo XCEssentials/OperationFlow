@@ -35,10 +35,10 @@ typealias FailureGeneric = (OperationFlow, Error, inout Bool) -> Void
 //=== Completion - managing (accepting link on the Flow)
 
 public
-typealias ManagingCompletion<Input> = (OperationFlow, Input) -> Void
+typealias ManagingCompletion<Input> = (OperationFlow.InfoProxy, Input) -> Void
 
 public
-typealias ManagingCompletionNoInput = (OperationFlow) -> Void
+typealias ManagingCompletionNoInput = (OperationFlow.InfoProxy) -> Void
 
 //=== Completion - NON-managing (NOT accepting link on the Flow)
 
@@ -52,4 +52,4 @@ typealias CompletionNoInput = () -> Void
 
 typealias GenericOperation = (OperationFlow, Any?) throws -> Any?
 
-typealias GenericCompletion = (OperationFlow, Any?) throws -> Void
+typealias GenericCompletion = (OperationFlow.InfoProxy, Any?) throws -> Void
