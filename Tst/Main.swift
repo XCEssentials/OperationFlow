@@ -43,7 +43,7 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock: OperationNoInput<String> = {
+        let firstBlock: OFL.OperationNoInput<String> = {
         
             XCTAssertFalse(task1Completed)
             XCTAssertFalse(task2Completed)
@@ -170,7 +170,7 @@ class Main: XCTestCase
             throw TestError.two(code: errCode)
         }
         
-        let failureBlock: FailureGeneric = { _, error, _ in
+        let failureBlock: OFL.FailureGeneric = { _, error, _ in
             
             XCTAssertTrue(task1Completed)
             XCTAssertEqual(OperationQueue.current, OperationQueue.main)
@@ -226,7 +226,7 @@ class Main: XCTestCase
         
         //===
         
-        let firstBlock = { (flow: OperationFlow.ActiveProxy) -> String in
+        let firstBlock = { (flow: OFL.ActiveProxy) -> String in
         
             XCTAssertFalse(task1Started)
             XCTAssertFalse(task1Completed)
@@ -328,7 +328,7 @@ class Main: XCTestCase
             }
         }
         
-        let failureBlock: FailureGeneric = { _, error, _ in
+        let failureBlock: OFL.FailureGeneric = { _, error, _ in
            
             XCTAssertFalse(failureReported)
             
@@ -394,7 +394,7 @@ class Main: XCTestCase
             throw TestError.one
         }
         
-        let failureBlock: FailureGeneric = { _, error, shouldRetry in
+        let failureBlock: OFL.FailureGeneric = { _, error, shouldRetry in
         
             XCTAssertTrue(error is TestError)
             
