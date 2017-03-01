@@ -11,7 +11,7 @@ import Foundation
 //===
 
 public
-extension OperationFlow
+extension OFL
 {
     final
     class Pending
@@ -41,7 +41,7 @@ extension OperationFlow
 //===
 
 public
-extension OperationFlow.Pending
+extension OFL.Pending
 {
     func take<Input>(_ input: Input) -> FirstConnector<Input>
     {
@@ -52,7 +52,7 @@ extension OperationFlow.Pending
 //===
 
 public
-extension OperationFlow.Pending
+extension OFL.Pending
 {
     func first<Output>(
         _ op: @escaping OFL.ManagingOperationNoInput<Output>
@@ -69,7 +69,7 @@ extension OperationFlow.Pending
         _ op: @escaping OFL.OperationNoInput<Output>
         ) -> Connector<Output>
     {
-        return first { (_: OperationFlow.ActiveProxy) in
+        return first { (_: OFL.ActiveProxy) in
             
             try op()
         }

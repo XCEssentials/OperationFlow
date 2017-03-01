@@ -106,7 +106,7 @@ extension OFL
     func checkFlowState(
         context: String = #function,
         _ flow: OperationFlow,
-        _ expectedStates: [OperationFlow.State]
+        _ expectedStates: [OFL.State]
         ) throws
     {
         try checkCurrentQueueIsMain()

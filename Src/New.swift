@@ -11,13 +11,13 @@ import Foundation
 //===
 
 public
-extension OperationFlow
+extension OFL
 {
     static
     func new(
         _ name: String = NSUUID().uuidString,
-        on targetQueue: OperationQueue = FlowDefaults.targetQueue,
-        maxRetries: UInt = FlowDefaults.maxRetries
+        on targetQueue: OperationQueue = Defaults.targetQueue,
+        maxRetries: UInt = Defaults.maxRetries
         ) -> Pending
     {
         return Pending(name,
@@ -29,7 +29,7 @@ extension OperationFlow
 //=== Alternative ways to start new Flow with default params
 
 public
-extension OperationFlow
+extension OFL
 {
     static
     func take<Input>(

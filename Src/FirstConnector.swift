@@ -14,14 +14,14 @@ public
 struct FirstConnector<Input>
 {
     fileprivate
-    let flow: OperationFlow.Pending
+    let flow: OFL.Pending
     
     fileprivate
     let input: Input
     
     //===
     
-    init(_ flow: OperationFlow.Pending, _ input: Input)
+    init(_ flow: OFL.Pending, _ input: Input)
     {
         self.flow = flow
         self.input = input

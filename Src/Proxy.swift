@@ -11,9 +11,8 @@ import Foundation
 //===
 
 public
-extension OperationFlow
+extension OFL
 {
-    public
     typealias InfoProxy =
     (
         name: String,
@@ -43,9 +42,8 @@ extension OperationFlow
 //===
 
 public
-extension OperationFlow
+extension OFL
 {
-    public
     typealias ActiveProxy =
     (
         name: String,

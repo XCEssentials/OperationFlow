@@ -10,7 +10,7 @@ import Foundation
 
 //===
 
-extension OperationFlow
+extension OFL
 {
     func start() throws
     {
@@ -162,7 +162,7 @@ extension OperationFlow
     
     func reset() throws
     {
-        try OFL.checkFlowState(self, OperationFlow.validStatesBeforeReset)
+        try OFL.checkFlowState(self, OFL.validStatesBeforeReset)
         
         //===
         

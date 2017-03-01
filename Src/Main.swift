@@ -79,7 +79,7 @@ extension OFL
     
     func executeAgain(after delay: TimeInterval = 0) throws
     {
-        try OFL.checkFlowState(self, OperationFlow.validStatesBeforeReset)
+        try OFL.checkFlowState(self, OFL.validStatesBeforeReset)
         
         //===
         

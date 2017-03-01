@@ -14,11 +14,11 @@ public
 struct Connector<Input>
 {
     fileprivate
-    let flow: OperationFlow.Pending
+    let flow: OFL.Pending
     
     //===
     
-    init(_ flow: OperationFlow.Pending)
+    init(_ flow: OFL.Pending)
     {
         self.flow = flow
     }
@@ -41,10 +41,10 @@ extension Connector
     }
     
     func then<Input, Output>(
-        _ op: @escaping OperationFlow.Operation<Input, Output>
+        _ op: @escaping OFL.Operation<Input, Output>
         ) -> Connector<Output>
     {
-        return then { (_: OperationFlow.ActiveProxy, input) in
+        return then { (_: OFL.ActiveProxy, input) in
                 
             try op(input)
         }
@@ -115,7 +115,7 @@ extension Connector
         _ handler: @escaping OFL.Completion<Input>
         ) -> OperationFlow
     {
-        return finally { (_: OperationFlow.InfoProxy, input) in
+        return finally { (_: OFL.InfoProxy, input) in
             
             handler(input)
         }

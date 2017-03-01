@@ -10,7 +10,7 @@ import Foundation
 
 //===
 
-extension OperationFlow
+extension OFL
 {
     struct Core
     {
@@ -31,7 +31,7 @@ extension OperationFlow
 
 //===
 
-extension OperationFlow.Core
+extension OFL.Core
 {
     mutating
     func first<Output>(

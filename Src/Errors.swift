@@ -39,6 +39,6 @@ struct InvalidFlowState: OperationFlowError
 {
     let flow: String
     let context: String
-    let expected: [OperationFlow.State]
-    let actual: OperationFlow.State
+    let expected: [OFL.State]
+    let actual: OFL.State
 }

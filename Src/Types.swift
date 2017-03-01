@@ -32,18 +32,18 @@ extension OFL
     //=== Failure handlers
     
     typealias Failure<E: Error> =
-        (OperationFlow.InfoProxy, E, inout Bool) -> Void
+        (InfoProxy, E, inout Bool) -> Void
     
     typealias FailureGeneric =
-        (OperationFlow.InfoProxy, Error, inout Bool) -> Void
+        (InfoProxy, Error, inout Bool) -> Void
     
     //=== Completion - managing (accepting link on the Flow)
     
     typealias ManagingCompletion<Input> =
-        (OperationFlow.InfoProxy, Input) -> Void
+        (InfoProxy, Input) -> Void
     
     typealias ManagingCompletionNoInput =
-        (OperationFlow.InfoProxy) -> Void
+        (InfoProxy) -> Void
     
     //=== Completion - NON-managing (NOT accepting link on the Flow)
     
@@ -56,8 +56,8 @@ extension OFL
     //===
 
     typealias GenericOperation =
-        (OperationFlow.ActiveProxy, Any?) throws -> Any?
+        (ActiveProxy, Any?) throws -> Any?
     
     typealias GenericCompletion =
-        (OperationFlow.InfoProxy, Any?) throws -> Void
+        (InfoProxy, Any?) throws -> Void
 }
