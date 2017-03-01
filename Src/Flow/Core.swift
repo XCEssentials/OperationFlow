@@ -10,13 +10,13 @@ import Foundation
 
 //===
 
-typealias FlowCore =
-(
-    name: String,
-    targetQueue: OperationQueue,
-    maxRetries: UInt, // how many times to retry on failure
+struct FlowCore
+{
+    let name: String
+    let targetQueue: OperationQueue
+    let maxRetries: UInt // how many times to retry on failure
 
-    operations: [GenericOperation],
-    completion: GenericCompletion?,
-    failureHandlers: [FailureGeneric]
-)
+    var operations: [GenericOperation]
+    var completion: GenericCompletion?
+    var failureHandlers: [FailureGeneric]
+}

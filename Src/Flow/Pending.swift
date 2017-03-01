@@ -22,14 +22,14 @@ class PendingOperationFlow
          on targetQueue: OperationQueue,
          maxRetries: UInt)
     {
-        self.core = (
+        self.core = FlowCore(
             
-            name,
-            targetQueue,
-            maxRetries,
-            [],
-            nil,
-            []
+            name: name,
+            targetQueue: targetQueue,
+            maxRetries: maxRetries,
+            operations: [],
+            completion: nil,
+            failureHandlers: []
         )
     }
 }
