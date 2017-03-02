@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                      = 'MKHOperationFlow'
-  s.version                   = '4.0.0'
+  s.version                   = '4.0.1'
   s.summary                   = 'Lightweight async serial operation flow controller.'
   s.homepage                  = 'https://github.com/maximkhatskevich/#{s.name}'
 
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
 
   s.source                    = { :git => '#{s.homepage}.git', :tag => '#{s.version}' }
-  s.source_files              = 'Src/Common/*.swift'
+  s.source_files              = 'Src/**/*.swift'
 
   s.requires_arc              = true
 
