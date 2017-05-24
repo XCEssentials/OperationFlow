@@ -13,11 +13,14 @@ import Foundation
 public
 extension OFL
 {
+    public
     enum Defaults
     {
+        public
         static
         var targetQueue = OperationQueue()
         
+        public
         static
         var maxRetries: UInt = 3
     }
