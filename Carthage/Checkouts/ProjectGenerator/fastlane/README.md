@@ -30,19 +30,9 @@ xcode-select --install
 
 # Available Actions
 ## iOS
-### ios finalize_release
+### ios inc_version_and_commit
 ```
-fastlane ios finalize_release
-```
-
-### ios regenerate_project
-```
-fastlane ios regenerate_project
-```
-
-### ios generate_project
-```
-fastlane ios generate_project
+fastlane ios inc_version_and_commit
 ```
 
 
