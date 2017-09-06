@@ -56,6 +56,33 @@ extension Connector
 public
 extension Connector
 {
+    func thenAsync<Input, Output>(
+        _ op: @escaping OFL.ManagingOperation<Input, Promise<Output>>
+        ) -> Connector<Output>
+    {
+        flow.core.then(op)
+        
+        //===
+        
+        return Connector<Output>(flow)
+    }
+    
+    func thenAsync<Input, Output>(
+        _ op: @escaping OFL.Operation<Input, Promise<Output>>
+        ) -> Connector<Output>
+    {
+        return thenAsync { (_: OFL.ActiveProxy, input) in
+
+            try op(input)
+        }
+    }
+}
+
+//===
+
+public
+extension Connector
+{
     func onFailure(
         _ handler: @escaping OFL.FailureGeneric
         ) -> Connector<Input>

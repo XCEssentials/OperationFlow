@@ -47,3 +47,26 @@ extension FirstConnector
         return flow.first { try op(self.input) }
     }
 }
+
+//===
+
+public
+extension FirstConnector
+{
+    func firstAsync<Output>(
+        _ op: @escaping OFL.ManagingOperation<Input, Promise<Output>>
+        ) -> Connector<Output>
+    {
+        return flow.firstAsync { try op($0, self.input) }
+    }
+    
+    func firstAsync<Output>(
+        _ op: @escaping OFL.Operation<Input, Promise<Output>>
+        ) -> Connector<Output>
+    {
+        return firstAsync { (_: OFL.ActiveProxy, input) in
+            
+            try op(input)
+        }
+    }
+}
