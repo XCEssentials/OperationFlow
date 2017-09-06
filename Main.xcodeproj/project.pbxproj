@@ -68,7 +68,7 @@
 		65E964E6A4B068F520194914 /* New.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = New.swift; sourceTree = "<group>"; };
 		6945E1275C3332B1AF7C34D2 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		941DC7AA7244A6135A19FB1D /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		944CAEFE939F6DB9EEAE294A /* Fwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Fwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		944CAEFE939F6DB9EEAE294A /* XCEOperationFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCEOperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0DD0DEA925DDA19F48A11F /* Defaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		CBCFDAD234B20DD6A365E131 /* FirstConnector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirstConnector.swift; sourceTree = "<group>"; };
 		CC09E97C4A9B26C2E5812BEF /* Connector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
@@ -101,7 +101,6 @@
 			children = (
 				6945E1275C3332B1AF7C34D2 /* Main.swift */,
 			);
-			name = Tests;
 			path = Tests;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -109,7 +108,7 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = "$local";
+			name = $local;
 			sourceTree = "<group>";
 		};
 		4B8907B16BB5C1FF747798CC /* Frameworks */ = {
@@ -145,7 +144,6 @@
 				3830D9E01AE1B4BB69B65D31 /* Proxy.swift */,
 				E1162A3CC3FF97ECE7CA7A10 /* Types.swift */,
 			);
-			name = Sources;
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -162,7 +160,7 @@
 		F474C7BD5AD8EA37816E688D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				944CAEFE939F6DB9EEAE294A /* Fwk.framework */,
+				944CAEFE939F6DB9EEAE294A /* XCEOperationFlow.framework */,
 				FAAE1154266B511D2EAF3F05 /* Tests.xctest */,
 			);
 			name = Products;
@@ -186,7 +184,7 @@
 			);
 			name = Fwk;
 			productName = Fwk;
-			productReference = 944CAEFE939F6DB9EEAE294A /* Fwk.framework */;
+			productReference = 944CAEFE939F6DB9EEAE294A /* XCEOperationFlow.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		BE8F9F1FCA9C48FA12BAFFA4 /* Tests */ = {
@@ -216,6 +214,14 @@
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0700;
 				Struct.Version = 2.1.0;
+				TargetAttributes = {
+					B0A38953164A18EF88445BED = {
+						ProvisioningStyle = Automatic;
+					};
+					BE8F9F1FCA9C48FA12BAFFA4 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = DDA9D73A843DE679215C689A /* Build configuration list for PBXProject "Main" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -249,7 +255,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-			showEnvVarsInLog = 1;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -343,8 +348,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 21;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Info/Fwk.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -352,6 +359,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.XCEssentials.OperationFlow;
 				PRODUCT_NAME = XCEOperationFlow;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -365,8 +373,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 21;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Info/Fwk.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -375,6 +385,7 @@
 				MTL_ENABLE_DEBUG_INFO = true;
 				PRODUCT_BUNDLE_IDENTIFIER = io.XCEssentials.OperationFlow;
 				PRODUCT_NAME = XCEOperationFlow;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -389,6 +400,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(BUILT_PRODUCTS_DIR)",
@@ -398,6 +411,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.XCEssentials.OperationFlow.Tst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 3.0;
 			};
@@ -461,6 +475,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(BUILT_PRODUCTS_DIR)",
@@ -471,6 +487,7 @@
 				MTL_ENABLE_DEBUG_INFO = true;
 				PRODUCT_BUNDLE_IDENTIFIER = io.XCEssentials.OperationFlow.Tst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 3.0;
 			};

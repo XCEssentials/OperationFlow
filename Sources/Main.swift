@@ -59,7 +59,7 @@ class OperationFlow
         
         //===
         
-        OFL.ensureOnMain { try! self.start() }
+        OFL.ensureOnMain { try! self.start() } //swiftlint:disable:this force_try
     }
 }
 
@@ -87,7 +87,7 @@ extension OFL
         
         OFL.ensureOnMain(after: delay) {
             
-            try! self.reset()
+            try! self.reset() //swiftlint:disable:this force_try
         }
     }
 }

@@ -67,13 +67,13 @@ extension OFL
                     {
                         // the task thrown an error
                         
-                        OFL.asyncOnMain { try! self.processFailure(error) }
+                        OFL.asyncOnMain { try! self.processFailure(error) } //swiftlint:disable:this force_try
                     }
             }
         }
         else
         {
-            try! executeCompletion(previousResult)
+            try! executeCompletion(previousResult) //swiftlint:disable:this force_try
         }
     }
     
@@ -96,7 +96,7 @@ extension OFL
                     
                     //===
                     
-                    try! self.executeNext(previousResult)
+                    try! self.executeNext(previousResult) //swiftlint:disable:this force_try
             }
         }
     }
@@ -122,7 +122,7 @@ extension OFL
             {
                 // the task thrown an error
                 
-                try! self.processFailure(error)
+                try! self.processFailure(error) //swiftlint:disable:this force_try
             }
         }
     }
@@ -153,7 +153,7 @@ extension OFL
         if
             shouldRetry
         {
-            try! executeAgain(after: 0.25 * Double(failedAttempts))
+            try! executeAgain(after: 0.25 * Double(failedAttempts)) //swiftlint:disable:this force_try
         }
     }
     
