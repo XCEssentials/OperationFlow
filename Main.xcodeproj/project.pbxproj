@@ -18,6 +18,7 @@
 		7190CB49D4221CD462B47668 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE947E489FD598D44B88FA /* Helpers.swift */; };
 		7D360A73EBA20B7FD0216390 /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC09E97C4A9B26C2E5812BEF /* Connector.swift */; };
 		8B30B15C67F198406D8D0E02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F572CF10C25A4A496D0623 /* Foundation.framework */; };
+		944664C81F60BEA6005FCEDA /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944664C71F60BEA6005FCEDA /* Promise.swift */; };
 		98013EB1B302D5575A4B6330 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6945E1275C3332B1AF7C34D2 /* Main.swift */; };
 		BB905E78E7A194A05E97EB6B /* New.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E964E6A4B068F520194914 /* New.swift */; };
 		C04A7CD26C7067C03783E15F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F572CF10C25A4A496D0623 /* Foundation.framework */; };
@@ -68,6 +69,7 @@
 		65E964E6A4B068F520194914 /* New.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = New.swift; sourceTree = "<group>"; };
 		6945E1275C3332B1AF7C34D2 /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		941DC7AA7244A6135A19FB1D /* Main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		944664C71F60BEA6005FCEDA /* Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		944CAEFE939F6DB9EEAE294A /* XCEOperationFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCEOperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0DD0DEA925DDA19F48A11F /* Defaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		CBCFDAD234B20DD6A365E131 /* FirstConnector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirstConnector.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				40B2A48E3BCEDCF52802F25C /* Processing.swift */,
 				3830D9E01AE1B4BB69B65D31 /* Proxy.swift */,
 				E1162A3CC3FF97ECE7CA7A10 /* Types.swift */,
+				944664C71F60BEA6005FCEDA /* Promise.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -278,6 +281,7 @@
 				CE3079E65D2EBED6DBD8246F /* FirstConnector.swift in Sources */,
 				7190CB49D4221CD462B47668 /* Helpers.swift in Sources */,
 				675EBBB2F8B5A571561F1227 /* Main.swift in Sources */,
+				944664C81F60BEA6005FCEDA /* Promise.swift in Sources */,
 				BB905E78E7A194A05E97EB6B /* New.swift in Sources */,
 				12E93E2EF0F3304DBF814BF4 /* Pending.swift in Sources */,
 				4E1273B60319B60184FEBABC /* Processing.swift in Sources */,
@@ -323,7 +327,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -349,7 +353,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
@@ -374,7 +378,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
@@ -442,7 +446,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;

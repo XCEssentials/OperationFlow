@@ -58,10 +58,38 @@ extension OFL
                         
                         //===
                         
-                        // everything seems to be good,
-                        // lets continue execution
-                        
-                        self.proceed(result)
+                        if
+                            let promise = result as? DeferredResult
+                        {
+                            if
+                                let promiseResult = promise.value
+                            {
+                                // promise is already fulfilled somehow,
+                                // lets just proceed normally
+                                
+                                self.proceed(promiseResult)
+                            }
+                            else
+                            {
+                                promise.onSuccess = {
+                                    
+                                    self.proceed($0)
+                                }
+                                
+                                promise.onFailure = { error in
+                                    
+                                    OFL.asyncOnMain { try! self.processFailure(error) }
+                                    //swiftlint:disable:previous force_try
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // everything seems to be good,
+                            // lets continue execution
+                            
+                            self.proceed(result)
+                        }
                     }
                     catch
                     {

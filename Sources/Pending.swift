@@ -75,3 +75,30 @@ extension OFL.Pending
         }
     }
 }
+
+//===
+
+public
+extension OFL.Pending
+{
+    func firstAsync<Output>(
+        _ op: @escaping OFL.ManagingOperationNoInput<Promise<Output>>
+        ) -> Connector<Output>
+    {
+        core.first(op)
+        
+        //===
+        
+        return Connector<Output>(self)
+    }
+    
+    func firstAsync<Output>(
+        _ op: @escaping OFL.OperationNoInput<Promise<Output>>
+        ) -> Connector<Output>
+    {
+        return firstAsync { (_: OFL.ActiveProxy) in
+            
+            try op()
+        }
+    }
+}
