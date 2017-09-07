@@ -1,4 +1,4 @@
-protocol DeferredResult
+protocol DeferredResult: class
 {
     var value: Any? { get }
     
