@@ -12,6 +12,11 @@ public
 final
 class Promise<T>: DeferredResult
 {
+    public
+    init() { }
+    
+    //===
+    
     var value: Any?
     
     //===
