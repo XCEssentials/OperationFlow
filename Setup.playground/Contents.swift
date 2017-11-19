@@ -167,6 +167,7 @@ try! Template.XCE.CocoaPods.Podspec
             email: author.email
         ),
         deploymentTargets: Set(depTargets.map{ $0.name }),
+        sourcesPath: sourcesPath.main,
         subspecs: false
         )
     )
