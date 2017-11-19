@@ -62,7 +62,7 @@
 		3247712486F6D5A6BD57E9BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		32CE29088EF50DE37B67B69D /* Connector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
 		342F51A7595621E37E674D41 /* Core.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
-		355FA9BFF9A9D2F7829840F4 /* OperationFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		355FA9BFF9A9D2F7829840F4 /* XCEOperationFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XCEOperationFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		400BC13322F0408428A028FA /* Errors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		68C55D4BFE09D24C36680653 /* OperationFlowTst.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OperationFlowTst.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7326F0F2B78E0BC7C221FF55 /* Defaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
@@ -103,7 +103,6 @@
 			children = (
 				BF49FB2E35FFC6CACAE33EE4 /* Main.swift */,
 			);
-			name = OperationFlowTst;
 			path = OperationFlowTst;
 			sourceTree = "<group>";
 		};
@@ -131,7 +130,6 @@
 				BF88B86A442D82917F3B49B1 /* OperationFlow */,
 				15DFB2A3CBAC09952589F1E4 /* OperationFlowTst */,
 			);
-			name = Sources;
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -152,7 +150,6 @@
 				7457A5D252FDD6CD02474315 /* Main.swift */,
 				FE46B3C3D08AF4D1ABE032A9 /* Types.swift */,
 			);
-			name = OperationFlow;
 			path = OperationFlow;
 			sourceTree = "<group>";
 		};
@@ -168,13 +165,13 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = "$local";
+			name = $local;
 			sourceTree = "<group>";
 		};
 		EEF0D8F69DA2A7FE0B363A7A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				355FA9BFF9A9D2F7829840F4 /* OperationFlow.framework */,
+				355FA9BFF9A9D2F7829840F4 /* XCEOperationFlow.framework */,
 				68C55D4BFE09D24C36680653 /* OperationFlowTst.xctest */,
 			);
 			name = Products;
@@ -215,7 +212,7 @@
 			);
 			name = OperationFlow;
 			productName = OperationFlow;
-			productReference = 355FA9BFF9A9D2F7829840F4 /* OperationFlow.framework */;
+			productReference = 355FA9BFF9A9D2F7829840F4 /* XCEOperationFlow.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -303,7 +300,6 @@
 				PRODUCT_NAME = XCEOperationFlow;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -325,7 +321,6 @@
 				PRODUCT_NAME = XCEOperationFlow;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -348,7 +343,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.XCEssentials.OperationFlow.Tst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -367,7 +361,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.XCEssentials.OperationFlow.Tst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
