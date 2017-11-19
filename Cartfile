@@ -1,1 +1,2 @@
-github "XCEssentials/ProjectGenerator" ~> 2.1
+# github "XCEssentials/RepoConfig" # ~> 1.0
+git "file:///Users/maxim/Library/Mobile Documents/com~apple~CloudDocs/Dev/XCEssentials/RepoConfig" "master"

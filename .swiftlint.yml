@@ -1,19 +1,30 @@
-disabled_rules: # rule identifiers to exclude from running
+# see more at https://github.com/realm/SwiftLint
+
+# ===
+
+disabled_rules:
+
   - opening_brace
   - nesting
-  - large_tuple
+  - function_body_length
   - file_length
-  # - trailing_whitespace # remove this later!!!
-included: # paths to include during linting. `--path` is ignored if present.
-  - Sources
 
-# # configurable rules can be customized from this configuration file
-# # binary rules can set their severity level
+# paths to ignore during linting. Takes precedence over `included`.
+excluded:
+
+  - Resources
+
+  - Carthage
+  - Pods
+
+# rules options
+
 line_length:
-  ignores_comments: true
+    ignores_comments: true
 trailing_whitespace:
-  ignores_empty_lines: true
+    ignores_empty_lines: true
 type_name:
-  allowed_symbols: _
+    allowed_symbols: _
 statement_position:
-  statement_mode: uncuddled_else # https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
+    # https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
+    statement_mode: uncuddled_else

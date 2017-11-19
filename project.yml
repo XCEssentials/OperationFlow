@@ -7,67 +7,63 @@ configurations:
     type: "debug"
     overrides:
       IPHONEOS_DEPLOYMENT_TARGET: "8.0"
-      SWIFT_VERSION: "3.0"
+      SWIFT_VERSION: "4.0"
       VERSIONING_SYSTEM: "apple-generic"
-      CURRENT_PROJECT_VERSION: "0"
-      CODE_SIGN_IDENTITY[sdk=iphoneos*]: ""
       SWIFT_OPTIMIZATION_LEVEL: "-Onone"
   Release:
     type: "release"
     overrides:
       IPHONEOS_DEPLOYMENT_TARGET: "8.0"
-      SWIFT_VERSION: "3.0"
+      SWIFT_VERSION: "4.0"
       VERSIONING_SYSTEM: "apple-generic"
-      CURRENT_PROJECT_VERSION: "0"
-      CODE_SIGN_IDENTITY[sdk=iphoneos*]: ""
 targets:
-  Fwk:
+  OperationFlow:
     platform: "ios"
     type: ":framework"
     sources:
-    - "Sources"
+    - "Sources/OperationFlow"
     configurations:
       Debug:
-        PRODUCT_NAME: "XCEOperationFlow"
         IPHONEOS_DEPLOYMENT_TARGET: "8.0"
         PRODUCT_BUNDLE_IDENTIFIER: "io.XCEssentials.OperationFlow"
-        INFOPLIST_FILE: "Info/Fwk.plist"
+        INFOPLIST_FILE: "Info/OperationFlow.plist"
         SDKROOT: "iphoneos"
         TARGETED_DEVICE_FAMILY: "1,2"
+        PRODUCT_NAME: "XCEOperationFlow"
         DEFINES_MODULE: "NO"
         SKIP_INSTALL: "YES"
         MTL_ENABLE_DEBUG_INFO: "true"
       Release:
-        PRODUCT_NAME: "XCEOperationFlow"
         IPHONEOS_DEPLOYMENT_TARGET: "8.0"
         PRODUCT_BUNDLE_IDENTIFIER: "io.XCEssentials.OperationFlow"
-        INFOPLIST_FILE: "Info/Fwk.plist"
+        INFOPLIST_FILE: "Info/OperationFlow.plist"
         SDKROOT: "iphoneos"
         TARGETED_DEVICE_FAMILY: "1,2"
+        PRODUCT_NAME: "XCEOperationFlow"
         DEFINES_MODULE: "NO"
         SKIP_INSTALL: "YES"
-  Tests:
+  OperationFlowTst:
     platform: "ios"
     type: ":bundle.unit-test"
     references:
-    - "Fwk"
+    - "OperationFlow"
     sources:
-    - "Tests"
+    - "Sources/OperationFlowTst"
     configurations:
       Debug:
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
         IPHONEOS_DEPLOYMENT_TARGET: "8.0"
         PRODUCT_BUNDLE_IDENTIFIER: "io.XCEssentials.OperationFlow.Tst"
-        INFOPLIST_FILE: "Info/Tst.plist"
+        INFOPLIST_FILE: "Info/OperationFlowTst.plist"
         FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR)"
         MTL_ENABLE_DEBUG_INFO: "true"
       Release:
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"
         IPHONEOS_DEPLOYMENT_TARGET: "8.0"
         PRODUCT_BUNDLE_IDENTIFIER: "io.XCEssentials.OperationFlow.Tst"
-        INFOPLIST_FILE: "Info/Tst.plist"
+        INFOPLIST_FILE: "Info/OperationFlowTst.plist"
         FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR)"
 variants:
   $base:
     abstract: true
-  Main:
+  OperationFlow:

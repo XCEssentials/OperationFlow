@@ -44,10 +44,14 @@ extension Connector
         _ op: @escaping OFL.Operation<Input, Output>
         ) -> Connector<Output>
     {
-        return then { (_: OFL.ActiveProxy, input) in
-                
+        flow.core.then { _, input in
+
             try op(input)
         }
+
+        //===
+
+        return Connector<Output>(flow)
     }
 }
 
@@ -71,10 +75,14 @@ extension Connector
         _ op: @escaping OFL.Operation<Input, Promise<Output>>
         ) -> Connector<Output>
     {
-        return thenAsync { (_: OFL.ActiveProxy, input) in
+        flow.core.then { _, input in
 
             try op(input)
         }
+
+        //===
+
+        return Connector<Output>(flow)
     }
 }
 
@@ -142,10 +150,14 @@ extension Connector
         _ handler: @escaping OFL.Completion<Input>
         ) -> OperationFlow
     {
-        return finally { (_: OFL.InfoProxy, input) in
-            
+        flow.core.finally { _, input in
+
             handler(input)
         }
+
+        //===
+
+        return start()
     }
     
     @discardableResult
