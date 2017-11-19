@@ -36,6 +36,13 @@ platform :ios do
 
     # ===
 
+    pod_lib_lint(
+      allow_warnings: true,
+      quick: true
+    )
+
+    # ===
+
     versionNumber = get_version_number(xcodeproj: 'OperationFlow.xcodeproj')
     puts 'Current VERSION number: ' + versionNumber
 
@@ -78,6 +85,18 @@ platform :ios do
     commit_version_bump( # it will fail if more than version bump
       xcodeproj: 'OperationFlow.xcodeproj',
       message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+    )
+
+    # ===
+
+    version_bump_podspec(
+      path: './XCEOperationFlow.podspec',
+      version_number: newVersionNumber
+    )
+
+    git_commit(
+      path: './XCEOperationFlow.podspec',
+      message: 'Version Bump to ' + newVersionNumber + ' in Podspec file'
     )
 
   end
