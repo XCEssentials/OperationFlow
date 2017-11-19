@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   s.name                      = 'XCEOperationFlow'
   s.summary                   = 'Lightweight async serial operation flow controller.'
-  s.version                   = '0.1.0'
+  s.version                   = '4.1.3'
   s.homepage                  = 'https://XCEssentials.github.io/OperationFlow'
 
   s.source                    = { :git => 'https://github.com/XCEssentials/OperationFlow.git', :tag => s.version }
