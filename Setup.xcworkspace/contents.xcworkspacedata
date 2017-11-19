@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Setup.playground">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/GRMustache.swift/Xcode/Mustache.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/ProjectGenerator/ProjectGenerator.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/RepoConfig/RepoConfig.xcodeproj">
+   </FileRef>
+</Workspace>

@@ -1,0 +1,3 @@
+git "file:///Users/maxim/Library/Mobile Documents/com~apple~CloudDocs/Dev/XCEssentials/RepoConfig" "6c1a7503e138b3ccc4cc1b432e4e1cdced30fb2e"
+github "XCEssentials/ProjectGenerator" "2.3.1"
+github "maximkhatskevich/GRMustache.swift" "2603bb12d67c312ef17ecc755cb40cd77bf386ad"

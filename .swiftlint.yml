@@ -1,0 +1,30 @@
+# see more at https://github.com/realm/SwiftLint
+
+# ===
+
+disabled_rules:
+
+  - opening_brace
+  - nesting
+  - function_body_length
+  - file_length
+
+# paths to ignore during linting. Takes precedence over `included`.
+excluded:
+
+  - Resources
+
+  - Carthage
+  - Pods
+
+# rules options
+
+line_length:
+    ignores_comments: true
+trailing_whitespace:
+    ignores_empty_lines: true
+type_name:
+    allowed_symbols: _
+statement_position:
+    # https://github.com/realm/SwiftLint/issues/1181#issuecomment-272445593
+    statement_mode: uncuddled_else

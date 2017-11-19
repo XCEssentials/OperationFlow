@@ -1,0 +1,192 @@
+# Customise this file, documentation can be found here:
+# https://github.com/KrauseFx/fastlane/tree/master/docs
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# By default, fastlane will send which actions are used
+# No personal data is shared, more information on https://github.com/fastlane/enhancer
+# Uncomment the following line to opt out
+# opt_out_usage
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version '1.100.0'
+
+default_platform :ios
+
+#===
+
+platform :ios do
+
+  lane :beforeRelease do
+
+    ensure_git_branch(
+      branch: 'release/*'
+    )
+
+    # ===
+
+    ensure_git_status_clean
+
+    # ===
+
+    versionNumber = get_version_number(xcodeproj: 'OperationFlow.xcodeproj')
+    puts 'Current VERSION number: ' + versionNumber
+
+    # === Infer new version number
+
+    defaultNewVersion = git_branch.split('/').last
+
+    # === Define new version number
+
+    useInferredNEWVersionNumber = prompt(
+      text: 'Proceed with inferred NEW version number (' + defaultNewVersion + ')?',
+      boolean: true
+    )
+
+    if useInferredNEWVersionNumber
+
+      newVersionNumber = defaultNewVersion
+
+    else
+
+      newVersionNumber = prompt(text: 'New VERSION number:')
+
+    end
+
+    # === Apply NEW version number and increment build number
+
+    increment_version_number(
+      xcodeproj: 'OperationFlow.xcodeproj',
+      version_number: newVersionNumber
+    )
+
+    increment_build_number(
+      xcodeproj: 'OperationFlow.xcodeproj'
+    )
+
+    # ===
+
+    newBuildNumber = get_build_number(xcodeproj: 'OperationFlow.xcodeproj')
+
+    commit_version_bump( # it will fail if more than version bump
+      xcodeproj: 'OperationFlow.xcodeproj',
+      message: 'Version Bump to ' + newVersionNumber + ' (' + newBuildNumber + ')'
+    )
+
+  end
+
+  # ===
+
+  lane :resetProject do
+
+    # === Remember current version and build numbers
+
+    versionNumber = get_version_number(xcodeproj: 'OperationFlow.xcodeproj')
+    buildNumber = get_build_number(xcodeproj: 'OperationFlow.xcodeproj')
+
+    # === Remove completely current project file/package
+
+    sh 'cd ./.. && rm -r ./OperationFlow.xcodeproj'
+
+    # === Regenerate project
+
+    # default initial location for any command
+    # is inside 'Fastlane' folder
+
+    sh 'cd ./.. && struct generate && pod update'
+
+    # === Set proper current version and build numbers
+
+    increment_version_number(
+      xcodeproj: 'OperationFlow.xcodeproj',
+      version_number: versionNumber
+    )
+
+    increment_build_number(
+      xcodeproj: 'OperationFlow.xcodeproj',
+      build_number: buildNumber
+    )
+
+    # === Sort all project entries
+
+    sh 'cd ./.. && xcodeproj sort "OperationFlow.xcodeproj"'
+
+    # === Add custom 'Run Script Phase' entries
+
+    addSwiftLintBuildPhase('OperationFlow')
+
+  end
+
+  # ===
+
+  lane :setupProject do
+
+    # === Generate project from scratch
+
+    # default initial location for any command
+    # is inside 'Fastlane' folder
+
+    sh 'cd ./.. && struct generate && pod update'
+
+    # === Set proper build number (proper version number is stored in the Info file)
+
+    newBuildNumber = prompt(text: 'Desired BUILD number:')
+
+    increment_build_number(
+      xcodeproj: 'OperationFlow.xcodeproj',
+      build_number: newBuildNumber
+    )
+
+    # === Sort all project entries
+
+    sh 'cd ./.. && xcodeproj sort "OperationFlow.xcodeproj"'
+
+    # === Add custom 'Run Script Phase' entries
+
+    addSwiftLintBuildPhase('OperationFlow')
+
+  end
+
+end
+
+# More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+
+# custom functions
+
+def addSwiftLintBuildPhase(projectFileName)
+
+  # adds SwiftLint build phase script to each target of given project
+
+  #===
+
+  # remember, we are in ./fastlane/ folder now...
+  fullProjFilePath = Dir.pwd + '/../' + projectFileName + '.xcodeproj'
+
+  project = Xcodeproj::Project.open(fullProjFilePath)
+
+  project.targets.each { |target|
+
+    swiftLintPhase = target.new_shell_script_build_phase("SwiftLint")
+    swiftLintPhase.shell_script = 'if which swiftlint >/dev/null; then
+        swiftlint
+    else
+        echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+    fi'
+    # swiftLintPhase.run_only_for_deployment_postprocessing = '1'
+
+    target.build_phases.delete(swiftLintPhase)
+    target.build_phases.unshift(swiftLintPhase)
+
+  }
+
+  project.save()
+
+end
