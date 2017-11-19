@@ -8,6 +8,6 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
-      location = "group:Main.xcodeproj">
+      location = "group:OperationFlow.xcodeproj">
    </FileRef>
 </Workspace>
